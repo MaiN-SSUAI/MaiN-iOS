@@ -32,7 +32,7 @@ struct NewClassroomScheduleView: View {
                     ThirdSeminarView(thirdSeminarInfo: reservationModelData.thirdSeminarRoom, selectedReservationData: selectedReservationData, selectedBlock: $selectedBlock)
                 }.padding()
             }.sheet(isPresented: $selectedBlock, content: {
-                NewDeleteHalfModalView(loadDataDoIt: $loadDataDoIt, isPresented: $selectedBlock, summary: selectedReservationData.summary, eventID: selectedReservationData.eventID, start: selectedReservationData.start, end: selectedReservationData.end).presentationDetents([.fraction(0.2)]).cornerRadius(20)
+                NewDeleteHalfModalView(alertMessage: $alertMessage, alertShow: $alertShow, loadDataDoIt: $loadDataDoIt, isPresented: $selectedBlock, summary: selectedReservationData.summary, eventID: selectedReservationData.eventID, start: selectedReservationData.start, end: selectedReservationData.end).presentationDetents([.fraction(0.2)]).cornerRadius(20)
             })
             .alert(isPresented: $alertShow) {
                 Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인"), action: {

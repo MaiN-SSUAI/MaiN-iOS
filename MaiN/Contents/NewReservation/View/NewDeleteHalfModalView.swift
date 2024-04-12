@@ -9,7 +9,8 @@ import SwiftUI
 import Moya
 
 struct NewDeleteHalfModalView: View {
-
+    @Binding var alertMessage: String
+    @Binding var alertShow: Bool
     @State private var isDeleteConfirmationPresented = false
     @Binding var loadDataDoIt: Bool
     @Binding var isPresented: Bool
@@ -73,6 +74,8 @@ struct NewDeleteHalfModalView: View {
                 Spacer()
                 Button(action: {
                     isDeleteConfirmationPresented = true
+                    alertMessage = "예약이 삭제되었습니다."
+                    alertShow = true
                 }) {
                     Text("삭제").font(.normal(size: 15))
                         .foregroundColor(.white)
