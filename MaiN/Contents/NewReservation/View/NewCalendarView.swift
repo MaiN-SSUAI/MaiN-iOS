@@ -12,7 +12,8 @@ struct NewCalendarView: View {
     @State private var selectedDate: Date = Date()
     @State var loadDataDoIt = false
     @State var isModalPresented = false
-    
+    @State var alertMessage = ""
+    @State var alertShow = false
     var reservationModelData: NewReservationModelData {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -31,7 +32,7 @@ struct NewCalendarView: View {
                 NewMonthView(selectedDate: $selectedDate)
                     .frame(width:130,height:28).padding(.leading, 7)
                 Spacer()
-                AddReservationButton(loadDataDoIt: $loadDataDoIt, selectedDate: $selectedDate, isModalPresented: $isModalPresented)
+                AddReservationButton(alertMessage: $alertMessage, alertShow: $alertShow, loadDataDoIt: $loadDataDoIt, selectedDate: $selectedDate, isModalPresented: $isModalPresented)
                     .frame(width: 66, height: 35)
                     .cornerRadius(6)
             }.padding()
@@ -44,7 +45,7 @@ struct NewCalendarView: View {
                 }.frame(height: 61)
             }.padding(3).background(.white)
             Spacer()
-            NewClassroomScheduleView(selectedDate: $selectedDate, loadDataDoIt: $loadDataDoIt)
+            NewClassroomScheduleView(alertMessage: $alertMessage, alertShow: $alertShow, selectedDate: $selectedDate, loadDataDoIt: $loadDataDoIt)
             Spacer()
         }.background(.white)
         .onChange(of: loadDataDoIt) {

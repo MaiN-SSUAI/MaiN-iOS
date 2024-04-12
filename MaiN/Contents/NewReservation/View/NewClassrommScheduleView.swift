@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct NewClassroomScheduleView: View {
+    @Binding var alertMessage: String
+    @Binding var alertShow: Bool
     @Binding var selectedDate: Date
     // 모달뷰 관련
     @Binding var loadDataDoIt: Bool
@@ -9,7 +11,9 @@ struct NewClassroomScheduleView: View {
     @ObservedObject var reservationModelData: NewReservationModelData
     @ObservedObject var selectedReservationData: NewSelectedReservationData = NewSelectedReservationData()
     
-    init(selectedDate: Binding<Date>, loadDataDoIt: Binding<Bool>) {
+    init(alertMessage: Binding<String>, alertShow: Binding<Bool>, selectedDate: Binding<Date>, loadDataDoIt: Binding<Bool>) {
+        self._alertMessage = alertMessage
+        self._alertShow = alertShow
         self._selectedDate = selectedDate
         self._loadDataDoIt = loadDataDoIt
         self.reservationModelData = NewReservationModelData(selectedDate: selectedDate.wrappedValue.toDateString())
@@ -30,6 +34,12 @@ struct NewClassroomScheduleView: View {
             }.sheet(isPresented: $selectedBlock, content: {
                 NewDeleteHalfModalView(loadDataDoIt: $loadDataDoIt, isPresented: $selectedBlock, summary: selectedReservationData.summary, eventID: selectedReservationData.eventID, start: selectedReservationData.start, end: selectedReservationData.end).presentationDetents([.fraction(0.2)]).cornerRadius(20)
             })
+            .alert(isPresented: $alertShow) {
+                Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인"), action: {
+//                    isModalPresented = false
+//                    loadDataDoIt.toggle() // 모달이 닫힌 후에 데이터 로딩 상태를 업데이트
+                }))
+            }
         }
     }
 }
