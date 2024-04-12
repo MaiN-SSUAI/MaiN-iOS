@@ -8,6 +8,8 @@
 import SwiftUI
 import Moya
 struct AddReservationButton: View {
+    @Binding var alertMessage: String
+    @Binding var alertShow: Bool
     @Binding var loadDataDoIt: Bool
     @Binding var selectedDate: Date
     @Binding var isModalPresented: Bool
@@ -20,7 +22,7 @@ struct AddReservationButton: View {
                 .padding()
                 .background(.blue)
         }.sheet(isPresented: $isModalPresented) {
-            AddFirstSeminarModal(isModalPresented: $isModalPresented, reservationDate: $selectedDate, loadDataDoIt: $loadDataDoIt)
+            AddFirstSeminarModal(alertMessage: $alertMessage, alertShow: $alertShow, isModalPresented: $isModalPresented, reservationDate: $selectedDate, loadDataDoIt: $loadDataDoIt)
                 .presentationDetents([.fraction(0.5)])
         }
     }
@@ -31,6 +33,8 @@ struct AddReservationButton: View {
 }
 
 struct AddFirstSeminarModal: View {
+    @Binding var alertMessage: String
+    @Binding var alertShow: Bool
     @State var startTime = Date()
     @State var endTime = Date()
     @State var wakeUp = Date()
@@ -95,7 +99,8 @@ struct AddFirstSeminarModal: View {
                 Button(action: {
                     isModalPresented = false
 //                    loadDataDoIt.toggle()
-                    loadReservationData(seminarRoom: selectedSeminarRoom,summary: studentID, startDateTimeStr: convertDateString(inputString: startTime), endDateTimeStr: convertDateString(inputString: endTime)){ success in
+                    alertShow = true
+                    loadReservationData(seminarRoom: selectedSeminarRoom,summary: studentID, startDateTimeStr: convertDateString(inputString: startTime), endDateTimeStr: convertDateString(inputString: endTime)){ success,message  in
                         loadDataDoIt.toggle()
                     }}){
                         Text("저장").font(.bold(size: 20))
@@ -110,15 +115,14 @@ struct AddFirstSeminarModal: View {
         .onAppear {
             self.startTime = reservationDate
             self.endTime = reservationDate
-        }
-        .onChange(of: reservationDate) { newDate in
+        }.onChange(of: reservationDate) { newDate in
             self.startTime = newDate
             self.endTime = newDate
         }
         .background(.gray00)
     }
     
-    func loadReservationData(seminarRoom: String, summary: String, startDateTimeStr: String, endDateTimeStr: String, completion: @escaping (Bool) -> Void){
+    func loadReservationData(seminarRoom: String, summary: String, startDateTimeStr: String, endDateTimeStr: String, completion: @escaping (Bool, String?) -> Void) {
         let provider = MoyaProvider<NewReservationAPI>()
         let startDateTimeStr = startDateTimeStr
         let endDateTimeStr = endDateTimeStr
@@ -126,13 +130,20 @@ struct AddFirstSeminarModal: View {
             switch result {
             case .success(let response):
                 do {
-                    let data = try response.mapJSON()
-                    completion(true)
+                    if response.statusCode == 200 {
+                        alertMessage = "예약이 등록되었습니다."
+                        completion(true, nil)
+                    } else {
+                        let json = try JSONSerialization.jsonObject(with: response.data, options: []) as? [String: Any]
+                        let message = json?["message"] as? String ?? "알 수 없는 오류가 발생했습니다."
+                        handleServerError(message: message)
+                        completion(false, message)
+                    }
                 } catch {
-                    completion(true)
+                    completion(false, "데이터 처리 중 오류가 발생했습니다.")
                 }
             case .failure(let error):
-                completion(false)
+                completion(false, error.localizedDescription)
             }
         }
     }
@@ -142,5 +153,23 @@ struct AddFirstSeminarModal: View {
         outputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
         return outputFormatter.string(from: inputString)
     }
+    
+    func handleServerError(message: String?) {
+        if let message = message {
+            switch message {
+            case "More than 2 hours":
+                alertMessage = "회당 2시간 이상 예약이 불가합니다."
+            case "Event Overlaps":
+                alertMessage = "해당 일정에 이미 예약된 일정이 존재합니다."
+            case "More than 2 appointments a week":
+                alertMessage = "주당 2회만 예약이 가능합니다."
+            case "Reservation can only be made for this month and the next month":
+                alertMessage = "매달 1일 기준 다음달까지만 예약이 가능합니다."
+            default:
+                alertMessage = "예약 처리 중 오류가 발생했습니다."
+            }
+        }
+    }
+
 }
 
