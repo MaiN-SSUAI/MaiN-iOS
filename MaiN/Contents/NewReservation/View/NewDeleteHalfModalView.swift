@@ -97,7 +97,7 @@ struct NewDeleteHalfModalView: View {
         
     func deleteReservationData(eventID: String,  completion: @escaping(Bool) -> Void){
         let provider = MoyaProvider<NewReservationAPI>()
-        provider.request(.deleteReservation(eventId: eventID, studentId: studentId)) { result in
+        provider.request(.deleteReservation(eventId: eventID)) { result in
             switch result {
             case .success(let response):
                 completion(true)

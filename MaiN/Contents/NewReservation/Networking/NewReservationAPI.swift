@@ -11,7 +11,7 @@ import Moya
 enum NewReservationAPI {
     case getReservation(date: String, selectedSeminar: String)
     case addReservation(location: String, student_id: String, startDateTimeStr: String, endDateTimeStr: String)
-    case deleteReservation(eventId: String, studentId: String)
+    case deleteReservation(eventId: String)
 }
 
 extension NewReservationAPI: TargetType {
@@ -23,8 +23,8 @@ extension NewReservationAPI: TargetType {
             return "/calendar/show_event"
         case .addReservation:
             return "/calendar/add"
-        case .deleteReservation(let eventId, let studentId):
-            return "/calendar/delete/\(eventId)/\(studentId)"
+        case .deleteReservation(let eventId):
+            return "/calendar/delete/\(eventId)"
         }
     }
 
