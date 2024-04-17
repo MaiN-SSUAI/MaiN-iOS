@@ -14,6 +14,7 @@ struct NewCalendarView: View {
     @State var isModalPresented = false
     @State var alertMessage = ""
     @State var alertShow = false
+    @State var infoModalPresented = false
     var reservationModelData: NewReservationModelData {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -26,6 +27,7 @@ struct NewCalendarView: View {
             HStack(){
                 Text("세미나실 예약").font(.bold(size: 30)).foregroundColor(.black)
                 Spacer()
+                Button(action: presentInfo) {Image("info").padding()}
             }.padding(.top, 50).padding(.leading, 40)
                 .padding(.bottom, 10)
             HStack() {
@@ -48,8 +50,32 @@ struct NewCalendarView: View {
             NewClassroomScheduleView(alertMessage: $alertMessage, alertShow: $alertShow, selectedDate: $selectedDate, loadDataDoIt: $loadDataDoIt)
             Spacer()
         }.background(.white)
-        .onChange(of: loadDataDoIt) {
-            print("loadDataDoIt 바뀜")
+        .sheet(isPresented: $infoModalPresented) {
+            InfoModalView()
+                .presentationDetents([.fraction(0.4)])
+        }
+    }
+
+    func presentInfo() {
+        infoModalPresented = true
+    }
+}
+
+struct InfoModalView: View {
+    var body: some View {
+        VStack {
+            Spacer().frame(height: 20)
+            Text("세미나실 예약 수칙")
+                .font(.bold(size: 20))
+            VStack(alignment: .leading, spacing: 10) {
+                Text("1. 회당 2시간 이상 예약이 불가합니다.").font(.normal(size: 15))
+                Text("2. 주당 2회만 예약이 가능합니다.").font(.normal(size: 15))
+                Text("3. 본인이 한 예약만 삭제 가능합니다").font(.normal(size: 15))
+                Text("4. 매달 1일 기준 다음달까지만 예약이 가능합니다").font(.normal(size: 15))
+                Text("5. 이미 예약된 일정에는 예약이 불가합니다.").font(.normal(size: 15))
+                Text("6. 교수회의실은 교수님들 외에 예약이 불가합니다.").font(.normal(size: 15))
+            }.padding()
+            Spacer()
         }
     }
 }
