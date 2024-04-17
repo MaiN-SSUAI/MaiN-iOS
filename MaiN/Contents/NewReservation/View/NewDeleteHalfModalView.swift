@@ -19,6 +19,7 @@ struct NewDeleteHalfModalView: View {
     var eventID: String
     var start: String
     var end: String
+    var resStudentId: String
     let studentId: String = UserDefaults.standard.string(forKey: "schoolNumber") ?? "정보없음"
     
     func timeStringToTime(isoDateString: String) -> String {
@@ -74,8 +75,8 @@ struct NewDeleteHalfModalView: View {
                 Spacer()
                 Button(action: {
                     isDeleteConfirmationPresented = true
-                    alertMessage = "예약이 삭제되었습니다."
-                    alertShow = true
+//                    alertMessage = "예약이 삭제되었습니다."
+//                    alertShow = true
                 }) {
                     Text("삭제").font(.normal(size: 15))
                         .foregroundColor(.white)
@@ -86,10 +87,18 @@ struct NewDeleteHalfModalView: View {
                 }.padding(.trailing, 20)
                 .confirmationDialog("정말로 삭제하겠습니까?", isPresented: $isDeleteConfirmationPresented, actions: {
                     Button("삭제", role: .destructive) {
-                        isPresented = false
-                        deleteReservationData(eventID: self.eventID) { success in
+                        if (studentId == resStudentId){
+                            isPresented = false
+                            deleteReservationData(eventID: self.eventID) { success in
+                                loadDataDoIt.toggle()
+                                alertMessage = "예약이 삭제되었습니다."
+                                alertShow = true
+                            }
+                        } else {
                             loadDataDoIt.toggle()
-                        }
+                            alertMessage = "본인이 한 예약만 삭제 가능합니다."
+                            alertShow = true
+                            print("삭제 오류") }
                     }
                     Button("취소", role: .cancel) { }
                 })

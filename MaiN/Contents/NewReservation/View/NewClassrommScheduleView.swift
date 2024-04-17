@@ -19,7 +19,13 @@ struct NewClassroomScheduleView: View {
         self.reservationModelData = NewReservationModelData(selectedDate: selectedDate.wrappedValue.toDateString())
         self.reservationModelData.setAPIValue()
     }
-
+    func extractNumber(from input: String) -> String? {
+        let parts = input.components(separatedBy: "/")
+        if let lastPart = parts.last, let _ = Int(lastPart) {
+            return lastPart
+        }
+        return nil
+    }
     var body: some View {
         if reservationModelData.isLoading {
             ProgressView()
@@ -32,7 +38,7 @@ struct NewClassroomScheduleView: View {
                     ThirdSeminarView(thirdSeminarInfo: reservationModelData.thirdSeminarRoom, selectedReservationData: selectedReservationData, selectedBlock: $selectedBlock)
                 }.padding()
             }.sheet(isPresented: $selectedBlock, content: {
-                NewDeleteHalfModalView(alertMessage: $alertMessage, alertShow: $alertShow, loadDataDoIt: $loadDataDoIt, isPresented: $selectedBlock, summary: selectedReservationData.summary, eventID: selectedReservationData.eventID, start: selectedReservationData.start, end: selectedReservationData.end).presentationDetents([.fraction(0.2)]).cornerRadius(20)
+                NewDeleteHalfModalView(alertMessage: $alertMessage, alertShow: $alertShow, loadDataDoIt: $loadDataDoIt, isPresented: $selectedBlock, summary: selectedReservationData.summary, eventID: selectedReservationData.eventID, start: selectedReservationData.start, end: selectedReservationData.end, resStudentId: extractNumber(from: selectedReservationData.summary) ?? "학번 오류").presentationDetents([.fraction(0.2)]).cornerRadius(20)
             })
             .alert(isPresented: $alertShow) {
                 Alert(title: Text("알림"), message: Text(alertMessage), dismissButton: .default(Text("확인"), action: {
