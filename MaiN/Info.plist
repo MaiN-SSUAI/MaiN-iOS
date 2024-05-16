@@ -26,6 +26,13 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Inter-ExtraBold.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+		<string>Lato-SemiBold.ttf</string>
+		<string>Inter-Regular.ttf</string>
+		<string>Inter-Bold.ttf</string>
+		<string>Inter-Light.ttf</string>
 		<string>Lato-Light.ttf</string>
 		<string>Lato-Bold.ttf</string>
 		<string>Lato-Regular.ttf</string>
