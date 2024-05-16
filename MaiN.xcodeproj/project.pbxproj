@@ -31,6 +31,7 @@
 		80223A1B2B4D781C0021C344 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80223A1A2B4D781C0021C344 /* FontManager.swift */; };
 		80223A1D2B4D857D0021C344 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80223A1C2B4D857D0021C344 /* Lato-Bold.ttf */; };
 		80223A1F2B4D85B80021C344 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80223A1E2B4D85B80021C344 /* Lato-Light.ttf */; };
+		802D56E62BF4A7470009D9C7 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802D56E52BF4A7470009D9C7 /* WeekView.swift */; };
 		806AF8702B7A23B9008F7F62 /* NewSelectedReservationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806AF86F2B7A23B9008F7F62 /* NewSelectedReservationData.swift */; };
 		806C82792B5C1AFA00B2F796 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806C82782B5C1AFA00B2F796 /* UserDefaultsKeys.swift */; };
 		806F1B0D2B5F9FE7003E742F /* NewCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B0C2B5F9FE7003E742F /* NewCalendarView.swift */; };
@@ -38,11 +39,9 @@
 		806F1B112B5FA4D2003E742F /* NewReservationModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B102B5FA4D2003E742F /* NewReservationModelData.swift */; };
 		806F1B132B5FD58A003E742F /* NewReservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B122B5FD58A003E742F /* NewReservation.swift */; };
 		806F1B152B5FE13A003E742F /* NewReservationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B142B5FE13A003E742F /* NewReservationAPI.swift */; };
-		806F1B172B5FF9AA003E742F /* NewWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B162B5FF9AA003E742F /* NewWeekView.swift */; };
 		806F1B192B5FFB9B003E742F /* NewClassrommScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B182B5FFB9B003E742F /* NewClassrommScheduleView.swift */; };
 		806F1B1B2B6197D4003E742F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B1A2B6197D4003E742F /* Utility.swift */; };
 		806F1B232B642791003E742F /* NewDeleteHalfModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B222B642791003E742F /* NewDeleteHalfModalView.swift */; };
-		806F1B312B64382A003E742F /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B2A2B64382A003E742F /* WeekView.swift */; };
 		806F1B322B64382A003E742F /* AddReservationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B2B2B64382A003E742F /* AddReservationButton.swift */; };
 		807BF8262B504B2400A659B9 /* SsuNotiRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF8252B504B2400A659B9 /* SsuNotiRow.swift */; };
 		807BF8282B504B6800A659B9 /* SsuNotiModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF8272B504B6800A659B9 /* SsuNotiModelData.swift */; };
@@ -52,6 +51,9 @@
 		807BF8302B50516400A659B9 /* FunsysNotiRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF82F2B50516400A659B9 /* FunsysNotiRow.swift */; };
 		807BF8322B50A40400A659B9 /* FixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF8312B50A40400A659B9 /* FixView.swift */; };
 		807BF8342B50A42100A659B9 /* MypageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF8332B50A42100A659B9 /* MypageView.swift */; };
+		809241682BF529F00036D2B8 /* MonthPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809241672BF529F00036D2B8 /* MonthPicker.swift */; };
+		8092416A2BF534D10036D2B8 /* Extension+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809241692BF534D10036D2B8 /* Extension+DateFormatter.swift */; };
+		8092416D2BF53EE70036D2B8 /* DayWeekPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8092416C2BF53EE70036D2B8 /* DayWeekPicker.swift */; };
 		8099F1002B6F9EF300F06339 /* UserServiceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F0FF2B6F9EF200F06339 /* UserServiceAPI.swift */; };
 		8099F1022B6FAB3F00F06339 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099F1012B6FAB3F00F06339 /* Extension.swift */; };
 		80B11A292B57FA6C0069F8D9 /* AgreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B11A282B57FA6C0069F8D9 /* AgreeView.swift */; };
@@ -78,6 +80,17 @@
 		80223A1A2B4D781C0021C344 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		80223A1C2B4D857D0021C344 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		80223A1E2B4D85B80021C344 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		802D56DB2BF4A2DB0009D9C7 /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Black.ttf"; path = "../../../../Inter/static/Inter-Black.ttf"; sourceTree = "<group>"; };
+		802D56DC2BF4A2DB0009D9C7 /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Medium.ttf"; path = "../../../../Inter/static/Inter-Medium.ttf"; sourceTree = "<group>"; };
+		802D56DD2BF4A2DB0009D9C7 /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-ExtraBold.ttf"; path = "../../../../Inter/static/Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
+		802D56DE2BF4A2DB0009D9C7 /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-ExtraLight.ttf"; path = "../../../../Inter/static/Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
+		802D56DF2BF4A2DB0009D9C7 /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Bold.ttf"; path = "../../../../Inter/static/Inter-Bold.ttf"; sourceTree = "<group>"; };
+		802D56E02BF4A2DB0009D9C7 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-SemiBold.ttf"; path = "../../../../Inter/static/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		802D56E12BF4A2DB0009D9C7 /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Thin.ttf"; path = "../../../../Inter/static/Inter-Thin.ttf"; sourceTree = "<group>"; };
+		802D56E22BF4A2DB0009D9C7 /* Inter-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Light.ttf"; path = "../../../../Inter/static/Inter-Light.ttf"; sourceTree = "<group>"; };
+		802D56E32BF4A2DB0009D9C7 /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Regular.ttf"; path = "../../../../Inter/static/Inter-Regular.ttf"; sourceTree = "<group>"; };
+		802D56E42BF4A6160009D9C7 /* Lato-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-SemiBold.ttf"; path = "../../../../Lato-SemiBold.ttf"; sourceTree = "<group>"; };
+		802D56E52BF4A7470009D9C7 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		8042C37D2B7F55C9003DE096 /* MaiN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaiN.entitlements; sourceTree = "<group>"; };
 		806AF86F2B7A23B9008F7F62 /* NewSelectedReservationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSelectedReservationData.swift; sourceTree = "<group>"; };
 		806C82782B5C1AFA00B2F796 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
@@ -86,11 +99,9 @@
 		806F1B102B5FA4D2003E742F /* NewReservationModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReservationModelData.swift; sourceTree = "<group>"; };
 		806F1B122B5FD58A003E742F /* NewReservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReservation.swift; sourceTree = "<group>"; };
 		806F1B142B5FE13A003E742F /* NewReservationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReservationAPI.swift; sourceTree = "<group>"; };
-		806F1B162B5FF9AA003E742F /* NewWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWeekView.swift; sourceTree = "<group>"; };
 		806F1B182B5FFB9B003E742F /* NewClassrommScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClassrommScheduleView.swift; sourceTree = "<group>"; };
 		806F1B1A2B6197D4003E742F /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		806F1B222B642791003E742F /* NewDeleteHalfModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeleteHalfModalView.swift; sourceTree = "<group>"; };
-		806F1B2A2B64382A003E742F /* WeekView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		806F1B2B2B64382A003E742F /* AddReservationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReservationButton.swift; sourceTree = "<group>"; };
 		807BF8252B504B2400A659B9 /* SsuNotiRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsuNotiRow.swift; sourceTree = "<group>"; };
 		807BF8272B504B6800A659B9 /* SsuNotiModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsuNotiModelData.swift; sourceTree = "<group>"; };
@@ -100,6 +111,9 @@
 		807BF82F2B50516400A659B9 /* FunsysNotiRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunsysNotiRow.swift; sourceTree = "<group>"; };
 		807BF8312B50A40400A659B9 /* FixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixView.swift; sourceTree = "<group>"; };
 		807BF8332B50A42100A659B9 /* MypageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageView.swift; sourceTree = "<group>"; };
+		809241672BF529F00036D2B8 /* MonthPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPicker.swift; sourceTree = "<group>"; };
+		809241692BF534D10036D2B8 /* Extension+DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+DateFormatter.swift"; sourceTree = "<group>"; };
+		8092416C2BF53EE70036D2B8 /* DayWeekPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayWeekPicker.swift; sourceTree = "<group>"; };
 		8099F0FF2B6F9EF200F06339 /* UserServiceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceAPI.swift; sourceTree = "<group>"; };
 		8099F1012B6FAB3F00F06339 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		80B11A282B57FA6C0069F8D9 /* AgreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreeView.swift; sourceTree = "<group>"; };
@@ -163,6 +177,7 @@
 				80223A132B4D70850021C344 /* Font */,
 				806C82782B5C1AFA00B2F796 /* UserDefaultsKeys.swift */,
 				806F1B1A2B6197D4003E742F /* Utility.swift */,
+				809241692BF534D10036D2B8 /* Extension+DateFormatter.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -170,9 +185,19 @@
 		80223A132B4D70850021C344 /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				802D56DB2BF4A2DB0009D9C7 /* Inter-Black.ttf */,
+				802D56DF2BF4A2DB0009D9C7 /* Inter-Bold.ttf */,
+				802D56DD2BF4A2DB0009D9C7 /* Inter-ExtraBold.ttf */,
+				802D56DE2BF4A2DB0009D9C7 /* Inter-ExtraLight.ttf */,
+				802D56E22BF4A2DB0009D9C7 /* Inter-Light.ttf */,
+				802D56DC2BF4A2DB0009D9C7 /* Inter-Medium.ttf */,
+				802D56E32BF4A2DB0009D9C7 /* Inter-Regular.ttf */,
+				802D56E02BF4A2DB0009D9C7 /* Inter-SemiBold.ttf */,
+				802D56E12BF4A2DB0009D9C7 /* Inter-Thin.ttf */,
 				80223A1E2B4D85B80021C344 /* Lato-Light.ttf */,
 				80223A1C2B4D857D0021C344 /* Lato-Bold.ttf */,
 				80223A182B4D770F0021C344 /* Lato-Regular.ttf */,
+				802D56E42BF4A6160009D9C7 /* Lato-SemiBold.ttf */,
 				80223A1A2B4D781C0021C344 /* FontManager.swift */,
 			);
 			path = Font;
@@ -220,6 +245,16 @@
 				80FF8FB72BB0971B0029152A /* View */,
 			);
 			path = NewReservation;
+			sourceTree = "<group>";
+		};
+		8092416B2BF535560036D2B8 /* CustomComponent */ = {
+			isa = PBXGroup;
+			children = (
+				809241672BF529F00036D2B8 /* MonthPicker.swift */,
+				802D56E52BF4A7470009D9C7 /* WeekView.swift */,
+				8092416C2BF53EE70036D2B8 /* DayWeekPicker.swift */,
+			);
+			path = CustomComponent;
 			sourceTree = "<group>";
 		};
 		80B11A302B5AE6810069F8D9 /* Frameworks */ = {
@@ -310,14 +345,13 @@
 		80FF8FB72BB0971B0029152A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8092416B2BF535560036D2B8 /* CustomComponent */,
 				802239D02B458E510021C344 /* ReservationUIView.swift */,
-				806F1B162B5FF9AA003E742F /* NewWeekView.swift */,
-				806F1B2A2B64382A003E742F /* WeekView.swift */,
-				806F1B222B642791003E742F /* NewDeleteHalfModalView.swift */,
 				806F1B0C2B5F9FE7003E742F /* NewCalendarView.swift */,
+				806F1B182B5FFB9B003E742F /* NewClassrommScheduleView.swift */,
+				806F1B222B642791003E742F /* NewDeleteHalfModalView.swift */,
 				806F1B0E2B5FA019003E742F /* NewMonthView.swift */,
 				806F1B2B2B64382A003E742F /* AddReservationButton.swift */,
-				806F1B182B5FFB9B003E742F /* NewClassrommScheduleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -436,16 +470,16 @@
 				806C82792B5C1AFA00B2F796 /* UserDefaultsKeys.swift in Sources */,
 				80E9B7E32B3DFFA90047EC6E /* HomeUIView.swift in Sources */,
 				806F1B0F2B5FA019003E742F /* NewMonthView.swift in Sources */,
-				806F1B312B64382A003E742F /* WeekView.swift in Sources */,
 				807BF82E2B504F1000A659B9 /* FunsysNotiAPI.swift in Sources */,
 				802239D92B459A3C0021C344 /* FunsysNoti.swift in Sources */,
+				809241682BF529F00036D2B8 /* MonthPicker.swift in Sources */,
 				806F1B322B64382A003E742F /* AddReservationButton.swift in Sources */,
+				802D56E62BF4A7470009D9C7 /* WeekView.swift in Sources */,
 				8099F1022B6FAB3F00F06339 /* Extension.swift in Sources */,
 				802239E82B45A9FC0021C344 /* AiNotiAPI.swift in Sources */,
 				807BF8342B50A42100A659B9 /* MypageView.swift in Sources */,
 				802239D72B459A250021C344 /* AiNoti.swift in Sources */,
 				806F1B192B5FFB9B003E742F /* NewClassrommScheduleView.swift in Sources */,
-				806F1B172B5FF9AA003E742F /* NewWeekView.swift in Sources */,
 				806F1B0D2B5F9FE7003E742F /* NewCalendarView.swift in Sources */,
 				806F1B1B2B6197D4003E742F /* Utility.swift in Sources */,
 				8099F1002B6F9EF300F06339 /* UserServiceAPI.swift in Sources */,
@@ -462,7 +496,9 @@
 				80B11A292B57FA6C0069F8D9 /* AgreeView.swift in Sources */,
 				802239D52B4593AE0021C344 /* ModelData.swift in Sources */,
 				802239DB2B459A570021C344 /* SsuNoti.swift in Sources */,
+				8092416A2BF534D10036D2B8 /* Extension+DateFormatter.swift in Sources */,
 				807BF82A2B504DDD00A659B9 /* FunsysNotiModelData.swift in Sources */,
+				8092416D2BF53EE70036D2B8 /* DayWeekPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,9 +27,9 @@ struct NewClassroomScheduleView: View {
         return nil
     }
     var body: some View {
-        if reservationModelData.isLoading {
-            ProgressView()
-        } else {
+//        if reservationModelData.isLoading {
+//            ProgressView()
+//        } else {
             ScrollView(){
                 HStack(spacing: 0){
                     TimeView().padding(.top, 5).padding(.trailing, 7)
@@ -46,7 +46,7 @@ struct NewClassroomScheduleView: View {
 //                    loadDataDoIt.toggle() // 모달이 닫힌 후에 데이터 로딩 상태를 업데이트
                 }))
             }
-        }
+//        }
     }
 }
 

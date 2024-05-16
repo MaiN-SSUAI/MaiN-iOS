@@ -17,7 +17,7 @@ enum Tab {
 struct HomeUIView: View {
     @State private var selectedTab: Tab = .notice
     init() {
-        UITabBar.appearance().backgroundColor = UIColor.white
+        UITabBar.appearance().backgroundColor = .white
     }
     var body: some View {
         NavigationView {

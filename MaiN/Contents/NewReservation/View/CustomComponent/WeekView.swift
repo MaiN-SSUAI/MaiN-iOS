@@ -19,21 +19,20 @@ struct WeekView: View {
                 HStack(spacing: 0) {
                     ForEach(0..<7, id: \.self) { offset in
                         let day = Calendar.current.date(byAdding: .day, value: offset, to: selectedDate.startOfWeek!)!
-                        let dayString = changeToKorean(englishDate: dayOfWeekFormatter.string(from: day))
+                        let dayString = dayOfWeekFormatter.string(from: day)
                         
                         let dateString = dateOfWeekFormatter.string(from: day)
                         Button(action: {self.updateSelectedDate(to: day)}){
-                            VStack() {
-                                Text(dayString)
-                                    .foregroundColor(.gray01)
-                                    .font(.normal(size: 14))
-                                
+                            VStack(alignment: .center, spacing: 2) {
                                 Text(dateString)
-                                    .foregroundColor(.black)
-                                    .font(.normal(size: 21))
+                                    .foregroundColor(.black00)
+                                    .font(isSameDay(day1: day, day2: selectedDate) ? .interExtraBold(size: 18) : .interSemiBold(size: 18))
+                                Text(dayString)
+                                    .foregroundColor(.gray03)
+                                    .font(.interRegular(size: 13))
                             }
                             .frame( width: geometry.size.width/7, height: 61)
-                            .background(isSameDay(day1: day, day2: selectedDate) ? .blue01 : Color.white)
+                            .background(isSameDay(day1: day, day2: selectedDate) ? .selectedCalendar : Color.white)
                             .cornerRadius(10)
                         }
                     }
@@ -100,3 +99,4 @@ struct WeekView_Previews: PreviewProvider {
         WeekView(selectedDate: $previewDate)
     }
 }
+
