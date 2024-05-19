@@ -29,7 +29,7 @@ struct HomeUIView: View {
                     }
                     .tag(Tab.notice)
                 
-                ReservationUIView()
+                ReservationView()
                     .tabItem {
                         Image(selectedTab == .reservation ? "reserveTabFill" : "reserveTab")
                         Text("예약").font(.system(size: 10)).foregroundColor(.gray)

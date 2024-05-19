@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct WeekView: View {
-    @Binding var selectedDate: Date
-    private func updateSelectedDate(to newDate: Date) {
-        self.selectedDate = newDate
-    }
+    @ObservedObject var vm: ReservationViewModel
     
     var body: some View {
         GeometryReader { geometry in
             ScrollView(.horizontal, showsIndicators: false){
                 HStack(spacing: 0) {
                     ForEach(0..<7, id: \.self) { offset in
-                        let day = Calendar.current.date(byAdding: .day, value: offset, to: selectedDate.startOfWeek!)!
+                        let day = Calendar.current.date(byAdding: .day, value: offset, to: vm.selectedDate.startOfWeek!)!
                         let dayString = dayOfWeekFormatter.string(from: day)
                         
                         let dateString = dateOfWeekFormatter.string(from: day)
@@ -26,19 +23,23 @@ struct WeekView: View {
                             VStack(alignment: .center, spacing: 2) {
                                 Text(dateString)
                                     .foregroundColor(.black00)
-                                    .font(isSameDay(day1: day, day2: selectedDate) ? .interExtraBold(size: 18) : .interSemiBold(size: 18))
+                                    .font(isSameDay(day1: day, day2: vm.selectedDate) ? .interExtraBold(size: 18) : .interSemiBold(size: 18))
                                 Text(dayString)
                                     .foregroundColor(.gray03)
                                     .font(.interRegular(size: 13))
                             }
                             .frame( width: geometry.size.width/7, height: 61)
-                            .background(isSameDay(day1: day, day2: selectedDate) ? .selectedCalendar : Color.white)
+                            .background(isSameDay(day1: day, day2: vm.selectedDate) ? .selectedCalendar : Color.white)
                             .cornerRadius(10)
                         }
                     }
                 }
             }
         }
+    }
+
+    private func updateSelectedDate(to newDate: Date) {
+        vm.changeDate(date: newDate)
     }
 
     private func isSameDay(day1: Date, day2: Date) -> Bool {
@@ -91,12 +92,3 @@ let dateFormatter: DateFormatter = {
     formatter.dateFormat = "yyyy-MM-dd"
     return formatter
 }()
-
-struct WeekView_Previews: PreviewProvider {
-    @State static var previewDate = Date()
-
-    static var previews: some View {
-        WeekView(selectedDate: $previewDate)
-    }
-}
-
