@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MonthPicker: View {
-    @Binding var selectedDate: Date
+    @ObservedObject var vm: ReservationViewModel
     @State private var showingDatePicker = false
     
     var body: some View {
@@ -17,24 +17,20 @@ struct MonthPicker: View {
                 self.showingDatePicker = true
             }) {
                 HStack() {
-                    Text("\(selectedDate, formatter: DateFormatterType.monthYear.formatter)")
+                    Text("\(vm.selectedDate, formatter: DateFormatterType.monthYear.formatter)")
                         .font(.semiBold(size: 17)).foregroundColor(.gray01)
                     Image("calendarArrow").resizable().frame(width: 16, height: 11).rotationEffect(.degrees(showingDatePicker ? 180 : 0))
                 }
             }
             .sheet(isPresented: $showingDatePicker) {
-                DatePicker("날짜 선택", selection: $selectedDate, displayedComponents: .date)
+                DatePicker("날짜 선택", selection: $vm.selectedDate, displayedComponents: .date)
                                     .datePickerStyle(GraphicalDatePickerStyle())
-                                    .padding().onChange(of: selectedDate) { _ in
+                                    .padding()
+                                    .onChange(of: vm.selectedDate) { _ in
                                         showingDatePicker = false
-                                    }.presentationDetents([.fraction(0.5)])
+                                    }
+                                    .presentationDetents([.fraction(0.5)])
             }
         }
-    }
-}
-
-struct MonthPickerPreviews: PreviewProvider {
-    static var previews: some View {
-        MonthPicker(selectedDate: .constant(Date()))
     }
 }
