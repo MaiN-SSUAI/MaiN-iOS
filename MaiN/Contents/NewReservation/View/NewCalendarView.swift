@@ -33,7 +33,7 @@
 //                    Button(action: presentInfo) {Image("info").frame(width: 30, height: 30)}
 //                }
 //                HStack() {
-//                    MonthPicker(selectedDate: $selectedDate)
+//                    MonthPicker(selectedDate: selectedDate)
 //                    Spacer()
 //                    DayWeekPicker().frame(width: 200, height: 28)
 ////                    AddReservationButton(alertMessage: $alertMessage, alertShow: $alertShow, loadDataDoIt: $loadDataDoIt, selectedDate: $selectedDate, isModalPresented: $isModalPresented)

@@ -11,7 +11,7 @@ import Moya
 
 struct NewReservation: Decodable,Hashable {
     var summary: String
-    var eventid: String
+    var eventId: String
     var start: String
     var end: String
     var end_pixel: String

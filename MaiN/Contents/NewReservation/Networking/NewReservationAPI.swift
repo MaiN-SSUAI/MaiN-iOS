@@ -15,12 +15,12 @@ enum NewReservationAPI {
 }
 
 extension NewReservationAPI: TargetType {
-    var baseURL: URL { return URL(string: "http://43.203.195.189")! }
+    var baseURL: URL { return URL(string: "http://54.180.221.239")! }
 
     var path: String {
         switch self {
         case .getReservation:
-            return "/calendar/show_event"
+            return "/calendar/events"
         case .addReservation:
             return "/calendar/add"
         case .deleteReservation(let eventId):

@@ -69,26 +69,10 @@
 //}
 //
 //struct FirstSeminarView: View {
+//    var vm: ReservationViewModel
 //    var firstSeminarInfo: [NewReservation]
 //    var selectedReservationData: NewSelectedReservationData
 //    @Binding var selectedBlock: Bool
-//    private func frameHeight(for reservation: NewReservation) -> CGFloat {
-//        let startPixel = Int(reservation.start_pixel) ?? 0
-//        let endPixel = Int(reservation.end_pixel) ?? 0
-//        return CGFloat(max(0, endPixel - startPixel-5))
-//    }
-//    func timeStringToDate(isoDateString: String) -> String {
-//        let isoFormatter = ISO8601DateFormatter()
-//        isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-//        guard let date = isoFormatter.date(from: isoDateString) else {
-//            print("Invalid date string")
-//            exit(1)
-//        }
-//        let timeFormatter = DateFormatter()
-//        timeFormatter.dateFormat = "HH:mm"
-//        let timeString = timeFormatter.string(from: date)
-//        return timeString
-//    }
 //    
 //    var body: some View {
 //        VStack(spacing: 0){
@@ -134,6 +118,23 @@
 //            }
 //            Spacer()
 //        }
+//    }
+//    private func frameHeight(for reservation: NewReservation) -> CGFloat {
+//        let startPixel = Int(reservation.start_pixel) ?? 0
+//        let endPixel = Int(reservation.end_pixel) ?? 0
+//        return CGFloat(max(0, endPixel - startPixel-5))
+//    }
+//    func timeStringToDate(isoDateString: String) -> String {
+//        let isoFormatter = ISO8601DateFormatter()
+//        isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+//        guard let date = isoFormatter.date(from: isoDateString) else {
+//            print("Invalid date string")
+//            exit(1)
+//        }
+//        let timeFormatter = DateFormatter()
+//        timeFormatter.dateFormat = "HH:mm"
+//        let timeString = timeFormatter.string(from: date)
+//        return timeString
 //    }
 //    
 //}
