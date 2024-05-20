@@ -134,13 +134,7 @@ struct AgreeView: View {
                         Text(termsOfServiceText).foregroundColor(.black)
                     }.padding()
                     
-                    NavigationLink(destination: WebView(url: URL(string: "https://smartid.ssu.ac.kr/Symtra_sso/smln.asp?apiReturnUrl=https%3A%2F%2Fsaint.ssu.ac.kr%2FwebSSO%2Fsso.jsp")!,shouldNavigateToHome: $shouldNavigateToHome).navigationBarBackButtonHidden(true).navigationBarItems(leading: Button(action: {
-                        self.presentationMode.wrappedValue.dismiss() // 현재 뷰 닫기
-                    }) {
-                        Image("ic_back")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                    }) ) {
+                    NavigationLink(destination: UsaintLogInView().navigationBarHidden(true)) {
                             Text("동의 하기")
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity, maxHeight: 59)
