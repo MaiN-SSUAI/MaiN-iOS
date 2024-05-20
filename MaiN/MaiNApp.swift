@@ -22,7 +22,7 @@ struct MaiNApp: App {
             if isLogin == "success" {
                 HomeUIView()
             } else {
-                LogInUIView()
+                LogInUIView().environmentObject(LogInViewModel())
             }
         }
     }

@@ -14,7 +14,7 @@ struct ReservationView: View {
         VStack(spacing: 0) {
             TopReservationView(vm: reservationVM)
             BottomReservationView(vm: reservationVM)
-        }
+        }.background(.white)
     }
 }
 

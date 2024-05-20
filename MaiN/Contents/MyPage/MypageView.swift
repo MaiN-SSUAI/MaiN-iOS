@@ -10,7 +10,6 @@ import SwiftUI
 struct MypageView: View {
     
     @State var showAutoLoginAlert = false
-    @State var isLogout = false
     
     var body: some View {
         VStack(alignment: .center){
@@ -22,7 +21,7 @@ struct MypageView: View {
                 HStack(){
                     Text("학번").font(.bold(size: 15)).foregroundColor(.black)
                     Spacer()
-                    Text("\(UserDefaults.standard.string(forKey: "schoolNumber")!)").font(.bold(size: 15)).foregroundColor(.black)
+                    Text("\(UserDefaults.standard.string(forKey: "schoolNumber") ?? "")").font(.bold(size: 15)).foregroundColor(.black)
                 }
                 Divider().frame(width: 254)
                 Button(action: {
@@ -39,7 +38,7 @@ struct MypageView: View {
                         primaryButton: .default(Text("취소").foregroundColor(.blue), action: {
                         }),
                         secondaryButton: .default(Text("확인").foregroundColor(.red), action: {
-                            UserDefaults.standard.removeObject(forKey: "isLogIn")
+                            UserDefaultHandler.shared.clearUserDefaults()
                         })
                     )
                 }
