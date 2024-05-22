@@ -9,8 +9,6 @@ import SwiftUI
 
 struct AgreeView: View {
 
-    @State private var shouldNavigateToHome = false
-    @State private var showWebView = false
     let termsOfServiceText = """
     이용약관 및 개인정보취급방침
 
@@ -144,10 +142,6 @@ struct AgreeView: View {
                                 .padding()
                     }
                 }.padding().background(.white)
-            }.onChange(of: shouldNavigateToHome) { newValue in
-                if newValue {
-                    UserDefaults.standard.set("success", forKey: "isLogIn")
-                }
             }
             
     }

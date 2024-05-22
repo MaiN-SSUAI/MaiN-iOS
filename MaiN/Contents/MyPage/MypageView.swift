@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MypageView: View {
-    
+    @EnvironmentObject var logInVM: LogInViewModel
     @State var showAutoLoginAlert = false
     
     var body: some View {
@@ -39,6 +39,8 @@ struct MypageView: View {
                         }),
                         secondaryButton: .default(Text("확인").foregroundColor(.red), action: {
                             UserDefaultHandler.shared.clearUserDefaults()
+                            logInVM.loginSuccess = false
+                            logInVM.isAuthenticating = false
                         })
                     )
                 }
