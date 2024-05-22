@@ -39,8 +39,7 @@ struct MypageView: View {
                         }),
                         secondaryButton: .default(Text("확인").foregroundColor(.red), action: {
                             UserDefaultHandler.shared.clearUserDefaults()
-                            logInVM.loginSuccess = false
-                            logInVM.isAuthenticating = false
+                            logInVM.logOut()
                         })
                     )
                 }

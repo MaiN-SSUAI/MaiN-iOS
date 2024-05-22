@@ -49,6 +49,11 @@ class LogInViewModel: ObservableObject {
                 }
         }
     }
+    
+    func logOut() {
+        loginSuccess = false
+        isAuthenticating = false
+    }
 
 }
 
