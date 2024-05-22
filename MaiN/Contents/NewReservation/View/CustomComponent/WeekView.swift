@@ -19,32 +19,45 @@ struct WeekView: View {
                         let dayString = dayOfWeekFormatter.string(from: day)
                         
                         let dateString = dateOfWeekFormatter.string(from: day)
-                        Button(action: {self.updateSelectedDate(to: day)}){
+                        Button(action: {
+                            if (vm.dayOrWeek == "week") {vm.dayOrWeek = "day"}
+                            self.updateSelectedDate(to: day)
+                        }){
                             VStack(alignment: .center, spacing: 2) {
                                 Text(dateString)
-                                    .foregroundColor(.black00)
-                                    .font(isSameDay(day1: day, day2: vm.selectedDate) ? .interExtraBold(size: 18) : .interSemiBold(size: 18))
+                                    .foregroundColor(isSameDate(day1: day, day2: Date()) ? .red : .black00)
+//                                    .foregroundColor(.black00)
+                                    .font(isSameDay(day1: day, day2: Date()) ? .interExtraBold(size: 18) : .interSemiBold(size: 18))
                                 Text(dayString)
                                     .foregroundColor(.gray03)
                                     .font(.interRegular(size: 13))
                             }
-                            .frame( width: geometry.size.width/7, height: 61)
-                            .background(isSameDay(day1: day, day2: vm.selectedDate) ? .selectedCalendar : Color.white)
+                            .frame(width: geometry.size.width/7, height: 60)
+                            .background( vm.dayOrWeek == "day" && isSameDate(day1: day, day2: vm.selectedDate) ? .selectedCalendar : Color.white)
                             .cornerRadius(10)
                         }
                     }
                 }
             }
-        }
+        }.frame(height: 60)
     }
 
     private func updateSelectedDate(to newDate: Date) {
         vm.changeDate(date: newDate)
     }
-
+    
+    //같은 요일인지 확인
     private func isSameDay(day1: Date, day2: Date) -> Bool {
         let calendar = Calendar.current
         return calendar.isDate(day1, inSameDayAs: day2)
+    }
+    
+    //같은 날짜인지 확인
+    private func isSameDate(day1: Date, day2: Date) -> Bool {
+        let calendar = Calendar.current
+        let components1 = calendar.dateComponents([.year, .month, .day], from: day1)
+        let components2 = calendar.dateComponents([.year, .month, .day], from: day2)
+        return components1.year == components2.year && components1.month == components2.month && components1.day == components2.day
     }
 }
 

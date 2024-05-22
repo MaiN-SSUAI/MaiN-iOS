@@ -13,7 +13,7 @@ struct SsuNotiRow: View {
     @State private var showFavoritesOnly = false
     @State private var selectedTab = "전체"
     @State var webViewIsLoading: Bool = true
-    let studentId = UserDefaults.standard.string(forKey: "schoolNumber")
+    let studentId = UserDefaults.standard.string(forKey: "studentNumber")
  
     var body: some View {
         Group {

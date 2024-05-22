@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TopReservationView: View {
-    var vm: ReservationViewModel
+    @ObservedObject var vm: ReservationViewModel
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -22,11 +22,14 @@ struct TopReservationView: View {
             HStack() {
                 MonthPicker(vm: vm)
                 Spacer()
-                DayWeekPicker().frame(width: 200, height: 28)
+                DayWeekPicker(vm: vm).frame(width: 100, height: 28)
             }
             
             WeekView(vm: vm)
         }
-        .padding(.horizontal, 28).padding(.top, 15)
+        .padding(.horizontal, 28).padding(.vertical, 15)
+        .background(Color.white)
+        .cornerRadius(20, corners: [.bottomLeft, .bottomRight])
+        .shadow(color: Color.gray.opacity(0.1), radius: 10, x: 0, y: 10)
     }
 }

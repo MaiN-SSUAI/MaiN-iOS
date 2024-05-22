@@ -40,7 +40,7 @@ class ModelData: ObservableObject {
     }
     
     func setAPIValue() {
-        guard let studentId = UserDefaults.standard.string(forKey: "schoolNumber") else {
+        guard let studentId = UserDefaults.standard.string(forKey: "studentNumber") else {
             return
         }
         print(type(of: studentId))

@@ -12,7 +12,7 @@ struct FunsysNotiRow: View {
     @StateObject private var modelData = FunsysNotiModelData()
     @State private var showFavoritesOnly = false
     @State var webViewIsLoading = true
-    let studentId = UserDefaults.standard.string(forKey: "schoolNumber")
+    let studentId = UserDefaults.standard.string(forKey: "studentNumber")
  
     var body: some View {
         Group {

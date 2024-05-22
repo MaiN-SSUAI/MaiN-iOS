@@ -35,7 +35,7 @@ class LogInViewModel: ObservableObject {
                         if let tokenResponse = try? response.map(TokenResponse.self) {
                             TokenManager.shared.accessToken = tokenResponse.accessToken
                             TokenManager.shared.refreshToken = tokenResponse.refreshToken
-                            UserDefaults.standard.set(tokenResponse.studentNo, forKey: "schoolNumber")
+                            UserDefaults.standard.set(tokenResponse.studentNo, forKey: "studentNumber")
                             print("⭐️\(tokenResponse.accessToken)")
                             completion(true)
                         } else {

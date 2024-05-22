@@ -40,7 +40,7 @@ struct AddFirstSeminarModal: View {
     @State var wakeUp = Date()
     @Binding var isModalPresented: Bool
     @State var selectedSeminarRoom = "세미나실1"
-    let studentID: String = UserDefaults.standard.string(forKey: "schoolNumber") ?? "정보 없음"
+    let studentID: String = UserDefaults.standard.string(forKey: "studentNumber") ?? "정보 없음"
     var seminarRooms = ["세미나실1", "세미나실2", "교수회의실"]
     @Binding var reservationDate: Date
     @Binding var loadDataDoIt: Bool

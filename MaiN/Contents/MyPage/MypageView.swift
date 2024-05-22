@@ -21,7 +21,7 @@ struct MypageView: View {
                 HStack(){
                     Text("학번").font(.bold(size: 15)).foregroundColor(.black)
                     Spacer()
-                    Text("\(UserDefaults.standard.string(forKey: "schoolNumber") ?? "")").font(.bold(size: 15)).foregroundColor(.black)
+                    Text("\(UserDefaults.standard.string(forKey: "studentNumber") ?? "")").font(.bold(size: 15)).foregroundColor(.black)
                 }
                 Divider().frame(width: 254)
                 Button(action: {
