@@ -41,15 +41,6 @@ struct UsaintLogInView: View {
                         }
                     }
             }
-            
-            //MARK: After Receive Token
-            NavigationLink (
-                destination: HomeUIView().navigationBarHidden(true),
-                isActive: $logInVM.loginSuccess,
-                label: {
-                    EmptyView()
-                }
-            )
         }
     }
     
