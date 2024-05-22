@@ -20,7 +20,7 @@ struct NewDeleteHalfModalView: View {
     var start: String
     var end: String
     var resStudentId: String
-    let studentId: String = UserDefaults.standard.string(forKey: "schoolNumber") ?? "정보없음"
+    let studentId: String = UserDefaults.standard.string(forKey: "studentNumber") ?? "정보없음"
     
     func timeStringToTime(isoDateString: String) -> String {
         let isoFormatter = ISO8601DateFormatter()

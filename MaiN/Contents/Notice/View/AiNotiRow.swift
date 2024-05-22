@@ -26,7 +26,7 @@ struct AiNotiRow: View {
     @StateObject private var modelData = ModelData()
     @State private var showFavoritesOnly = false
     
-    let studentId = UserDefaults.standard.string(forKey: "schoolNumber")
+    let studentId = UserDefaults.standard.string(forKey: "studentNumber")
  
     var body: some View {
         Group {

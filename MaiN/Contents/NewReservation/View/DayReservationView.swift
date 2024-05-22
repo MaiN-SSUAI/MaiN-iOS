@@ -11,10 +11,6 @@ struct DayReservationView: View {
     @ObservedObject var vm: ReservationViewModel
 
     var body: some View {
-        if vm.isLoading {
-            ProgressView()
-        } else {
-            Text("Events: \(vm.reservations.count)")
-        }
+        Text("Events: \(vm.reservations.count)")
     }
 }

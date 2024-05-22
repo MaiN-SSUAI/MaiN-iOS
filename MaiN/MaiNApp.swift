@@ -30,7 +30,7 @@ struct ApplicationSwitcher: View {
     @EnvironmentObject var vm: LogInViewModel
 
     var body: some View {
-        if (vm.loginSuccess) {
+        if (vm.loginSuccess) || (UserDefaults.standard.bool(forKey: "isAutoLogin")) {
             HomeUIView()
         } else {
             LogInUIView()

@@ -19,6 +19,7 @@ class ReservationViewModel: ObservableObject {
             fetchReservationAPI(for: selectedDate)
         }
     }
+    @Published var dayOrWeek: String = "day"
 
     //MARK: Network
     @Published var isLoading: Bool = false // API 호출 진행중
@@ -29,10 +30,15 @@ class ReservationViewModel: ObservableObject {
             }
         }
     }
+    
+    //MARK: init
+    init() {
+        fetchReservationAPI(for: selectedDate)
+    }
 
     let provider = MoyaProvider<NewReservationAPI>()
-    
     func fetchReservationAPI(for date: Date) {
+        self.isLoading = true 
         provider.request(.getReservation(date: date.toDateString(), selectedSeminar: "세미나실 1")) { result in
             DispatchQueue.main.async {
                 switch result {

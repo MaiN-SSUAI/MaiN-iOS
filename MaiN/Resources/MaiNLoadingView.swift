@@ -33,6 +33,12 @@ struct MaiNLoadingView: View {
     }
 }
 
-#Preview {
-    MaiNLoadingView()
+struct DefaultLoadingView: View {
+    var body: some View {
+        VStack() {
+            Spacer()
+            ProgressView()
+            Spacer()
+        }
+    }
 }

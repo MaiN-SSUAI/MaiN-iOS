@@ -9,19 +9,19 @@ import SwiftUI
 
 struct DayWeekPicker: View {
     let items = ["day", "week"]
-    @State private var selectedItem = "day"
+    @ObservedObject var vm: ReservationViewModel
     
     var body: some View {
-        HStack {
+        HStack(spacing: 0) {
             ForEach(items, id: \.self) { item in
                 Button(action: {
-                    self.selectedItem = item
+                    vm.dayOrWeek = item
                 }) {
                     Text(item)
-                        .font(Font.custom(selectedItem == item ? "Lato-SemiBold" : "Lato-Regular", size: 15))
-                        .foregroundColor(selectedItem == item ? .black : .gray04)
-                        .padding(.horizontal,   11).padding(.vertical, 4)
-                        .background(selectedItem == item ? .white : .EFEFEF)
+                        .font(Font.custom(vm.dayOrWeek == item ? "Lato-SemiBold" : "Lato-Regular", size: 11))
+                        .foregroundColor(vm.dayOrWeek == item ? .black : .gray04)
+                        .frame(width: 48, height: 24)
+                        .background(vm.dayOrWeek == item ? .white : .EFEFEF)
                         .cornerRadius(5)
                 }
             }
@@ -30,10 +30,10 @@ struct DayWeekPicker: View {
         .padding(.vertical, 2)
         .background(.EFEFEF)
         .cornerRadius(5)
-        .padding()
+
     }
 }
 
 #Preview {
-    DayWeekPicker()
+    DayWeekPicker(vm: ReservationViewModel())
 }

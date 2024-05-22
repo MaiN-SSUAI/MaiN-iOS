@@ -11,10 +11,14 @@ struct BottomReservationView: View {
     @ObservedObject var vm: ReservationViewModel
 
     var body: some View {
-        ScrollView() {
-            HStack(spacing: 0) {
-                TimeView().padding(.top, 5).padding(.trailing, 7)
-                DayReservationView(vm: vm)
+        if vm.isLoading {
+            DefaultLoadingView()
+        } else {
+            ScrollView() {
+                HStack(spacing: 0) {
+                    TimeView().padding(.top, 5).padding(.trailing, 7)
+                    DayReservationView(vm: vm)
+                }
             }
         }
     }
