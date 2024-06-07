@@ -37,7 +37,7 @@ struct UsaintLogInView: View {
                             logInVM.isAuthenticating = false
                             showAutoLoginAlert = true
                         } else {
-                            print()
+                            print("")
                         }
                     }
                 }

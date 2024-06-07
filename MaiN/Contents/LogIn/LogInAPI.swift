@@ -9,12 +9,12 @@ import Moya
 import Foundation
 
 enum LogInAPI {
-    case login(sToken: String, sIdNo: String)
+    case login(sToken: String, sIdNo: Int)
 }
 
 extension LogInAPI: TargetType {
     var baseURL: URL {
-        return URL(string: "http://localhost:8080")!
+        return URL(string: "http://54.180.221.239")!
     }
     
     var path: String {

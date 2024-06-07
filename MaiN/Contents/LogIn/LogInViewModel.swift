@@ -28,7 +28,7 @@ class LogInViewModel: ObservableObject {
     }
     
     func sendTokenToServer(completion: @escaping (Bool) -> Void) {
-        provider.request(.login(sToken: usaintTokenInfo?.sToken ?? "", sIdNo: usaintTokenInfo?.sIdno ?? "")) { result in
+        provider.request(.login(sToken: usaintTokenInfo?.sToken ?? "", sIdNo: usaintTokenInfo?.sIdno ?? 0)) { result in
                 DispatchQueue.main.async {
                     switch result {
                     case let .success(response):
@@ -59,7 +59,7 @@ class LogInViewModel: ObservableObject {
 
 struct UsaintTokenInfo {
     var sToken: String
-    var sIdno: String
+    var sIdno: Int
 }
 
 struct TokenResponse: Decodable {

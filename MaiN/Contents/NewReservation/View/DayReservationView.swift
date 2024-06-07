@@ -9,8 +9,20 @@ import SwiftUI
 
 struct DayReservationView: View {
     @ObservedObject var vm: ReservationViewModel
-
+    let colorSet: [ButtonColor] = [.green, .orange, .red, .purple, .blue]
     var body: some View {
-        Text("Events: \(vm.reservations.count)")
+        VStack() {
+            ForEach(Array(vm.reservations.enumerated()), id: \.element) { index, reservation in
+                DayReservationButton(
+                    vm: vm,
+                    reservation: reservation,
+                    color: colorSet[index % colorSet.count]
+                )
+            }
+        }
     }
+}
+
+#Preview {
+    DayReservationView(vm: ReservationViewModel())
 }
