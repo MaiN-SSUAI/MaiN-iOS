@@ -23,13 +23,14 @@ struct MonthPicker: View {
                 }
             }
             .sheet(isPresented: $showingDatePicker) {
-                DatePicker("날짜 선택", selection: $vm.selectedDate, displayedComponents: .date)
-                                    .datePickerStyle(GraphicalDatePickerStyle())
-                                    .padding()
-                                    .onChange(of: vm.selectedDate) { _ in
-                                        showingDatePicker = false
-                                    }
-                                    .presentationDetents([.fraction(0.5)])
+                DatePicker("날짜 선택", selection: $vm.selectedDate, 
+                           displayedComponents: .date)
+                    .datePickerStyle(GraphicalDatePickerStyle())
+                    .padding()
+                    .onChange(of: vm.selectedDate) { _ in
+                        showingDatePicker = false
+                    }
+                    .presentationDetents([.fraction(0.5)])
             }
         }
     }
