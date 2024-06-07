@@ -11,15 +11,19 @@ struct BottomReservationView: View {
     @ObservedObject var vm: ReservationViewModel
 
     var body: some View {
-        if vm.isLoading {
-            DefaultLoadingView()
-        } else {
-            ScrollView() {
-                HStack(spacing: 0) {
-                    TimeView().padding(.top, 5).padding(.trailing, 7)
-                    DayReservationView(vm: vm)
+        if vm.dayOrWeek == "day" {
+            if vm.isLoading {
+                DefaultLoadingView()
+            } else {
+                ScrollView() {
+                    HStack(spacing: 0) {
+                        TimeView().padding(.top, 5).padding(.trailing, 7)
+                        DayReservationView(vm: vm)
+                    }
                 }
             }
+        } else {
+            Rectangle().foregroundColor(.blue)
         }
     }
 }
