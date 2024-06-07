@@ -38,7 +38,7 @@ extension WebView {
                 print("⭐️Usaint 로그인 성공")
                 if let sToken = components.queryItems?.first(where: { $0.name == "sToken" })?.value,
                    let sIdno = components.queryItems?.first(where: { $0.name == "sIdno" })?.value {
-                    parent.loginVM.usaintTokenInfo = UsaintTokenInfo(sToken: sToken, sIdno: sIdno)
+                    parent.loginVM.usaintTokenInfo = UsaintTokenInfo(sToken: sToken, sIdno: Int(sIdno) ?? 0)
                     parent.loginVM.isAuthenticating = true
                 }
                 

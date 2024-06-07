@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum NewReservationAPI {
-    case getReservation(date: String, selectedSeminar: String)
+    case getReservation(date: String)
     case addReservation(location: String, student_id: String, startDateTimeStr: String, endDateTimeStr: String)
     case deleteReservation(eventId: String)
 }
@@ -41,8 +41,8 @@ extension NewReservationAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .getReservation(let date, let selectedSeminar):
-            return .requestParameters(parameters: ["date": date, "location": selectedSeminar], encoding: URLEncoding.queryString)
+        case .getReservation(let date):
+            return .requestParameters(parameters: ["date": date], encoding: URLEncoding.queryString)
         case .addReservation(let location, let student_id, let startDateTimeStr, let endDateTimeStr):
             let params: [String: Any] = [
                 "location": location,
