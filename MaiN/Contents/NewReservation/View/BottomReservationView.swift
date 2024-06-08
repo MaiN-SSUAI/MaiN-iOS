@@ -15,10 +15,33 @@ struct BottomReservationView: View {
             if vm.isLoading {
                 DefaultLoadingView()
             } else {
-                ScrollView() {
-                    HStack(spacing: 0) {
-                        TimeView().padding(.top, 5).padding(.trailing, 7)
-                        DayReservationView(vm: vm)
+                ZStack() {
+                    ScrollView() {
+                        HStack(spacing: 0) {
+                            TimeView().padding(.top, 5).padding(.trailing, 7)
+                            DayReservationView(vm: vm)
+                        }
+                    }
+                    
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                vm.isRegisterModalPresented = true
+                            }) {
+                                ZStack {
+                                    Circle()
+                                        .fill(.blue04)
+                                        .frame(width: 60, height: 60)
+                                        .shadow(color: .gray, radius: 3, x: 1, y: 1)
+                                    Text("+")
+                                        .font(.bold(size: 40))
+                                        .foregroundColor(.white)
+                                }
+                            }
+                            .padding(.bottom, 25).padding(.trailing, 15)
+                        }
                     }
                 }
             }

@@ -43,6 +43,7 @@
 		802AD7412BFDE9D7009DDB5A /* DayReservationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802AD7402BFDE9D7009DDB5A /* DayReservationButton.swift */; };
 		802D56E62BF4A7470009D9C7 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802D56E52BF4A7470009D9C7 /* WeekView.swift */; };
 		803727FE2C12F9B9002F9DFA /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803727FD2C12F9B9002F9DFA /* Reservation.swift */; };
+		803728022C146900002F9DFA /* RegisterModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803728012C146900002F9DFA /* RegisterModalView.swift */; };
 		806AF8702B7A23B9008F7F62 /* NewSelectedReservationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806AF86F2B7A23B9008F7F62 /* NewSelectedReservationData.swift */; };
 		806C82792B5C1AFA00B2F796 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806C82782B5C1AFA00B2F796 /* UserDefaultsKeys.swift */; };
 		806F1B0F2B5FA019003E742F /* NewMonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B0E2B5FA019003E742F /* NewMonthView.swift */; };
@@ -109,6 +110,7 @@
 		802D56E42BF4A6160009D9C7 /* Lato-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-SemiBold.ttf"; path = "../../../../Lato-SemiBold.ttf"; sourceTree = "<group>"; };
 		802D56E52BF4A7470009D9C7 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		803727FD2C12F9B9002F9DFA /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
+		803728012C146900002F9DFA /* RegisterModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModalView.swift; sourceTree = "<group>"; };
 		8042C37D2B7F55C9003DE096 /* MaiN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaiN.entitlements; sourceTree = "<group>"; };
 		806AF86F2B7A23B9008F7F62 /* NewSelectedReservationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSelectedReservationData.swift; sourceTree = "<group>"; };
 		806C82782B5C1AFA00B2F796 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 				806F1B2B2B64382A003E742F /* AddReservationButton.swift */,
 				806F1B222B642791003E742F /* NewDeleteHalfModalView.swift */,
 				806F1B0E2B5FA019003E742F /* NewMonthView.swift */,
+				803728012C146900002F9DFA /* RegisterModalView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				807BF8322B50A40400A659B9 /* FixView.swift in Sources */,
 				802239CF2B458E3C0021C344 /* NoticeUIView.swift in Sources */,
 				802AD7312BFB5ECB009DDB5A /* UsaintLogInView.swift in Sources */,
+				803728022C146900002F9DFA /* RegisterModalView.swift in Sources */,
 				80E9B7E12B3DECFD0047EC6E /* LogInUIView.swift in Sources */,
 				80223A1B2B4D781C0021C344 /* FontManager.swift in Sources */,
 				802239EA2B45C1CB0021C344 /* AiNotiRow.swift in Sources */,
