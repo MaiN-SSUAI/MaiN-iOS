@@ -14,7 +14,12 @@ struct ReservationView: View {
         VStack(spacing: 0) {
             TopReservationView(vm: reservationVM)
             BottomReservationView(vm: reservationVM)
-        }.background(.white)
+        }
+        .background(.white)
+        .sheet(isPresented: $reservationVM.isRegisterModalPresented) {
+            RegisterModalView(vm: reservationVM)
+                .presentationDetents([.fraction(0.55)])
+        }
     }
 }
 

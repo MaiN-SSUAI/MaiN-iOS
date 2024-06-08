@@ -17,6 +17,7 @@ class ReservationViewModel: ObservableObject {
     //MARK: View
     @Published var isInfoModalPresented: Bool = false
     @Published var isDetailModalPresented: Bool = false
+    @Published var isRegisterModalPresented: Bool = false
     @Published var selectedDate: Date = Date() { // API 강제 호출
         didSet {
             fetchReservationAPI(for: selectedDate)
@@ -40,9 +41,19 @@ class ReservationViewModel: ObservableObject {
         fetchReservationAPI(for: selectedDate)
     }
 
+    func showInfoModal() {
+        isInfoModalPresented = true
+    }
+    
+    func changeDate(date: Date) {
+        selectedDate = date
+    }
+    
+    //MARK: Network
     let provider = MoyaProvider<NewReservationAPI>()
+    
     func fetchReservationAPI(for date: Date) {
-        self.isLoading = true 
+        self.isLoading = true
         provider.request(.getReservation(date: date.toDateString())) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -50,7 +61,7 @@ class ReservationViewModel: ObservableObject {
                     print(response)
                     if let reservations = try? response.map([Reservation].self) {
                         self.reservations = reservations
-                    } else { 
+                    } else {
                         print("세미나실 매핑 실패🚨")
                     }
                 case .failure:
@@ -61,12 +72,8 @@ class ReservationViewModel: ObservableObject {
             self.trigger = false
         }
     }
-
-    func showInfoModal() {
-        isInfoModalPresented = true
-    }
     
-    func changeDate(date: Date) {
-        selectedDate = date
+    func addUser(studentId: String) {
+        print("")
     }
 }
