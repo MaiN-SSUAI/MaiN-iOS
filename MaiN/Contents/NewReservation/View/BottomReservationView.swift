@@ -17,10 +17,9 @@ struct BottomReservationView: View {
             } else {
                 ZStack() {
                     ScrollView() {
-                        ZStack(alignment: .top) {
+                        HStack(spacing: 8) {
                             TimeView()
                             DayReservationView(vm: vm)
-                                .padding(.leading, 58)
                         }
                         .padding(.horizontal, 14)
                         .padding(.top, 15)
@@ -64,16 +63,11 @@ struct TimeView: View {
     var body: some View {
         ZStack(alignment: .top) {
             ForEach(Array(timeArray.enumerated()), id: \.element) { index, time in
-                HStack(spacing: 8) {
-                    Text(time)
-                        .font(.interRegular(size: 12))
-                        .foregroundColor(.gray01)
-                        .frame(width: 50)
-                    Rectangle()
-                        .frame(maxWidth: .infinity, maxHeight: 1)
-                        .foregroundColor(.gray05)
-                }
-                .padding(.top, CGFloat(36 * index))
+                Text(time)
+                    .font(.interRegular(size: 12))
+                    .foregroundColor(.gray01)
+                    .frame(width: 50)
+                    .padding(.top, CGFloat(36 * index))
             }
         }
     }
@@ -82,14 +76,28 @@ struct TimeView: View {
 struct DayReservationView: View {
     @ObservedObject var vm: ReservationViewModel
     let colorSet: [ButtonColor] = [.green, .orange, .red, .purple, .blue]
+    
     var body: some View {
         ZStack(alignment: .top) {
-            ForEach(Array(vm.reservations.enumerated()), id: \.element) { index, reservation in
-                DayReservationButton(
-                    vm: vm,
-                    reservation: reservation,
-                    color: colorSet[index % colorSet.count]
-                )
+            //MARK: 시간 그리드
+            ZStack(alignment: .top) {
+                ForEach(0..<24, id: \.self) { index in
+                        Rectangle()
+                            .frame(maxWidth: .infinity, maxHeight: 1)
+                            .foregroundColor(.gray05)
+                    .padding(.top, CGFloat(36 * index))
+                }
+            }
+            
+            //MARK: 예약 버튼들
+            ZStack(alignment: .top) {
+                ForEach(Array(vm.reservations.enumerated()), id: \.element) { index, reservation in
+                    DayReservationButton(
+                        vm: vm,
+                        reservation: reservation,
+                        color: colorSet[index % colorSet.count]
+                    )
+                }
             }
         }
     }
