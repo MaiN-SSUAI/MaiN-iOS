@@ -34,7 +34,6 @@
 		802AD7292BFA7006009DDB5A /* TopReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802AD7282BFA7006009DDB5A /* TopReservationView.swift */; };
 		802AD72B2BFA7016009DDB5A /* BottomReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802AD72A2BFA7016009DDB5A /* BottomReservationView.swift */; };
 		802AD72D2BFA7329009DDB5A /* ReservationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802AD72C2BFA7329009DDB5A /* ReservationViewModel.swift */; };
-		802AD72F2BFA86E2009DDB5A /* DayReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802AD72E2BFA86E2009DDB5A /* DayReservationView.swift */; };
 		802AD7312BFB5ECB009DDB5A /* UsaintLogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802AD7302BFB5ECB009DDB5A /* UsaintLogInView.swift */; };
 		802AD7332BFBBF24009DDB5A /* MaiNLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802AD7322BFBBF24009DDB5A /* MaiNLoadingView.swift */; };
 		802AD7352BFBC1BC009DDB5A /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802AD7342BFBC1BC009DDB5A /* LogInViewModel.swift */; };
@@ -89,7 +88,6 @@
 		802AD7282BFA7006009DDB5A /* TopReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopReservationView.swift; sourceTree = "<group>"; };
 		802AD72A2BFA7016009DDB5A /* BottomReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomReservationView.swift; sourceTree = "<group>"; };
 		802AD72C2BFA7329009DDB5A /* ReservationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewModel.swift; sourceTree = "<group>"; };
-		802AD72E2BFA86E2009DDB5A /* DayReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayReservationView.swift; sourceTree = "<group>"; };
 		802AD7302BFB5ECB009DDB5A /* UsaintLogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsaintLogInView.swift; sourceTree = "<group>"; };
 		802AD7322BFBBF24009DDB5A /* MaiNLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaiNLoadingView.swift; sourceTree = "<group>"; };
 		802AD7342BFBC1BC009DDB5A /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
@@ -276,6 +274,7 @@
 				809241672BF529F00036D2B8 /* MonthPicker.swift */,
 				802D56E52BF4A7470009D9C7 /* WeekView.swift */,
 				8092416C2BF53EE70036D2B8 /* DayWeekPicker.swift */,
+				802AD7402BFDE9D7009DDB5A /* DayReservationButton.swift */,
 			);
 			path = CustomComponent;
 			sourceTree = "<group>";
@@ -376,8 +375,6 @@
 				802AD7282BFA7006009DDB5A /* TopReservationView.swift */,
 				802AD72A2BFA7016009DDB5A /* BottomReservationView.swift */,
 				803728012C146900002F9DFA /* RegisterModalView.swift */,
-				802AD7402BFDE9D7009DDB5A /* DayReservationButton.swift */,
-				802AD72E2BFA86E2009DDB5A /* DayReservationView.swift */,
 				806F1B222B642791003E742F /* NewDeleteHalfModalView.swift */,
 			);
 			path = View;
@@ -527,7 +524,6 @@
 				802239D52B4593AE0021C344 /* ModelData.swift in Sources */,
 				802239DB2B459A570021C344 /* SsuNoti.swift in Sources */,
 				8092416A2BF534D10036D2B8 /* Extension+DateFormatter.swift in Sources */,
-				802AD72F2BFA86E2009DDB5A /* DayReservationView.swift in Sources */,
 				802AD72D2BFA7329009DDB5A /* ReservationViewModel.swift in Sources */,
 				807BF82A2B504DDD00A659B9 /* FunsysNotiModelData.swift in Sources */,
 				8092416D2BF53EE70036D2B8 /* DayWeekPicker.swift in Sources */,

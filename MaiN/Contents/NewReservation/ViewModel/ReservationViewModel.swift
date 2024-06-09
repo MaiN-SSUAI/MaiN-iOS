@@ -11,8 +11,30 @@ import Moya
 class ReservationViewModel: ObservableObject {
     //MARK: data
     @Published var reservations: [Reservation] = [Reservation(reservId: 16,
-          studentNo: ["20221813", "20220900"], start: "2024-05-25T01:00:00.000+09:00",
-          end: "2024-05-25T02:00:00.000+09:00", start_pixel: "36", end_pixel: "72")]
+                                                              studentNo: ["20221813", "20220900"], 
+                                                              start: "2024-05-25T01:00:00.000+09:00", end: "2024-05-25T02:00:00.000+09:00",
+                                                              start_pixel: "36", end_pixel: "72"),
+                                                Reservation(reservId: 0,
+                                                            studentNo: ["20233107"],
+                                                            start: "2024-06-03T13:00:00.000+09:00", end: "2024-06-03T16:00:00.000+09:00",
+                                                            start_pixel: "468", end_pixel: "576")]
+    
+    @Published var weekReservations: [[Reservation]] = [
+            [Reservation(reservId: 16,
+            studentNo: ["20221813", "20220900"],
+            start: "2024-05-25T01:00:00.000+09:00",
+            end: "2024-05-25T02:00:00.000+09:00",
+            start_pixel: "36", end_pixel: "72"),
+             Reservation(reservId: 16,
+             studentNo: ["20221813", "20220900"],
+             start: "2024-05-25T02:10:00.000+09:00",
+             end: "2024-05-25T03:00:00.000+09:00",
+             start_pixel: "36", end_pixel: "72")],
+            [Reservation(reservId: 16,
+            studentNo: ["20221813", "20220900"],
+            start: "2024-05-25T04:00:00.000+09:00",
+            end: "2024-05-25T05:00:00.000+09:00",
+            start_pixel: "36", end_pixel: "72")]]
     
     //MARK: View
     @Published var isInfoModalPresented: Bool = false
@@ -23,6 +45,7 @@ class ReservationViewModel: ObservableObject {
             fetchReservationAPI(for: selectedDate)
         }
     }
+    @Published var selectedDateIndex: Int = 0
     @Published var dayOrWeek: String = "day"
     @Published var selectedReservation: Reservation?
 

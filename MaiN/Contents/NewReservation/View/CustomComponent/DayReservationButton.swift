@@ -27,30 +27,34 @@ struct DayReservationButton: View {
     }
 
     var body: some View {
-        Button(action: {
-            vm.isDetailModalPresented = true
-        }, label: {
-            ZStack(alignment: .leading) {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("\(time)")
-                        .foregroundColor(buttonColor.pointColor).font(.interSemiBold(size: 12))
-                    Text(studentNo[0])
+        VStack() {
+            Spacer()
+                .frame(height: startPixel+12)
+            Button(action: {
+                vm.isDetailModalPresented = true
+            }, label: {
+                ZStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        Text("\(time)")
+                            .foregroundColor(buttonColor.pointColor).font(.interSemiBold(size: 12))
+                        Text(studentNo[0])
+                            .foregroundColor(buttonColor.pointColor)
+                            .font(.interRegular(size: 12))
+                    }
+                    .padding(.top, 5)
+                    .padding(.leading, 15)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+//                    .frame(height: (endPixel - startPixel))
+                    .background(buttonColor.backgroundColor)
+                    .cornerRadius(4)
+                    
+                    RoundedCornerRectangle(cornerRadius: 4, corners: [.topLeft, .bottomLeft])
+                        .frame(maxHeight: .infinity)
+                        .frame(maxWidth: 5)
                         .foregroundColor(buttonColor.pointColor)
-                        .font(.interRegular(size: 12))
                 }
-                .padding(.top, 5)
-                .padding(.leading, 15)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
-                .frame(height: (endPixel - startPixel)*2)
-                .background(buttonColor.backgroundColor)
-                .cornerRadius(4)
-                
-                RoundedCornerRectangle(cornerRadius: 4, corners: [.topLeft, .bottomLeft])
-                .frame(height: (endPixel - startPixel)*2)
-                .frame(maxWidth: 5)
-                .foregroundColor(buttonColor.pointColor)
-            }
-        })
+            })
+        }.frame(height: endPixel)
     }
 
     static func formatTime(_ dateTimeString: String) -> String {

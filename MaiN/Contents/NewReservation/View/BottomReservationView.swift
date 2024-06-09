@@ -17,10 +17,13 @@ struct BottomReservationView: View {
             } else {
                 ZStack() {
                     ScrollView() {
-                        HStack(spacing: 0) {
-                            TimeView().padding(.top, 5).padding(.trailing, 7)
+                        ZStack(alignment: .top) {
+                            TimeView()
                             DayReservationView(vm: vm)
+                                .padding(.leading, 58)
                         }
+                        .padding(.horizontal, 14)
+                        .padding(.top, 15)
                     }
                     
                     VStack {
@@ -52,16 +55,47 @@ struct BottomReservationView: View {
 }
 
 struct TimeView: View {
-    private let timeArray: [String] = (0...23).map { String(format: "%02d:00", $0) }
+    private let timeArray: [String] = (0...23).map {
+        let hour = $0 % 12
+        let period = $0 < 12 ? "오전" : "오후"
+        return String(format: "%@ %d시", period, hour == 0 ? 12 : hour)
+    }
 
     var body: some View {
-        VStack(spacing: 0) {
-            ForEach(timeArray, id: \.self) { time in
-                Text(time)
-                    .font(.normal(size: 10))
-                    .foregroundColor(.gray01)
-                    .padding(.bottom, 23)
+        ZStack(alignment: .top) {
+            ForEach(Array(timeArray.enumerated()), id: \.element) { index, time in
+                HStack(spacing: 8) {
+                    Text(time)
+                        .font(.interRegular(size: 12))
+                        .foregroundColor(.gray01)
+                        .frame(width: 50)
+                    Rectangle()
+                        .frame(maxWidth: .infinity, maxHeight: 1)
+                        .foregroundColor(.gray05)
+                }
+                .padding(.top, CGFloat(36 * index))
             }
-        }.frame(width: 30)
+        }
     }
+}
+
+struct DayReservationView: View {
+    @ObservedObject var vm: ReservationViewModel
+    let colorSet: [ButtonColor] = [.green, .orange, .red, .purple, .blue]
+    var body: some View {
+        ZStack(alignment: .top) {
+            ForEach(Array(vm.reservations.enumerated()), id: \.element) { index, reservation in
+                DayReservationButton(
+                    vm: vm,
+                    reservation: reservation,
+                    color: colorSet[index % colorSet.count]
+                )
+            }
+        }
+    }
+}
+
+#Preview() {
+//    TimeView()
+    BottomReservationView(vm: ReservationViewModel())
 }

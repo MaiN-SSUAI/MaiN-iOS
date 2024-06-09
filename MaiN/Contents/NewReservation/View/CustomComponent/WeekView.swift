@@ -22,6 +22,7 @@ struct WeekView: View {
                         Button(action: {
                             if (vm.dayOrWeek == "week") {vm.dayOrWeek = "day"}
                             self.updateSelectedDate(to: day)
+                            vm.selectedDateIndex = offset
                         }){
                             VStack(alignment: .center, spacing: 2) {
                                 Text(dateString)
