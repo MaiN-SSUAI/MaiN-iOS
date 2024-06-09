@@ -29,7 +29,7 @@ struct DayReservationButton: View {
     var body: some View {
         VStack() {
             Spacer()
-                .frame(height: startPixel+12)
+                .frame(height: startPixel)
             Button(action: {
                 vm.isDetailModalPresented = true
             }, label: {
