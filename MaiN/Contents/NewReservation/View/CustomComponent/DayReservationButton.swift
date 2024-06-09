@@ -31,7 +31,12 @@ struct DayReservationButton: View {
             Spacer()
                 .frame(height: startPixel)
             Button(action: {
-                vm.isDetailModalPresented = true
+                if vm.dayOrWeek == "day" {
+                    vm.isDetailModalPresented = true
+                } else {
+                    vm.dayOrWeek = "day"
+                    // + 선택된 버튼의 날짜로 isSelectedDate 변경해주기
+                }
             }, label: {
                 ZStack(alignment: .leading) {
                     VStack(alignment: .leading, spacing: 0) {
@@ -48,10 +53,12 @@ struct DayReservationButton: View {
                     .background(buttonColor.backgroundColor)
                     .cornerRadius(4)
                     
-                    RoundedCornerRectangle(cornerRadius: 4, corners: [.topLeft, .bottomLeft])
-                        .frame(maxHeight: .infinity)
-                        .frame(maxWidth: 5)
-                        .foregroundColor(buttonColor.pointColor)
+                    if vm.dayOrWeek == "day" {
+                        RoundedCornerRectangle(cornerRadius: 4, corners: [.topLeft, .bottomLeft])
+                            .frame(maxHeight: .infinity)
+                            .frame(maxWidth: 5)
+                            .foregroundColor(buttonColor.pointColor)
+                    }
                 }
             })
         }.frame(height: endPixel)

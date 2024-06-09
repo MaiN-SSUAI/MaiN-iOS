@@ -46,7 +46,7 @@ class ReservationViewModel: ObservableObject {
         }
     }
     @Published var selectedDateIndex: Int = 0
-    @Published var dayOrWeek: String = "day"
+    @Published var dayOrWeek: String = "week"
     @Published var selectedReservation: Reservation?
 
     //MARK: Network

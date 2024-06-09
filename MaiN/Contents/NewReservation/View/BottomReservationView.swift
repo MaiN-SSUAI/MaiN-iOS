@@ -48,7 +48,19 @@ struct BottomReservationView: View {
                 }
             }
         } else {
-            Rectangle().foregroundColor(.blue)
+            ScrollView() {
+                ZStack(alignment: .leading) {
+                    TimeNumberView().padding(.leading, 10)
+                    HStack(spacing: 0) {
+                        Divider()
+                        ForEach(0..<7, id: \.self) { _ in
+                            DayReservationView(vm: vm)
+                            Divider()
+                        }
+                    }.padding(.leading, 28)
+                    .padding(.trailing, 20)
+                }
+            }
         }
     }
 }
@@ -68,6 +80,23 @@ struct TimeView: View {
                     .foregroundColor(.gray01)
                     .frame(width: 50)
                     .padding(.top, CGFloat(36 * index))
+            }
+        }
+    }
+}
+
+struct TimeNumberView: View {
+    private let timeArray: [Int] = Array(0..<24)
+
+    var body: some View {
+        ZStack(alignment: .top) {
+            ForEach(Array(timeArray.enumerated()), id: \.element) { index, time in
+                Text("\(time)")
+                    .font(.interRegular(size: 12))
+                    .foregroundColor(.gray01)
+                    .frame(width: 14)
+                    .padding(.top, CGFloat(36 * index))
+                    .padding(.trailing, 4)
             }
         }
     }
