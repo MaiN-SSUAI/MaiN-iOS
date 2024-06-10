@@ -69,12 +69,23 @@ struct DayReservationButton: View {
         inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
         inputFormatter.locale = Locale(identifier: "en_US_POSIX")
 
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "a h시"
-        outputFormatter.locale = Locale(identifier: "ko_KR")
+        let outputFormatterHour = DateFormatter()
+        outputFormatterHour.dateFormat = "a h시"
+        outputFormatterHour.locale = Locale(identifier: "ko_KR")
+        
+        let outputFormatterMinute = DateFormatter()
+        outputFormatterMinute.dateFormat = "mm분"
+        outputFormatterMinute.locale = Locale(identifier: "ko_KR")
 
         if let date = inputFormatter.date(from: dateTimeString) {
-            return outputFormatter.string(from: date)
+            let hourString = outputFormatterHour.string(from: date)
+            let minuteString = outputFormatterMinute.string(from: date)
+
+            if minuteString == "00분" {
+                return hourString
+            } else {
+                return "\(hourString) \(minuteString)"
+            }
         } else {
             return dateTimeString
         }
