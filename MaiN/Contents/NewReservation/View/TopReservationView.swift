@@ -31,6 +31,6 @@ struct TopReservationView: View {
         .background(Color.white)
         .cornerRadius(20, corners: [.bottomLeft, .bottomRight])
         .shadow(color: Color.gray.opacity(0.1), radius: 10, x: 0, y: 10)
-        .onChange(of: vm.selectedDate, {vm.trigger = true})
+//        .onChange(of: vm.selectedDate, {vm.trigger = true})
     }
 }

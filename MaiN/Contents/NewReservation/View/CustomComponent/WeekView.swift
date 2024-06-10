@@ -26,9 +26,10 @@ struct WeekView: View {
                         }){
                             VStack(alignment: .center, spacing: 2) {
                                 Text(dateString)
-                                    .foregroundColor(isSameDate(day1: day, day2: Date()) ? .red : .black00)
-//                                    .foregroundColor(.black00)
-                                    .font(isSameDay(day1: day, day2: Date()) ? .interExtraBold(size: 18) : .interSemiBold(size: 18))
+                                    .foregroundColor(.black00)
+                                    .font(isSameDay(day1: day, day2: Date()) ? /*.interExtraBold(size: 18) : .interSemiBold(size: 18)*/
+                                        .bold(size: 18) :
+                                            .interSemiBold(size: 18))
                                 Text(dayString)
                                     .foregroundColor(.gray03)
                                     .font(.interRegular(size: 13))

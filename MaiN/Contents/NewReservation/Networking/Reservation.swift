@@ -26,3 +26,13 @@ struct Reservation: Codable,Hashable, Identifiable {
         self.end_pixel = end_pixel
     }
 }
+
+struct WeekReservations: Codable {
+    let Mon: [Reservation]
+    let Tue: [Reservation]
+    let Wed: [Reservation]
+    let Thu: [Reservation]
+    let Fri: [Reservation]
+    let Sat: [Reservation]
+    let Sun: [Reservation]
+}
