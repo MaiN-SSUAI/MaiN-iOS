@@ -18,7 +18,11 @@ struct DayReservationButton: View {
 
     init(vm: ReservationViewModel, reservation: Reservation, color: ButtonColor) {
         self.vm = vm
-        self.time = "\(DayReservationButton.formatTime(reservation.start)) ~ \(DayReservationButton.formatTime(reservation.end))"
+        if vm.dayOrWeek == "day" {
+            self.time = "\(DayReservationButton.dayFormatTime(reservation.start)) ~ \(DayReservationButton.dayFormatTime(reservation.end))"
+        } else {
+            self.time = "\(DayReservationButton.weekFormatTime(reservation.start)) ~ \(DayReservationButton.weekFormatTime(reservation.end))"
+        }
         self.studentNo = reservation.studentNo
         self.reservId = reservation.reservId
         self.buttonColor = color
@@ -40,14 +44,23 @@ struct DayReservationButton: View {
             }, label: {
                 ZStack(alignment: .leading) {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("\(time)")
-                            .foregroundColor(buttonColor.pointColor).font(.interSemiBold(size: 12))
-                        Text(studentNo[0])
-                            .foregroundColor(buttonColor.pointColor)
-                            .font(.interRegular(size: 12))
+                        if vm.dayOrWeek == "day" {
+                            Text("\(time)")
+                                .foregroundColor(buttonColor.pointColor)
+                            //                            .font(.interSemiBold(size: 12))
+                                .font(.bold(size: 12))
+                            Text(studentNo[0])
+                                .foregroundColor(buttonColor.pointColor)
+                                .font(.interRegular(size: 12))
+                        } else {
+                            Text(studentNo[0].trimmingCharacters(in: .whitespaces))
+                                .foregroundColor(buttonColor.pointColor)
+                            //                            .font(.interSemiBold(size: 12))
+                                .font(.bold(size: 9))
+                        }
                     }
                     .padding(.top, 5)
-                    .padding(.leading, 15)
+                    .padding(.horizontal, vm.dayOrWeek == "day" ? 15 : 3)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 //                    .frame(height: (endPixel - startPixel))
                     .background(buttonColor.backgroundColor)
@@ -64,7 +77,7 @@ struct DayReservationButton: View {
         }.frame(height: endPixel)
     }
 
-    static func formatTime(_ dateTimeString: String) -> String {
+    static func dayFormatTime(_ dateTimeString: String) -> String {
         let inputFormatter = DateFormatter()
         inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
         inputFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -86,6 +99,33 @@ struct DayReservationButton: View {
             } else {
                 return "\(hourString) \(minuteString)"
             }
+        } else {
+            return dateTimeString
+        }
+    }
+    
+    static func weekFormatTime(_ dateTimeString: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+        inputFormatter.locale = Locale(identifier: "en_US_POSIX")
+
+        let outputFormatterHour = DateFormatter()
+        outputFormatterHour.dateFormat = "h : "
+        outputFormatterHour.locale = Locale(identifier: "ko_KR")
+        
+        let outputFormatterMinute = DateFormatter()
+        outputFormatterMinute.dateFormat = "mm"
+        outputFormatterMinute.locale = Locale(identifier: "ko_KR")
+
+        if let date = inputFormatter.date(from: dateTimeString) {
+            let hourString = outputFormatterHour.string(from: date)
+            let minuteString = outputFormatterMinute.string(from: date)
+
+//            if minuteString == "00" {
+//                return hourString
+//            } else {
+                return "\(hourString) \(minuteString)"
+//            }
         } else {
             return dateTimeString
         }

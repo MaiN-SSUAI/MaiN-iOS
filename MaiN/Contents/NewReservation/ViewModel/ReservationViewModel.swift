@@ -34,6 +34,31 @@ class ReservationViewModel: ObservableObject {
             studentNo: ["20221813", "20220900"],
             start: "2024-05-25T04:00:00.000+09:00",
             end: "2024-05-25T05:00:00.000+09:00",
+            start_pixel: "36", end_pixel: "72")],
+            [Reservation(reservId: 16,
+            studentNo: ["20221813", "20220900"],
+            start: "2024-05-25T04:00:00.000+09:00",
+            end: "2024-05-25T05:00:00.000+09:00",
+            start_pixel: "36", end_pixel: "72")],
+            [Reservation(reservId: 16,
+            studentNo: ["20221813", "20220900"],
+            start: "2024-05-25T04:00:00.000+09:00",
+            end: "2024-05-25T05:00:00.000+09:00",
+            start_pixel: "36", end_pixel: "72")],
+            [Reservation(reservId: 16,
+            studentNo: ["20221813", "20220900"],
+            start: "2024-05-25T04:00:00.000+09:00",
+            end: "2024-05-25T05:00:00.000+09:00",
+            start_pixel: "36", end_pixel: "72")],
+            [Reservation(reservId: 16,
+            studentNo: ["20221813", "20220900"],
+            start: "2024-05-25T04:00:00.000+09:00",
+            end: "2024-05-25T05:00:00.000+09:00",
+            start_pixel: "36", end_pixel: "72")],
+            [Reservation(reservId: 16,
+            studentNo: ["20221813", "20220900"],
+            start: "2024-05-25T04:00:00.000+09:00",
+            end: "2024-05-25T05:00:00.000+09:00",
             start_pixel: "36", end_pixel: "72")]]
     
     //MARK: View
@@ -43,6 +68,7 @@ class ReservationViewModel: ObservableObject {
     @Published var selectedDate: Date = Date() { // API 강제 호출
         didSet {
             fetchReservationAPI(for: selectedDate)
+            fetchWeekReservationAPI(for: selectedDate)
         }
     }
     @Published var selectedDateIndex: Int = 0
@@ -51,6 +77,7 @@ class ReservationViewModel: ObservableObject {
 
     //MARK: Network
     @Published var isLoading: Bool = false // API 호출 진행중
+    @Published var isWeekLoading: Bool = false // API 호출 진행중
     @Published var trigger: Bool = false { // API 강제 호출
         didSet {
             if trigger {
@@ -64,7 +91,8 @@ class ReservationViewModel: ObservableObject {
     
     //MARK: init
     init() {
-//        fetchReservationAPI(for: selectedDate)
+        fetchReservationAPI(for: selectedDate)
+        fetchWeekReservationAPI(for: selectedDate)
     }
 
     func showInfoModal() {
@@ -96,6 +124,43 @@ class ReservationViewModel: ObservableObject {
                 }
             }
             self.isLoading = false
+            self.trigger = false
+        }
+    }
+    
+    func fetchWeekReservationAPI(for date: Date) {
+        self.isWeekLoading = true
+        provider.request(.getWeekReservation(date: date.toDateString())) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case let .success(response):
+                    print(response)
+//                    if let reservations = try? response.map([Reservation].self) {
+//                        print("week 세미나실 매핑 성공🚨")
+//                        self.reservations = reservations
+//                    } else {
+//                        print("week 세미나실 매핑 실패🚨")
+//                    }
+                    do {
+                        let decodedData = try JSONDecoder().decode(WeekReservations.self, from: response.data)
+                        self.weekReservations = [
+                            decodedData.Mon,
+                            decodedData.Tue,
+                            decodedData.Wed,
+                            decodedData.Thu,
+                            decodedData.Fri,
+                            decodedData.Sat,
+                            decodedData.Sun
+                        ]
+                        print("week 세미나실 매핑 성공🚨")
+                    } catch {
+                        print("week 세미나실 매핑 실패🚨: \(error)")
+                    }
+                case .failure:
+                    print("세미나실 네트워크 요청 실패🚨")
+                }
+            }
+            self.isWeekLoading = false
             self.trigger = false
         }
     }
