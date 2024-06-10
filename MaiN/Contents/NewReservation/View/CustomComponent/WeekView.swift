@@ -97,7 +97,10 @@ let dateOfWeekFormatter: DateFormatter = {
 
 extension Date {
     var startOfWeek: Date? {
-        Calendar.current.date(from: Calendar.current.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))
+        var calendar = Calendar.current
+        calendar.firstWeekday = 2
+        let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))
+        return startOfWeek
     }
 }
 
