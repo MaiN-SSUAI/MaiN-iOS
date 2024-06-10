@@ -59,9 +59,12 @@ class ReservationViewModel: ObservableObject {
         }
     }
     
+    //MARK: User
+    @EnvironmentObject var logInVM: LogInViewModel
+    
     //MARK: init
     init() {
-        fetchReservationAPI(for: selectedDate)
+//        fetchReservationAPI(for: selectedDate)
     }
 
     func showInfoModal() {
@@ -83,6 +86,7 @@ class ReservationViewModel: ObservableObject {
                 case let .success(response):
                     print(response)
                     if let reservations = try? response.map([Reservation].self) {
+                        print("세미나실 매핑 성공🚨")
                         self.reservations = reservations
                     } else {
                         print("세미나실 매핑 실패🚨")

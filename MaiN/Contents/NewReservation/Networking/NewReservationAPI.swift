@@ -57,6 +57,10 @@ extension NewReservationAPI: TargetType {
     }
 
     var headers: [String : String]? {
-            return ["Content-type": "application/json"]
-        }
+        let accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdHVkZW50Tm8iOiIyMDIyMTc4OSIsImlhdCI6MTcxODAxNTQxNiwiZXhwIjoxNzE4MDI2MjE2fQ.nCfa1fdp0A8uY3eWDXBwd--e-mRCENV4QTinCJMEumx4MOfitbBGFwjEzvNEGL_9QyQAgMZXOsJIip_StTHm6g"
+        return [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer \(accessToken)"
+        ]
+    }
 }
