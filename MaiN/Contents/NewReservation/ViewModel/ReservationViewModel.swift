@@ -80,6 +80,15 @@ class ReservationViewModel: ObservableObject {
     //MARK: Network
     @Published var isLoading: Bool = false // API 호출 진행중
     @Published var isWeekLoading: Bool = false // API 호출 진행중
+    @Published var trigger: Bool = false { // API 강제 호출
+        didSet {
+            if trigger {
+                fetchReservationAPI(for: selectedDate)
+                fetchWeekReservationAPI(for: selectedDate)
+            }
+        }
+    }
+        
     
     //MARK: User
     @EnvironmentObject var logInVM: LogInViewModel
@@ -158,11 +167,50 @@ class ReservationViewModel: ObservableObject {
         }
     }
     
-    func addReservation() {
-        //API 연결 + 비동기처리
-        fetchReservationAPI(for: selectedDate)
-        fetchWeekReservationAPI(for: selectedDate)
+    func addReservation(reservInfo: ReservInfo, completion: @escaping (String) -> Void) {
+        self.isLoading = true
+        provider.request(.addReservation(reserv: reservInfo)) { result in
+            switch result {
+            case .success(let response):
+                if let responseString = String(data: response.data, encoding: .utf8) {
+                    DispatchQueue.main.async {
+                        print("세미나실 예약 등록 API 성공🔥")
+                        completion("예약이 등록되었습니다.")
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("세미나실 예약 등록 API 실패🔥")
+                    completion("네트워크 요청이 실패하였습니다")
+                }
+            }
+        }
     }
+    
+//    func addReservation(reservInfo: ReservInfo, completion: @escaping (Bool) -> Void) {
+//        // API 연결
+//        provider.request(.addReservation(reserv: reservInfo)) { result in
+//            self.trigger.toggle()
+//            switch result {
+//            case .success(let response):
+//                if let responseString = String(data: response.data, encoding: .utf8) {
+//                    DispatchQueue.main.async {
+//                        print("세미나실 예약 등록 API 성공🔥")
+//                        self.showAlert = true
+//                        self.alertMessage = responseString
+//                        completion(true)
+//                    }
+//                }
+//            case .failure(let error):
+//                DispatchQueue.main.async {
+//                    print("세미나실 예약 등록 API 실패🔥")
+//                    self.showAlert = true
+//                    self.alertMessage = "네트워크 요청이 실패하였습니다"
+//                    completion(true)
+//                }
+//            }
+//        }
+//    }
     
     func checkUser(user: String, date: String, completion: @escaping (Bool) -> Void) {
         provider.request(.checkUser(user: user, date: date)) { result in
@@ -201,5 +249,11 @@ class ReservationViewModel: ObservableObject {
             }
         }
     }
+}
 
+struct ReservInfo: Codable {
+    let studentIds: [String]
+    let purpose: String
+    let startDateTimeStr: String
+    let endDateTimeStr: String
 }

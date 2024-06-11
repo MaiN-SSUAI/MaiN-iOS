@@ -11,7 +11,7 @@ import Moya
 enum NewReservationAPI {
     case getReservation(date: String)
     case getWeekReservation(date: String)
-    case addReservation(location: String, student_id: String, startDateTimeStr: String, endDateTimeStr: String)
+    case addReservation(reserv: ReservInfo)
     case deleteReservation(eventId: String)
     case checkUser(user: String, date: String)
 }
@@ -26,7 +26,7 @@ extension NewReservationAPI: TargetType {
         case .getWeekReservation:
             return "/calendar/events/week"
         case .addReservation:
-            return "/calendar/add"
+            return "/calendar/add/event"
         case .deleteReservation(let eventId):
             return "/calendar/delete/\(eventId)"
         case .checkUser:
@@ -55,14 +55,8 @@ extension NewReservationAPI: TargetType {
             return .requestParameters(parameters: ["date": date], encoding: URLEncoding.queryString)
         case .getWeekReservation(let date):
             return .requestParameters(parameters: ["date": date], encoding: URLEncoding.queryString)
-        case .addReservation(let location, let student_id, let startDateTimeStr, let endDateTimeStr):
-            let params: [String: Any] = [
-                "location": location,
-                "student_id": student_id,
-                "startDateTimeStr": startDateTimeStr,
-                "endDateTimeStr": endDateTimeStr
-            ]
-            return .requestParameters(parameters: params, encoding: JSONEncoding.default)
+        case .addReservation(let reserv):
+            return .requestJSONEncodable(reserv)
         case .deleteReservation:
             return .requestPlain
         case .checkUser(user: let user, date: let date):
@@ -71,7 +65,7 @@ extension NewReservationAPI: TargetType {
     }
 
     var headers: [String : String]? {
-        let accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdHVkZW50Tm8iOiIyMDIyMTc4OSIsImlhdCI6MTcxODExNzc4OSwiZXhwIjoxNzE4MTI4NTg5fQ.tvgjv08PFUEZU9vMZWSaAr5oIQezn1DKgyeADI3jqUNgDQQlOAWJJAHcw_9k302LQj-BLMkOu5GYX4PI9NU7TA"
+        let accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdHVkZW50Tm8iOiIyMDIyMTc4OSIsImlhdCI6MTcxODEyODg5OSwiZXhwIjoxNzE4MTM5Njk5fQ.MvC9pupljrCxUPIvjc8JYZajXJrxn28owgDyA49KRM3LqPdSEaxhUYAeT1OQWKl2MEapWbDbsAS5E7xwlxD8yg"
         switch self {
         case .getReservation(date: let date):
             return [
@@ -83,7 +77,7 @@ extension NewReservationAPI: TargetType {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer \(accessToken)"
             ]
-        case .addReservation(location: let location, student_id: let student_id, startDateTimeStr: let startDateTimeStr, endDateTimeStr: let endDateTimeStr):
+        case .addReservation(reserv: let reserv):
             return [
                 "Content-Type": "application/json",
                 "Authorization": "Bearer \(accessToken)"

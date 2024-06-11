@@ -82,6 +82,7 @@ struct RegisterModalView: View {
                                     vm.checkUser(user: studentId, date: vm.selectedDate.toDateString()) { isValid in
                                         if isValid {
                                             studentIds.append(studentId)
+                                            print("??\(studentIds)")
                                         }
                                     }
                                 }
@@ -135,7 +136,14 @@ struct RegisterModalView: View {
                     .padding(.vertical, 15)
                     .background(.white)
                     
-                    Button(action: {vm.addReservation()}){
+                    Button(action: {
+                        vm.isRegisterModalPresented = false
+                        let reserv = ReservInfo(studentIds: studentIds, purpose: selectedPurpose, startDateTimeStr: startTime.toDateTimeString(), endDateTimeStr: endTime.toDateTimeString())
+                        vm.addReservation(reservInfo: reserv) { alertMessage in
+                            vm.trigger.toggle()
+                            
+                        }
+                    }){
                         Text("저장").font(.bold(size: 20))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
