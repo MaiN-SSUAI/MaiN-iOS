@@ -20,6 +20,9 @@ struct ReservationView: View {
             RegisterModalView(vm: reservationVM)
                 .presentationDetents([.fraction(0.55)])
         }
+        .sheet(isPresented: $reservationVM.isDetailModalPresented) {
+            DetailReservModalView()
+        }
     }
 }
 

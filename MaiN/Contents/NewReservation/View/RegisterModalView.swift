@@ -75,15 +75,24 @@ struct RegisterModalView: View {
                                 .frame(width: 164, height: 26)
 
                             Button(action: {
-                                // api 붙이기
-                                vm.addUser(studentId: studentId)
-                                // 성공 시
-                                studentIds.append(studentId)
+                                if (studentIds.contains(studentId)) {
+                                    vm.alertMessage = "이미 등록한 학생입니다."
+                                    vm.showAlert = true
+                                } else {
+                                    vm.checkUser(user: studentId, date: vm.selectedDate.toDateString()) { isValid in
+                                        if isValid {
+                                            studentIds.append(studentId)
+                                        }
+                                    }
+                                }
                             }) {
                                 Image("addUserButton")
                                     .resizable()
                                     .frame(width: 20, height: 20)
                             }.padding(.trailing, 15)
+                            .alert(isPresented: $vm.showAlert) {
+                                Alert(title: Text(""), message: Text(vm.alertMessage ?? "No message"), dismissButton: .default(Text("확인")))
+                            }
                         }
                         
                         ScrollView(.horizontal) {
@@ -126,7 +135,7 @@ struct RegisterModalView: View {
                     .padding(.vertical, 15)
                     .background(.white)
                     
-                    Button(action: {}){
+                    Button(action: {vm.addReservation()}){
                         Text("저장").font(.bold(size: 20))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
