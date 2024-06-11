@@ -74,17 +74,12 @@ class ReservationViewModel: ObservableObject {
     @Published var selectedDateIndex: Int = 0
     @Published var dayOrWeek: String = "week"
     @Published var selectedReservation: Reservation?
-
+    @Published var alertMessage: String? = nil
+    @Published var showAlert: Bool = false
+    
     //MARK: Network
     @Published var isLoading: Bool = false // API 호출 진행중
     @Published var isWeekLoading: Bool = false // API 호출 진행중
-    @Published var trigger: Bool = false { // API 강제 호출
-        didSet {
-            if trigger {
-                fetchReservationAPI(for: selectedDate)
-            }
-        }
-    }
     
     //MARK: User
     @EnvironmentObject var logInVM: LogInViewModel
@@ -124,7 +119,6 @@ class ReservationViewModel: ObservableObject {
                 }
             }
             self.isLoading = false
-            self.trigger = false
         }
     }
     
@@ -161,11 +155,51 @@ class ReservationViewModel: ObservableObject {
                 }
             }
             self.isWeekLoading = false
-            self.trigger = false
         }
     }
     
-    func addUser(studentId: String) {
-        print("")
+    func addReservation() {
+        //API 연결 + 비동기처리
+        fetchReservationAPI(for: selectedDate)
+        fetchWeekReservationAPI(for: selectedDate)
     }
+    
+    func checkUser(user: String, date: String, completion: @escaping (Bool) -> Void) {
+        provider.request(.checkUser(user: user, date: date)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    if let responseString = String(data: response.data, encoding: .utf8) {
+                        DispatchQueue.main.async {
+                            var checkValid: Bool
+                            switch responseString {
+                            case "uninformed/valid user", "informed/valid user":
+                                checkValid = true
+                            case "More than 2 appointments a week", "Reservation can only be made for this month and the next month":
+                                checkValid = false
+                            default:
+                                checkValid = false
+                            }
+                            self.alertMessage = responseString
+                            print("사용자 추가 결과 : \(responseString)")
+                            completion(checkValid)
+                        }
+                    }
+                    print("사용자 추가 api 매핑 성공")
+                } catch {
+                    print("사용자 추가 api 매핑 실패")
+                    DispatchQueue.main.async {
+                        completion(false)
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    self.alertMessage = "네트워크 통신이 실패하였습니다."
+                    completion(false)
+                }
+                print("사용자 추가 api 통신 실패")
+            }
+        }
+    }
+
 }

@@ -43,11 +43,11 @@
 		802D56E62BF4A7470009D9C7 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802D56E52BF4A7470009D9C7 /* WeekView.swift */; };
 		803727FE2C12F9B9002F9DFA /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803727FD2C12F9B9002F9DFA /* Reservation.swift */; };
 		803728022C146900002F9DFA /* RegisterModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803728012C146900002F9DFA /* RegisterModalView.swift */; };
+		803728102C178CEE002F9DFA /* DetailReservModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8037280F2C178CEE002F9DFA /* DetailReservModalView.swift */; };
 		806AF8702B7A23B9008F7F62 /* NewSelectedReservationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806AF86F2B7A23B9008F7F62 /* NewSelectedReservationData.swift */; };
 		806C82792B5C1AFA00B2F796 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806C82782B5C1AFA00B2F796 /* UserDefaultsKeys.swift */; };
 		806F1B152B5FE13A003E742F /* NewReservationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B142B5FE13A003E742F /* NewReservationAPI.swift */; };
 		806F1B1B2B6197D4003E742F /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B1A2B6197D4003E742F /* Utility.swift */; };
-		806F1B232B642791003E742F /* NewDeleteHalfModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 806F1B222B642791003E742F /* NewDeleteHalfModalView.swift */; };
 		807BF8262B504B2400A659B9 /* SsuNotiRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF8252B504B2400A659B9 /* SsuNotiRow.swift */; };
 		807BF8282B504B6800A659B9 /* SsuNotiModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF8272B504B6800A659B9 /* SsuNotiModelData.swift */; };
 		807BF82A2B504DDD00A659B9 /* FunsysNotiModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807BF8292B504DDD00A659B9 /* FunsysNotiModelData.swift */; };
@@ -107,12 +107,12 @@
 		802D56E52BF4A7470009D9C7 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		803727FD2C12F9B9002F9DFA /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
 		803728012C146900002F9DFA /* RegisterModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModalView.swift; sourceTree = "<group>"; };
+		8037280F2C178CEE002F9DFA /* DetailReservModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReservModalView.swift; sourceTree = "<group>"; };
 		8042C37D2B7F55C9003DE096 /* MaiN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaiN.entitlements; sourceTree = "<group>"; };
 		806AF86F2B7A23B9008F7F62 /* NewSelectedReservationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewSelectedReservationData.swift; sourceTree = "<group>"; };
 		806C82782B5C1AFA00B2F796 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		806F1B142B5FE13A003E742F /* NewReservationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewReservationAPI.swift; sourceTree = "<group>"; };
 		806F1B1A2B6197D4003E742F /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
-		806F1B222B642791003E742F /* NewDeleteHalfModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDeleteHalfModalView.swift; sourceTree = "<group>"; };
 		807BF8252B504B2400A659B9 /* SsuNotiRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsuNotiRow.swift; sourceTree = "<group>"; };
 		807BF8272B504B6800A659B9 /* SsuNotiModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SsuNotiModelData.swift; sourceTree = "<group>"; };
 		807BF8292B504DDD00A659B9 /* FunsysNotiModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunsysNotiModelData.swift; sourceTree = "<group>"; };
@@ -375,7 +375,7 @@
 				802AD7282BFA7006009DDB5A /* TopReservationView.swift */,
 				802AD72A2BFA7016009DDB5A /* BottomReservationView.swift */,
 				803728012C146900002F9DFA /* RegisterModalView.swift */,
-				806F1B222B642791003E742F /* NewDeleteHalfModalView.swift */,
+				8037280F2C178CEE002F9DFA /* DetailReservModalView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -483,10 +483,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				803728102C178CEE002F9DFA /* DetailReservModalView.swift in Sources */,
 				807BF8302B50516400A659B9 /* FunsysNotiRow.swift in Sources */,
 				806F1B152B5FE13A003E742F /* NewReservationAPI.swift in Sources */,
 				80E9B7D52B3DD9CB0047EC6E /* WebView.swift in Sources */,
-				806F1B232B642791003E742F /* NewDeleteHalfModalView.swift in Sources */,
 				802239D12B458E510021C344 /* ReservationView.swift in Sources */,
 				806C82792B5C1AFA00B2F796 /* UserDefaultsKeys.swift in Sources */,
 				80E9B7E32B3DFFA90047EC6E /* HomeUIView.swift in Sources */,

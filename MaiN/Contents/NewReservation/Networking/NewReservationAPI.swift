@@ -13,6 +13,7 @@ enum NewReservationAPI {
     case getWeekReservation(date: String)
     case addReservation(location: String, student_id: String, startDateTimeStr: String, endDateTimeStr: String)
     case deleteReservation(eventId: String)
+    case checkUser(user: String, date: String)
 }
 
 extension NewReservationAPI: TargetType {
@@ -28,6 +29,8 @@ extension NewReservationAPI: TargetType {
             return "/calendar/add"
         case .deleteReservation(let eventId):
             return "/calendar/delete/\(eventId)"
+        case .checkUser:
+            return "/calendar/check/user"
         }
     }
 
@@ -41,6 +44,8 @@ extension NewReservationAPI: TargetType {
             return .post
         case .deleteReservation:
             return .delete
+        case .checkUser(user: let user, date: let date):
+            return .get
         }
     }
 
@@ -60,14 +65,39 @@ extension NewReservationAPI: TargetType {
             return .requestParameters(parameters: params, encoding: JSONEncoding.default)
         case .deleteReservation:
             return .requestPlain
+        case .checkUser(user: let user, date: let date):
+            return .requestParameters(parameters: ["user": user, "date": date], encoding: URLEncoding.queryString)
         }
     }
 
     var headers: [String : String]? {
-        let accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdHVkZW50Tm8iOiIyMDIyMTc4OSIsImlhdCI6MTcxODAzODI0MywiZXhwIjoxNzE4MDQ5MDQzfQ.Blae8AVMryyBVtecSUi7nsmUUgD3VTafyHst8tkhB6FlmlfD7RPVVFNlt6DU9_onkEBovPM_asDtFnA-hrChXg"
-        return [
-            "Content-Type": "application/json",
-            "Authorization": "Bearer \(accessToken)"
-        ]
+        let accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdHVkZW50Tm8iOiIyMDIyMTc4OSIsImlhdCI6MTcxODExNzc4OSwiZXhwIjoxNzE4MTI4NTg5fQ.tvgjv08PFUEZU9vMZWSaAr5oIQezn1DKgyeADI3jqUNgDQQlOAWJJAHcw_9k302LQj-BLMkOu5GYX4PI9NU7TA"
+        switch self {
+        case .getReservation(date: let date):
+            return [
+                "Content-Type": "application/json",
+                "Authorization": "Bearer \(accessToken)"
+            ]
+        case .getWeekReservation(date: let date):
+            return [
+                "Content-Type": "application/json",
+                "Authorization": "Bearer \(accessToken)"
+            ]
+        case .addReservation(location: let location, student_id: let student_id, startDateTimeStr: let startDateTimeStr, endDateTimeStr: let endDateTimeStr):
+            return [
+                "Content-Type": "application/json",
+                "Authorization": "Bearer \(accessToken)"
+            ]
+        case .deleteReservation(eventId: let eventId):
+            return [
+                "Content-Type": "application/json",
+                "Authorization": "Bearer \(accessToken)"
+            ]
+        case .checkUser(user: let user, date: let date):
+            return [
+                "Content-Type": "text/plain",
+                "Authorization": "Bearer \(accessToken)"
+            ]
+        }
     }
 }
