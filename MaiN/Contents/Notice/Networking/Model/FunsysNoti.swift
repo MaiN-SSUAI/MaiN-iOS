@@ -12,7 +12,6 @@ struct FunsysNoti: Decodable {
     var title: String
     var link: String
     var startDate: String
-    var end_date: String
+    var endDate: String
     var favorites: Bool
 }
-

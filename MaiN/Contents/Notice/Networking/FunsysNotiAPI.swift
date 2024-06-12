@@ -9,34 +9,29 @@ import Foundation
 import Moya
 
 enum FunsysNotiAPI {
-    case funsysNotiAllShow
-    case funsysNotiFavorites(studentId: String)
+    case funsysNotiFavorites(studentId: String, pageNo: Int)
     case funsysNotiFavoritesAdd(studentId: String, funsysNotiId: Int)
     case funsysNotiFavoritesDelete(studentId: String, funsysNotiId: Int)
 }
 
 extension FunsysNotiAPI: TargetType {
     var baseURL: URL {
-        return URL(string: "http://43.203.195.189")!
+        return URL(string: "http://54.180.221.239")!
     }
     
     var path: String {
         switch self {
-        case .funsysNotiAllShow:
-            return "/funsys_noti/all"
-        case .funsysNotiFavorites(studentId: let studentId):
+        case .funsysNotiFavorites(studentId: let studentId, _):
             return "/funsysnoti/favorites/all/\(studentId)"
         case .funsysNotiFavoritesAdd(studentId: let studentId, funsysNotiId: let funsysNotiId):
-            return "/funsysnoti/favorites/delete/\(studentId)/\(funsysNotiId)"
+            return "/funsysnoti/favorites/delete"
         case .funsysNotiFavoritesDelete(studentId: let studentId, funsysNotiId: let funsysNotiId):
-            return "/funsysnoti/favorites/add/\(studentId)/\(funsysNotiId)"
+            return "/funsysnoti/favorites/add/"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .funsysNotiAllShow:
-            return .get
         case .funsysNotiFavorites:
             return .get
         case .funsysNotiFavoritesDelete:
@@ -49,19 +44,23 @@ extension FunsysNotiAPI: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .funsysNotiAllShow:
-            return .requestPlain
-        case .funsysNotiFavorites(studentId: let studentId):
-            return .requestParameters(parameters: ["studentId": studentId], encoding: URLEncoding.queryString)
+        case .funsysNotiFavorites(_, pageNo: let pageNo):
+            return .requestParameters(parameters: ["pageNo": pageNo], encoding: URLEncoding.queryString)
         case .funsysNotiFavoritesAdd(studentId: let studentId, funsysNotiId: let funsysNotiId):
-            return .requestParameters(parameters: ["studentId": studentId, "funsysNotiId": funsysNotiId], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["studentNo": studentId, "funsysNotiId": funsysNotiId], encoding: JSONEncoding.default)
         case .funsysNotiFavoritesDelete(studentId: let studentId, funsysNotiId: let funsysNotiId):
-            return .requestParameters(parameters: ["studentId": studentId, "funsysNotiId": funsysNotiId], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["studentNo": studentId, "funsysNotiId": funsysNotiId], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String : String]? {
-        return ["Content-type": "application/json"]
+        guard let accessToken = TokenManager.shared.accessToken else {
+            return nil
+        }
+        return [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer \(accessToken)"
+        ]
     }
     
     

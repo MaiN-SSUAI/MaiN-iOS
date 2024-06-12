@@ -20,6 +20,10 @@ struct ReservationView: View {
             RegisterModalView(vm: reservationVM)
                 .presentationDetents([.fraction(0.55)])
         }
+        .sheet(isPresented: $reservationVM.isInfoModalPresented) {
+            InfoModalView()
+                .presentationDetents([.fraction(0.4)])
+        }
         .alert(isPresented: $reservationVM.showAlert) {
             Alert(title: Text(""), message: Text(reservationVM.alertMessage ?? "No message"), dismissButton: .default(Text("확인")))
         }
