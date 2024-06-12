@@ -12,7 +12,7 @@ enum NewReservationAPI {
     case getReservation(date: String)
     case getWeekReservation(date: String)
     case addReservation(reserv: ReservInfo)
-    case deleteReservation(eventId: String)
+    case deleteReservation(reservId: Int)
     case checkUser(user: String, date: String)
 }
 
@@ -27,8 +27,8 @@ extension NewReservationAPI: TargetType {
             return "/calendar/events/week"
         case .addReservation:
             return "/calendar/add/event"
-        case .deleteReservation(let eventId):
-            return "/calendar/delete/\(eventId)"
+        case .deleteReservation(let reservId):
+            return "/calendar/delete/\(reservId)"
         case .checkUser:
             return "/calendar/check/user"
         }
@@ -65,7 +65,7 @@ extension NewReservationAPI: TargetType {
     }
 
     var headers: [String : String]? {
-        let accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdHVkZW50Tm8iOiIyMDIyMTc4OSIsImlhdCI6MTcxODEyODg5OSwiZXhwIjoxNzE4MTM5Njk5fQ.MvC9pupljrCxUPIvjc8JYZajXJrxn28owgDyA49KRM3LqPdSEaxhUYAeT1OQWKl2MEapWbDbsAS5E7xwlxD8yg"
+        let accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdHVkZW50Tm8iOiIyMDIyMTc4OSIsImlhdCI6MTcxODE2OTA5MiwiZXhwIjoxNzE4MTc5ODkyfQ.1iRCD7oPymE7k3g7f7N3q72Ig9qXUm-9Zp-HM38b5FGrVp5AkqCnHSNdEWtbPOznbbZlbFfExr4elhpzOOFp-Q"
         switch self {
         case .getReservation(date: let date):
             return [
@@ -82,7 +82,7 @@ extension NewReservationAPI: TargetType {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer \(accessToken)"
             ]
-        case .deleteReservation(eventId: let eventId):
+        case .deleteReservation(reservId: let reservId):
             return [
                 "Content-Type": "application/json",
                 "Authorization": "Bearer \(accessToken)"
