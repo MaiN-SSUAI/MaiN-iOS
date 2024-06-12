@@ -61,6 +61,8 @@ class ReservationViewModel: ObservableObject {
             end: "2024-05-25T05:00:00.000+09:00",
             start_pixel: "36", end_pixel: "72")]]
     
+    @Published var selectedDetailReservInfo: ReservDetailInfo = ReservDetailInfo(reservId: 0, studentIds: [], purpose: "", time: "")
+    
     //MARK: View
     @Published var isInfoModalPresented: Bool = false
     @Published var isDetailModalPresented: Bool = false
@@ -117,9 +119,9 @@ class ReservationViewModel: ObservableObject {
                 switch result {
                 case let .success(response):
                     print(response)
-                    if let reservations = try? response.map([Reservation].self) {
+                    if let reservations = try? response.map([Reservation?].self) {
                         print("세미나실 매핑 성공🚨")
-                        self.reservations = reservations
+                        self.reservations = reservations.compactMap { $0 }
                     } else {
                         print("세미나실 매핑 실패🚨")
                     }
@@ -164,6 +166,7 @@ class ReservationViewModel: ObservableObject {
     func addReservation(reservInfo: ReservInfo, completion: @escaping (String) -> Void) {
         self.isLoading = true
         provider.request(.addReservation(reserv: reservInfo)) { result in
+            self.isLoading = false
             switch result {
             case .success(let response):
                 let statusCode = response.statusCode
@@ -193,6 +196,7 @@ class ReservationViewModel: ObservableObject {
     func deleteReservation(reservId: Int, completion: @escaping (String) -> Void) {
         self.isLoading = true
         provider.request(.deleteReservation(reservId: reservId)) { result in
+            self.isLoading = false
             switch result {
             case .success(let response):
                 if let responseString = String(data: response.data, encoding: .utf8) {
@@ -214,29 +218,39 @@ class ReservationViewModel: ObservableObject {
         provider.request(.checkUser(user: user, date: date)) { result in
             switch result {
             case .success(let response):
-                do {
-                    if let responseString = String(data: response.data, encoding: .utf8) {
-                        DispatchQueue.main.async {
-                            print("등록 responseString : \(responseString)")
-                            var checkValid: Bool
-                            switch responseString {
-                            case "uninformed/valid user", "informed/valid user":
-                                checkValid = true
-                            case "More than 2 appointments a week", "Reservation can only be made for this month and the next month":
-                                checkValid = false
-                            default:
-                                checkValid = false
+                print(response)
+                if response.statusCode == 401 {
+                    print("인증 실패🚨: 401 에러")
+                    self.alertMessage = "세미나실 이용수칙을 다시 확인해주세요"
+                    completion(false)
+                } else {
+                    do {
+                        if let responseString = String(data: response.data, encoding: .utf8) {
+                            DispatchQueue.main.async {
+                                print("등록 responseString : \(responseString)")
+                                var checkValid: Bool
+                                switch responseString {
+                                case "uninformed/valid user", "informed/valid user":
+                                    checkValid = true
+                                case "More than 2 appointments a week":
+                                    checkValid = false
+                                    self.alertMessage = "일주일에 최대 2회 세미나실을 사용할 수 있습니다."
+                                case "Reservation can only be made for this month and the next month":
+                                    checkValid = false
+                                    self.alertMessage = "세미나실은 이번달과 다음달만 예약 가능합니다."
+                                default:
+                                    checkValid = false
+                                }
+                                print("사용자 추가 결과 : \(responseString)")
+                                completion(checkValid)
                             }
-                            self.alertMessage = responseString
-                            print("사용자 추가 결과 : \(responseString)")
-                            completion(checkValid)
                         }
-                    }
-                    print("사용자 추가 api 매핑 성공")
-                } catch {
-                    print("사용자 추가 api 매핑 실패")
-                    DispatchQueue.main.async {
-                        completion(false)
+                        print("사용자 추가 api 매핑 성공")
+                    } catch {
+                        print("사용자 추가 api 매핑 실패")
+                        DispatchQueue.main.async {
+                            completion(false)
+                        }
                     }
                 }
             case .failure(let error):
@@ -250,7 +264,7 @@ class ReservationViewModel: ObservableObject {
     }
 }
 
-struct ReservInfo: Codable {
+struct ReservInfo: Codable, Hashable {
     let studentIds: [String]
     let purpose: String
     let startDateTimeStr: String

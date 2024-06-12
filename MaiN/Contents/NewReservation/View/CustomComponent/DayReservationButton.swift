@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DayReservationButton: View {
     @ObservedObject var vm: ReservationViewModel
+    let date: Date
     let time: String
     let studentNo: [String]
     let buttonColor: ButtonColor
@@ -18,6 +19,7 @@ struct DayReservationButton: View {
 
     init(vm: ReservationViewModel, reservation: Reservation, color: ButtonColor) {
         self.vm = vm
+        self.date = reservation.start.toDate()
         if vm.dayOrWeek == "day" {
             self.time = "\(DayReservationButton.dayFormatTime(reservation.start)) ~ \(DayReservationButton.dayFormatTime(reservation.end))"
         } else {
@@ -36,10 +38,11 @@ struct DayReservationButton: View {
                 .frame(height: startPixel)
             Button(action: {
                 if vm.dayOrWeek == "day" {
+                    vm.selectedDetailReservInfo = ReservDetailInfo(reservId: reservId, studentIds: studentNo, purpose: "", time: time)
                     vm.isDetailModalPresented = true
                 } else {
                     vm.dayOrWeek = "day"
-                    // + 선택된 버튼의 날짜로 isSelectedDate 변경해주기
+                    vm.selectedDate = self.date
                 }
             }, label: {
                 ZStack(alignment: .leading) {
@@ -75,7 +78,7 @@ struct DayReservationButton: View {
                 }
             })
             .sheet(isPresented: $vm.isDetailModalPresented) {
-                DetailReservModalView(vm: vm, selectedReservInfo: ReservDetailInfo(reservId: reservId, studentIds: studentNo, purpose: "", time: time))
+                DetailReservModalView(vm: vm)
                     .presentationDetents([.fraction(0.3)])
             }
         }.frame(height: endPixel)
