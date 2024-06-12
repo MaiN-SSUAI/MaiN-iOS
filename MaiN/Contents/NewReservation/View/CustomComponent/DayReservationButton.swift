@@ -74,6 +74,10 @@ struct DayReservationButton: View {
                     }
                 }
             })
+            .sheet(isPresented: $vm.isDetailModalPresented) {
+                DetailReservModalView(vm: vm, selectedReservInfo: ReservDetailInfo(reservId: reservId, studentIds: studentNo, purpose: "", time: time))
+                    .presentationDetents([.fraction(0.3)])
+            }
         }.frame(height: endPixel)
     }
 
@@ -130,6 +134,13 @@ struct DayReservationButton: View {
             return dateTimeString
         }
     }
+}
+
+struct ReservDetailInfo: Codable {
+    let reservId: Int
+    let studentIds: [String]
+    let purpose: String
+    let time: String
 }
 
 enum ButtonColor {

@@ -90,7 +90,8 @@ struct RegisterModalView: View {
                                 Image("addUserButton")
                                     .resizable()
                                     .frame(width: 20, height: 20)
-                            }.padding(.trailing, 15)
+                            }
+                            .padding(.trailing, 15)
                             .alert(isPresented: $vm.showAlert) {
                                 Alert(title: Text(""), message: Text(vm.alertMessage ?? "No message"), dismissButton: .default(Text("확인")))
                             }
@@ -141,6 +142,8 @@ struct RegisterModalView: View {
                         let reserv = ReservInfo(studentIds: studentIds, purpose: selectedPurpose, startDateTimeStr: startTime.toDateTimeString(), endDateTimeStr: endTime.toDateTimeString())
                         vm.addReservation(reservInfo: reserv) { alertMessage in
                             vm.trigger.toggle()
+                            vm.alertMessage = alertMessage
+                            vm.showAlert = true
                             
                         }
                     }){

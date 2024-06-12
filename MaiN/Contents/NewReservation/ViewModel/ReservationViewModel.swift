@@ -72,7 +72,7 @@ class ReservationViewModel: ObservableObject {
         }
     }
     @Published var selectedDateIndex: Int = 0
-    @Published var dayOrWeek: String = "week"
+    @Published var dayOrWeek: String = "day"
     @Published var selectedReservation: Reservation?
     @Published var alertMessage: String? = nil
     @Published var showAlert: Bool = false
@@ -138,12 +138,6 @@ class ReservationViewModel: ObservableObject {
                 switch result {
                 case let .success(response):
                     print(response)
-//                    if let reservations = try? response.map([Reservation].self) {
-//                        print("week 세미나실 매핑 성공🚨")
-//                        self.reservations = reservations
-//                    } else {
-//                        print("week 세미나실 매핑 실패🚨")
-//                    }
                     do {
                         let decodedData = try JSONDecoder().decode(WeekReservations.self, from: response.data)
                         self.weekReservations = [
@@ -172,45 +166,49 @@ class ReservationViewModel: ObservableObject {
         provider.request(.addReservation(reserv: reservInfo)) { result in
             switch result {
             case .success(let response):
-                if let responseString = String(data: response.data, encoding: .utf8) {
+                let statusCode = response.statusCode
+                if statusCode == 200 {
+                    if let responseString = String(data: response.data, encoding: .utf8) {
+                        DispatchQueue.main.async {
+                            print("세미나실 예약 등록 API 성공🔥 : \(responseString)")
+                            completion("예약이 등록되었습니다.")
+                        }
+                    }
+                } else {
                     DispatchQueue.main.async {
-                        print("세미나실 예약 등록 API 성공🔥")
-                        completion("예약이 등록되었습니다.")
+                        print("세미나실 예약 등록 API 실패🔥 - 상태 코드: \(statusCode)")
+                        completion("예약 등록에 실패하였습니다 (상태 코드: \(statusCode))")
                     }
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    print("세미나실 예약 등록 API 실패🔥")
+                    print("세미나실 예약 등록 API 실패🔥 : \(error)")
                     completion("네트워크 요청이 실패하였습니다")
                 }
             }
         }
     }
+
     
-//    func addReservation(reservInfo: ReservInfo, completion: @escaping (Bool) -> Void) {
-//        // API 연결
-//        provider.request(.addReservation(reserv: reservInfo)) { result in
-//            self.trigger.toggle()
-//            switch result {
-//            case .success(let response):
-//                if let responseString = String(data: response.data, encoding: .utf8) {
-//                    DispatchQueue.main.async {
-//                        print("세미나실 예약 등록 API 성공🔥")
-//                        self.showAlert = true
-//                        self.alertMessage = responseString
-//                        completion(true)
-//                    }
-//                }
-//            case .failure(let error):
-//                DispatchQueue.main.async {
-//                    print("세미나실 예약 등록 API 실패🔥")
-//                    self.showAlert = true
-//                    self.alertMessage = "네트워크 요청이 실패하였습니다"
-//                    completion(true)
-//                }
-//            }
-//        }
-//    }
+    func deleteReservation(reservId: Int, completion: @escaping (String) -> Void) {
+        self.isLoading = true
+        provider.request(.deleteReservation(reservId: reservId)) { result in
+            switch result {
+            case .success(let response):
+                if let responseString = String(data: response.data, encoding: .utf8) {
+                    DispatchQueue.main.async {
+                        print("세미나실 예약 삭제 API 성공🔥")
+                        completion("예약이 삭제되었습니다.")
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    print("세미나실 예약 삭제 API 실패🔥: \(error)")
+                    completion("네트워크 요청이 실패하였습니다")
+                }
+            }
+        }
+    }
     
     func checkUser(user: String, date: String, completion: @escaping (Bool) -> Void) {
         provider.request(.checkUser(user: user, date: date)) { result in
@@ -219,6 +217,7 @@ class ReservationViewModel: ObservableObject {
                 do {
                     if let responseString = String(data: response.data, encoding: .utf8) {
                         DispatchQueue.main.async {
+                            print("등록 responseString : \(responseString)")
                             var checkValid: Bool
                             switch responseString {
                             case "uninformed/valid user", "informed/valid user":
