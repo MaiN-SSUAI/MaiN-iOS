@@ -55,10 +55,14 @@ struct BottomReservationView: View {
                     ZStack(alignment: .leading) {
                         TimeNumberView().padding(.leading, 10)
                         HStack(spacing: 0) {
-                            Divider()
+                            Rectangle()
+                                .frame(maxWidth: 1, maxHeight: .infinity)
+                                .foregroundColor(.gray05)
                             ForEach(0..<7, id: \.self) { index in
                                 WeekReservationView(vm: vm, index: index)
-                                Divider()
+                                Rectangle()
+                                    .frame(maxWidth: 1, maxHeight: .infinity)
+                                    .foregroundColor(.gray05)
                             }
                         }
                         .padding(.leading, 28)

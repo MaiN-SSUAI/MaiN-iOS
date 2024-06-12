@@ -9,8 +9,6 @@ import SwiftUI
 
 struct DetailReservModalView: View {
     @ObservedObject var vm: ReservationViewModel
-    
-    let selectedReservInfo: ReservDetailInfo
     @State private var showingAlert = false
     
     var body: some View {
@@ -27,17 +25,17 @@ struct DetailReservModalView: View {
                     }.background(.white)
                     HStack(){
                         VStack(alignment: .leading) {
-                            Text("세미나실1 / \(selectedReservInfo.studentIds[0])").font(.normal(size: 14)).foregroundColor(.black)
-                            if selectedReservInfo.studentIds.count > 1 {
-                                let remainingIds = selectedReservInfo.studentIds.dropFirst().joined(separator: ", ")
+                            Text("세미나실1 / \(vm.selectedDetailReservInfo.studentIds[0])").font(.normal(size: 14)).foregroundColor(.black)
+                            if vm.selectedDetailReservInfo.studentIds.count > 1 {
+                                let remainingIds = vm.selectedDetailReservInfo.studentIds.dropFirst().joined(separator: ", ")
                                 Text(remainingIds)
                                     .font(.interRegular(size: 12))
                                     .foregroundColor(.gray02)
                             }
-                            Text("시간 : \(selectedReservInfo.time)")
+                            Text("시간 : \(vm.selectedDetailReservInfo.time)")
                                 .font(.interRegular(size: 12))
                                 .foregroundColor(.gray02)
-                            Text("사용 목적: \(selectedReservInfo.purpose)")
+                            Text("사용 목적: \(vm.selectedDetailReservInfo.purpose)")
                                 .font(.interRegular(size: 12))
                                 .foregroundColor(.gray02)
                         }
@@ -63,10 +61,10 @@ struct DetailReservModalView: View {
                                 message: Text("정말로 삭제하겠습니까?"),
                                 primaryButton: .destructive(Text("삭제")) {
                                     vm.isDetailModalPresented = false
-                                    vm.deleteReservation(reservId: selectedReservInfo.reservId) { result in
-                                        vm.trigger.toggle()
+                                    vm.deleteReservation(reservId: vm.selectedDetailReservInfo.reservId) { result in
                                         vm.alertMessage = result
                                         vm.showAlert = true
+                                        vm.trigger.toggle()
                                     }
                                 },
                                 secondaryButton: .cancel(Text("취소"))

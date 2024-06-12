@@ -65,7 +65,7 @@ extension NewReservationAPI: TargetType {
     }
 
     var headers: [String : String]? {
-        let accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdHVkZW50Tm8iOiIyMDIyMTc4OSIsImlhdCI6MTcxODE2OTA5MiwiZXhwIjoxNzE4MTc5ODkyfQ.1iRCD7oPymE7k3g7f7N3q72Ig9qXUm-9Zp-HM38b5FGrVp5AkqCnHSNdEWtbPOznbbZlbFfExr4elhpzOOFp-Q"
+        let accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdHVkZW50Tm8iOiIyMDIyMTc4OSIsImlhdCI6MTcxODE5Mzk3NywiZXhwIjoxNzE4MjA0Nzc3fQ.I-5R4WzoBuvRQ_PrlzTa_Vr4tEKSli07PMw35sXI9dXdMSdvmPZAbwD4xbDkH16Rf_GxdY_mG5hPUlfCOCem2Q"
         switch self {
         case .getReservation(date: let date):
             return [

@@ -22,3 +22,11 @@ extension Date {
         return dateFormatter.string(from: self)
     }
 }
+
+extension String {
+    func toDate() -> Date {
+        let dateFormatter = ISO8601DateFormatter()
+        dateFormatter.formatOptions = [.withFullDate, .withFullTime, .withFractionalSeconds, .withTimeZone]
+        return dateFormatter.date(from: self) ?? Date()
+    }
+}

@@ -140,6 +140,7 @@ struct RegisterModalView: View {
                     Button(action: {
                         vm.isRegisterModalPresented = false
                         let reserv = ReservInfo(studentIds: studentIds, purpose: selectedPurpose, startDateTimeStr: startTime.toDateTimeString(), endDateTimeStr: endTime.toDateTimeString())
+                        print("검거하자\(reserv.studentIds)")
                         vm.addReservation(reservInfo: reserv) { alertMessage in
                             vm.trigger.toggle()
                             vm.alertMessage = alertMessage
