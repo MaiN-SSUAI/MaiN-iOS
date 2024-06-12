@@ -45,17 +45,20 @@ class FunsysNotiModelData: ObservableObject {
         guard let studentId = UserDefaults.standard.string(forKey: "studentNumber") else {
             return
         }
-        provider.request(.funsysNotiFavorites(studentId: studentId)) { result in
+        provider.request(.funsysNotiFavorites(studentId: studentId, pageNo: 1)) { result in
             DispatchQueue.main.async {
                 switch result {
                 case let .success(response):
                     if let aiNoticess = try? response.map([FunsysNoti].self) {
+                        print("🍎funsysNoti 매핑 성공")
                         self.funsysNotices = aiNoticess
                         self.isLoading = false
                     } else {
+                        print("🍎funsysNoti 매핑 실패")
                         self.isLoading = false
                     }
                 case .failure:
+                    print("🍎funsysNoti 네트워크 실패")
                     self.isLoading = false
                 }
             }

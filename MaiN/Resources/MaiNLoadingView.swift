@@ -14,12 +14,12 @@ struct MaiNLoadingView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack(spacing: 20) {
-                Image(systemName: "heart.fill")
-                    .resizable()
-                    .frame(width: 50, height: 50)
-                    .foregroundColor(.pink)
-                    .scaleEffect(1.2)
-                    .animation(Animation.easeInOut(duration: 0.6).repeatForever(autoreverses: true))
+//                Image("AppIcon")
+//                    .resizable()
+//                    .frame(width: 50, height: 50)
+//                    .foregroundColor(.pink)
+//                    .scaleEffect(1.2)
+//                    .animation(Animation.easeInOut(duration: 0.6).repeatForever(autoreverses: true))
                 
                 Text("Loading...")
                     .font(.headline)

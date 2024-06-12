@@ -58,7 +58,7 @@ struct FunsysNotiRow: View {
                                 VStack {
                                     VStack(alignment: .leading, spacing: 6) {
                                         HStack {
-                                            Text("\(aiNoti.startDate) ~ \(aiNoti.end_date)").font(.bold(size: 16)).foregroundStyle(.blue02)
+                                            Text("\(aiNoti.startDate) ~ \(aiNoti.endDate)").font(.bold(size: 16)).foregroundStyle(.blue02)
                                             Spacer()
                                             Image(systemName: aiNoti.favorites ? "star.fill" : "star")
                                                 .foregroundColor(aiNoti.favorites ? .yellow : .gray)
@@ -84,23 +84,6 @@ struct FunsysNotiRow: View {
             })
             .navigationBarTitle("펀 시스템", displayMode: .inline)
     }
-    func toggleFavorite(studentId: String, funsysNotiId: Int) {
-        let urlString = "/ainoti/favorites/add/\(studentId)/\(funsysNotiId)"
-        guard let url = URL(string: "https://your-api-base-url.com\(urlString)") else { return }
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Request error: \(error)")
-                return
-            }
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                print("Invalid response or status code")
-                return
-            }
-            if let data = data {}
-        }
-        task.resume()
-    }
-    
 }
 
 #Preview {

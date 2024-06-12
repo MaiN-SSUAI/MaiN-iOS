@@ -9,32 +9,27 @@ import Foundation
 import Moya
 
 enum AiNotiAPI {
-    case aiNotiAllShow
-    case aiNotiFavorites(studentId: String)
+    case aiNotiFavorites(studentNo: String, pageNo: Int)
     case aiNotiFavoritesAdd(studentId: String, aiNotiId: Int)
     case aiNotiFavoritesDelete(studentId: String, aiNotiId: Int)
 }
 
 extension AiNotiAPI: TargetType {
-    var baseURL: URL { return URL(string: "http://43.203.195.189")! }
+    var baseURL: URL { return URL(string: "http://54.180.221.239")! }
     
     var path: String {
         switch self {
-        case .aiNotiAllShow:
-            return "/ai_noti/all"
-        case .aiNotiFavorites(let studentId):
-            return "/ainoti/favorites/all/\(studentId)"
+        case .aiNotiFavorites(let studentNo, _):
+            return "/ainoti/favorites/all/\(studentNo)"
         case .aiNotiFavoritesDelete(let studentId, let aiNotiId):
-            return "/ainoti/favorites/delete/\(studentId)/\(aiNotiId)"
+            return "/ainoti/favorites/delete"
         case .aiNotiFavoritesAdd(studentId: let studentId, aiNotiId: let aiNotiId):
-            return "/ainoti/favorites/add/\(studentId)/\(aiNotiId)"
+            return "/ainoti/favorites/add"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .aiNotiAllShow:
-            return .get
         case .aiNotiFavorites:
             return .get
         case .aiNotiFavoritesDelete:
@@ -46,19 +41,23 @@ extension AiNotiAPI: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .aiNotiAllShow:
-            return .requestPlain
-        case .aiNotiFavorites(let studentId):
-            return .requestParameters(parameters: ["studentId": studentId], encoding: URLEncoding.queryString)
+        case .aiNotiFavorites(_, let pageNo):
+            return .requestParameters(parameters: ["pageNo": pageNo], encoding: URLEncoding.queryString)
         case .aiNotiFavoritesAdd(studentId: let studentId, aiNotiId: let aiNotiId):
-            return .requestParameters(parameters: ["studentId": studentId, "aiNotiId": aiNotiId], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["studentNo": studentId, "aiNotiId": aiNotiId], encoding: JSONEncoding.default)
         case .aiNotiFavoritesDelete(studentId: let studentId, aiNotiId: let aiNotiId):
-            return .requestParameters(parameters: ["studentId": studentId, "aiNotiId": aiNotiId], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["studentNo": studentId, "aiNotiId": aiNotiId], encoding: JSONEncoding.default)
         }
     }
     
     var headers: [String : String]? {
-        return ["Content-type": "application/json"]
+        guard let accessToken = TokenManager.shared.accessToken else {
+            return nil
+        }
+        return [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer \(accessToken)"
+        ]
     }
     
     

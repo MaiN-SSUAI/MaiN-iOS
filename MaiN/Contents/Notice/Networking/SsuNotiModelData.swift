@@ -44,7 +44,7 @@ class SsuNotiModelData: ObservableObject {
         guard let studentId = UserDefaults.standard.string(forKey: "studentNumber") else {
             return
         }
-        provider.request(.ssuNotiFavorites(studentId: studentId)) { result in
+        provider.request(.ssuNotiFavorites(studentId: studentId, pageNo: 1)) { result in
             DispatchQueue.main.async {
                 switch result {
                 case let .success(response):

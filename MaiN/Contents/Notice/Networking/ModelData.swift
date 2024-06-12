@@ -44,19 +44,24 @@ class ModelData: ObservableObject {
             return
         }
         print(type(of: studentId))
-        provider.request(.aiNotiFavorites(studentId: studentId)) { result in
+        provider.request(.aiNotiFavorites(studentNo: studentId, pageNo: 1)) { result in
             DispatchQueue.main.async {
                 switch result {
                 case let .success(response):
+                    print("학부 공지사항(aiNoti) 네트워크 성공🚨")
                     if let aiNoticess = try? response.map([AiNoti].self) {
                         print(2)
+                        print("학부 공지사항(aiNoti) 매핑 성공🚨")
                         self.aiNotices = aiNoticess
                         self.isLoading = false
                     } else {
+                        print("학부 공지사항(aiNoti) 매핑 실패🚨")
                         self.isLoading = false
                     }
-                case .failure:
+                case .failure(let error):
+                    print("학부 공지사항(aiNoti) 네트워크 실패🚨")
                     self.isLoading = false
+                    print("\(error)")
                 }
             }
         }

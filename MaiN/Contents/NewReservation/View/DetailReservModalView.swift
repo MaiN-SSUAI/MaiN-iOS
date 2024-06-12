@@ -35,9 +35,9 @@ struct DetailReservModalView: View {
                             Text("시간 : \(vm.selectedDetailReservInfo.time)")
                                 .font(.interRegular(size: 12))
                                 .foregroundColor(.gray02)
-                            Text("사용 목적: \(vm.selectedDetailReservInfo.purpose)")
-                                .font(.interRegular(size: 12))
-                                .foregroundColor(.gray02)
+//                            Text("사용 목적: \(vm.selectedDetailReservInfo.purpose)")
+//                                .font(.interRegular(size: 12))
+//                                .foregroundColor(.gray02)
                         }
                         .padding()
                         .padding(.leading, 18)
