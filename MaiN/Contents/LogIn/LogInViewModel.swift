@@ -36,7 +36,7 @@ class LogInViewModel: ObservableObject {
                             TokenManager.shared.accessToken = tokenResponse.accessToken
                             TokenManager.shared.refreshToken = tokenResponse.refreshToken
                             UserDefaults.standard.set(tokenResponse.studentNo, forKey: "studentNumber")
-                            print("⭐️\(tokenResponse.refreshToken)")
+                            print("⭐️\(tokenResponse.accessToken)")
                             completion(true)
                         } else {
                             print("🚨 로그인 API 파싱 실패 :  Invalid response from server")

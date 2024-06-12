@@ -65,7 +65,10 @@ extension NewReservationAPI: TargetType {
     }
 
     var headers: [String : String]? {
-        let accessToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdHVkZW50Tm8iOiIyMDIyMTc4OSIsImlhdCI6MTcxODE5Mzk3NywiZXhwIjoxNzE4MjA0Nzc3fQ.I-5R4WzoBuvRQ_PrlzTa_Vr4tEKSli07PMw35sXI9dXdMSdvmPZAbwD4xbDkH16Rf_GxdY_mG5hPUlfCOCem2Q"
+        guard let accessToken = TokenManager.shared.accessToken else {
+            return nil
+        }
+        print("⭐️accessToken: \(accessToken)")
         switch self {
         case .getReservation(date: let date):
             return [
