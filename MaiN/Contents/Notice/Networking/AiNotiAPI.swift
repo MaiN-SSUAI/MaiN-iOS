@@ -15,7 +15,9 @@ enum AiNotiAPI {
 }
 
 extension AiNotiAPI: TargetType {
-    var baseURL: URL { return URL(string: "http://54.180.221.239")! }
+    var baseURL: URL {
+        return URL(string: "http://54.180.221.239")!
+    }
     
     var path: String {
         switch self {

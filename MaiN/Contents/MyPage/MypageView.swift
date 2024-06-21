@@ -38,7 +38,7 @@ struct MypageView: View {
                         primaryButton: .default(Text("취소").foregroundColor(.blue), action: {
                         }),
                         secondaryButton: .default(Text("확인").foregroundColor(.red), action: {
-                            UserDefaultHandler.shared.clearUserDefaults()
+                            TokenManager.shared.clearTokens()
                             logInVM.logOut()
                         })
                     )

@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct ReservationView: View {
+    @EnvironmentObject var loginVM: LogInViewModel
     @ObservedObject private var reservationVM = ReservationViewModel()
 
     var body: some View {
         VStack(spacing: 0) {
             TopReservationView(vm: reservationVM)
-            BottomReservationView(vm: reservationVM)
+            BottomReservationView(vm: reservationVM).padding(.top, 10)
         }
         .background(.white)
         .sheet(isPresented: $reservationVM.isRegisterModalPresented) {
-            RegisterModalView(vm: reservationVM)
+            RegisterModalView(vm: reservationVM, startTime: reservationVM.selectedDate, endTime: reservationVM.selectedDate.addingTimeInterval(3600))
                 .presentationDetents([.fraction(0.55)])
         }
         .sheet(isPresented: $reservationVM.isInfoModalPresented) {

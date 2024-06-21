@@ -12,7 +12,7 @@ import SwiftUI
 class ModelData: ObservableObject {
     @Published var aiNotices: [AiNoti] = []
     @Published var isLoading = true
-    let provider = MoyaProvider<AiNotiAPI>()
+    let provider = MoyaProvider<AiNotiAPI>(plugins: [AuthPlugin()])
     init() {
         setAPIValue()
     }

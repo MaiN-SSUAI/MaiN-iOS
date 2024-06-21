@@ -25,21 +25,21 @@ struct HomeUIView: View {
                 NoticeUIView()
                     .tabItem {
                         Image(selectedTab == .notice ? "notiTabFill" : "notiTab")
-                        Text("공지사항").font(.system(size: 10)).foregroundColor(.gray)
+                        Text("공지사항").font(.system(size: 10)).foregroundColor(.gray01)
                     }
                     .tag(Tab.notice)
                 
                 ReservationView()
                     .tabItem {
                         Image(selectedTab == .reservation ? "reserveTabFill" : "reserveTab")
-                        Text("예약").font(.system(size: 10)).foregroundColor(.gray)
+                        Text("예약").font(.system(size: 10)).foregroundColor(.gray01)
                     }
                     .tag(Tab.reservation)
                 
                 MypageView()
                     .tabItem {
                         Image(selectedTab == .profile ? "mypageTabFill" : "mypageTab")
-                        Text("마이페이지").font(.system(size: 10)).foregroundColor(.gray)
+                        Text("마이페이지").font(.system(size: 10)).foregroundColor(.gray01)
                     }
                     .tag(Tab.profile)
             }

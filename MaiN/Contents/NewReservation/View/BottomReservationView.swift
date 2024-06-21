@@ -9,86 +9,97 @@ import SwiftUI
 
 struct BottomReservationView: View {
     @ObservedObject var vm: ReservationViewModel
-
+    
     var body: some View {
         if vm.dayOrWeek == "day" {
-            if vm.isLoading {
+            if vm.isWeekLoading {
                 DefaultLoadingView()
             } else {
-                ZStack() {
-                    ScrollView() {
-                        HStack(spacing: 8) {
-                            TimeView()
-                            DayReservationView(vm: vm)
-                        }
-                        .padding(.horizontal, 14)
-                        .padding(.top, 15)
-                    }
-                    
-                    VStack {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                vm.isRegisterModalPresented = true
-                            }) {
-                                ZStack {
-                                    Circle()
-                                        .fill(.blue04)
-                                        .frame(width: 60, height: 60)
-                                        .shadow(color: .gray, radius: 3, x: 1, y: 1)
-                                    Text("+")
-                                        .font(.bold(size: 40))
-                                        .foregroundColor(.white)
-                                }
+                if !vm.reservations.isEmpty {
+                    ZStack() {
+                        ScrollView() {
+                            HStack(alignment: .top, spacing: 8) {
+                                TimeView()
+                                DayReservationView(vm: vm)
+                                    .padding(.top, 5)
                             }
-                            .padding(.bottom, 25).padding(.trailing, 15)
+                            .padding(.horizontal, 14)
+                            .padding(.top, 15)
+                        }
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    vm.isRegisterModalPresented = true
+                                }) {
+                                    ZStack {
+                                        Circle()
+                                            .fill(.blue04)
+                                            .frame(width: 60, height: 60)
+                                            .shadow(color: .gray, radius: 3, x: 1, y: 1)
+                                        Text("+")
+                                            .font(.bold(size: 40))
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                                .padding(.bottom, 25).padding(.trailing, 15)
+                            }
                         }
                     }
+                } else {
+                    NoReservationDayView(vm: vm)
                 }
             }
         } else {
             if vm.isWeekLoading {
-               DefaultLoadingView()
+                DefaultLoadingView()
             } else {
-                ScrollView() {
-                    ZStack(alignment: .leading) {
-                        TimeNumberView().padding(.leading, 10)
-                        HStack(spacing: 0) {
-                            Rectangle()
-                                .frame(maxWidth: 1, maxHeight: .infinity)
-                                .foregroundColor(.gray05)
-                            ForEach(0..<7, id: \.self) { index in
-                                WeekReservationView(vm: vm, index: index)
-                                Rectangle()
-                                    .frame(maxWidth: 1, maxHeight: .infinity)
-                                    .foregroundColor(.gray05)
+                if !(vm.weekReservations.allSatisfy { $0.isEmpty }) {
+                    ZStack {
+                        ScrollView() {
+                            ZStack(alignment: .topLeading) {
+                                TimeNumberView().padding(.leading, 10)
+                                HStack(alignment: .top, spacing: 0) {
+                                    Rectangle()
+                                        .frame(maxWidth: 1, maxHeight: .infinity)
+                                        .foregroundColor(.gray05)
+                                    ForEach(0..<7, id: \.self) { index in
+                                        WeekReservationView(vm: vm, index: index)
+                                        Rectangle()
+                                            .frame(maxWidth: 1, maxHeight: .infinity)
+                                            .foregroundColor(.gray05)
+                                    }
+                                }
+                                .padding(.leading, 28)
+                                .padding(.trailing, 20)
+                                .padding(.top, 5)
                             }
                         }
-                        .padding(.leading, 28)
-                        .padding(.trailing, 20)
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    vm.isRegisterModalPresented = true
+                                }) {
+                                    ZStack {
+                                        Circle()
+                                            .fill(.blue04)
+                                            .frame(width: 60, height: 60)
+                                            .shadow(color: .gray, radius: 3, x: 1, y: 1)
+                                        Text("+")
+                                            .font(.bold(size: 40))
+                                            .foregroundColor(.white)
+                                    }
+                                }
+                                .padding(.bottom, 25).padding(.trailing, 15)
+                            }
+                        }
                     }
+                } else {
+                    NoReservationWeekView(vm: vm)
                 }
-            }
-        }
-    }
-}
-
-struct TimeView: View {
-    private let timeArray: [String] = (0...23).map {
-        let hour = $0 % 12
-        let period = $0 < 12 ? "오전" : "오후"
-        return String(format: "%@ %d시", period, hour == 0 ? 12 : hour)
-    }
-
-    var body: some View {
-        ZStack(alignment: .top) {
-            ForEach(Array(timeArray.enumerated()), id: \.element) { index, time in
-                Text(time)
-                    .font(.interRegular(size: 12))
-                    .foregroundColor(.gray01)
-                    .frame(width: 50)
-                    .padding(.top, CGFloat(36 * index))
             }
         }
     }
@@ -146,7 +157,10 @@ struct WeekReservationView: View {
     let index: Int
     
     let colorSet: [ButtonColor] = [.green, .orange, .red, .purple, .blue]
-    
+    init(vm: ReservationViewModel, index: Int) {
+        self.vm = vm
+        self.index = index
+    }
     var body: some View {
         ZStack(alignment: .top) {
             //MARK: 시간 그리드
@@ -171,9 +185,4 @@ struct WeekReservationView: View {
             }
         }
     }
-}
-
-#Preview() {
-//    TimeView()
-    BottomReservationView(vm: ReservationViewModel())
 }

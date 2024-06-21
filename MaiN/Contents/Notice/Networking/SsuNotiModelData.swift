@@ -13,7 +13,7 @@ import SwiftUI
 class SsuNotiModelData: ObservableObject {
     @Published var ssuNotices: [SsuNoti] = []
     @Published var isLoading = true
-    let provider = MoyaProvider<SsuNotiAPI>()
+    let provider = MoyaProvider<SsuNotiAPI>(plugins: [AuthPlugin()])
     init() {
         setAPIValue()
     }

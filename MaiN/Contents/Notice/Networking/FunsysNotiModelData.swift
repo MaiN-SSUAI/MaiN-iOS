@@ -13,7 +13,7 @@ class FunsysNotiModelData: ObservableObject {
     
     @Published var funsysNotices: [FunsysNoti] = []
     @Published var isLoading = true
-    let provider = MoyaProvider<FunsysNotiAPI>()
+    let provider = MoyaProvider<FunsysNotiAPI>(plugins: [AuthPlugin()])
     
     init() {
         setAPIValue()

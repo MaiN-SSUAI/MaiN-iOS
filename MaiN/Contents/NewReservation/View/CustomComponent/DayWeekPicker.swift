@@ -33,7 +33,3 @@ struct DayWeekPicker: View {
 
     }
 }
-
-#Preview {
-    DayWeekPicker(vm: ReservationViewModel())
-}

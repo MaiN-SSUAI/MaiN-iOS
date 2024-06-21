@@ -27,8 +27,9 @@ struct MonthPicker: View {
                            displayedComponents: .date)
                     .datePickerStyle(GraphicalDatePickerStyle())
                     .padding()
-                    .onChange(of: vm.selectedDate) { _ in
+                    .onChange(of: vm.selectedDate) { newDate in
                         showingDatePicker = false
+                        vm.fetchWeekReservationAPI(for: newDate)
                     }
                     .presentationDetents([.fraction(0.5)])
             }

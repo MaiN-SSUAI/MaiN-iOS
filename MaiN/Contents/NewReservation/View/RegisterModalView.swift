@@ -14,8 +14,8 @@ struct RegisterModalView: View {
     @ObservedObject var vm: ReservationViewModel
     
     //MARK: Data
-    @State var startTime = Date()
-    @State private var endTime = Date().addingTimeInterval(3600)
+    @State var startTime: Date
+    @State private var endTime: Date
     @State var studentId: String = ""
     @State var studentIds: [String] = [UserDefaults.standard.string(forKey: "studentNumber") ?? ""]
     @State var selectedPurpose: String = "학습"
@@ -23,6 +23,12 @@ struct RegisterModalView: View {
     //MARK: View
     @State private var isAlertPresented = false
     
+    init(vm: ReservationViewModel, startTime: Date, endTime: Date) {
+        self.vm = vm
+        self._startTime = State(initialValue: startTime)
+        self._endTime = State(initialValue: endTime)
+    }
+
     var body: some View {
         VStack(spacing: 5) {
             HStack() {
@@ -78,11 +84,16 @@ struct RegisterModalView: View {
                                 if (studentIds.contains(studentId)) {
                                     vm.alertMessage = "이미 등록한 학생입니다."
                                     vm.showAlert = true
+                                } else if !(studentId.count == 8 && studentId.first == "2" ){
+                                    vm.alertMessage = "학번 8자리만 입력 가능합니다."
+                                    vm.showAlert = true
                                 } else {
                                     vm.checkUser(user: studentId, date: vm.selectedDate.toDateString()) { isValid in
                                         if isValid {
                                             studentIds.append(studentId)
                                             print("??\(studentIds)")
+                                        } else {
+                                            vm.alertMessage = "등록 가능한 학생"
                                         }
                                     }
                                 }
@@ -117,19 +128,19 @@ struct RegisterModalView: View {
                         }.padding(.bottom, 15)
                         HStack(spacing: 40) {
                             ForEach(purposes, id: \.self) { purpose in
-                                HStack {
-                                    Button(action: {
-                                        selectedPurpose = purpose
-                                    }) {
+                                Button(action: {
+                                    selectedPurpose = purpose
+                                }) {
+                                    HStack {
                                         Image(systemName: selectedPurpose == purpose ? "checkmark.circle.fill" : "circle")
                                             .foregroundColor(.blue04)
+                                            .padding(.trailing, 15)
+                                        Text("\(purpose)")
+                                            .font(.interRegular(size: 15))
+                                        Spacer()
                                     }
-                                    .buttonStyle(PlainButtonStyle())
-                                    .padding(.trailing, 15)
-                                    Text("\(purpose)")
-                                        .font(.interRegular(size: 15))
-                                    Spacer()
                                 }
+                                .buttonStyle(PlainButtonStyle())
                             }
                         }
                     }
@@ -138,17 +149,17 @@ struct RegisterModalView: View {
                     .background(.white)
                     
                     Button(action: {
+                        vm.isLoading = true
+                        vm.isWeekLoading = true
                         vm.isRegisterModalPresented = false
                         let reserv = ReservInfo(studentIds: studentIds, purpose: selectedPurpose, startDateTimeStr: startTime.toDateTimeString(), endDateTimeStr: endTime.toDateTimeString())
-                        print("검거하자\(reserv.studentIds)")
                         vm.addReservation(reservInfo: reserv) { alertMessage in
                             vm.trigger.toggle()
                             vm.alertMessage = alertMessage
                             vm.showAlert = true
-                            
                         }
                     }){
-                        Text("저장").font(.bold(size: 20))
+                        Text("저장").font(.normal(size: 20))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
@@ -159,6 +170,12 @@ struct RegisterModalView: View {
                     .padding(.vertical, 15)
                 }
             }
+            .gesture(
+                TapGesture()
+                    .onEnded { _ in
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    }
+            )
         }.background(.gray00)
     }
 }
@@ -173,7 +190,7 @@ struct StudentIdView: View {
         ZStack() {
             Text("\(studentId)").font(.interRegular(size: 14))
                 .frame(width: 90, height: 30)
-                .background(.blue05)
+                .background(.blue04)
                 .foregroundColor(.white)
                 .cornerRadius(30)
                 .padding(3)
