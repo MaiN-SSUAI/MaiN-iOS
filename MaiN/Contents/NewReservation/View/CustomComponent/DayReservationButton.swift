@@ -37,13 +37,8 @@ struct DayReservationButton: View {
             Spacer()
                 .frame(height: startPixel)
             Button(action: {
-                if vm.dayOrWeek == "day" {
-                    vm.selectedDetailReservInfo = ReservDetailInfo(reservId: reservId, studentIds: studentNo, purpose: "", time: time)
-                    vm.isDetailModalPresented = true
-                } else {
-                    vm.dayOrWeek = "day"
-                    vm.selectedDate = self.date
-                }
+                vm.selectedDetailReservInfo = ReservDetailInfo(reservId: reservId, studentIds: studentNo, purpose: "", time: time)
+                vm.isDetailModalPresented = true
             }, label: {
                 ZStack(alignment: .leading) {
                     VStack(alignment: .leading, spacing: 0) {
@@ -59,7 +54,7 @@ struct DayReservationButton: View {
                             Text(studentNo[0].trimmingCharacters(in: .whitespaces))
                                 .foregroundColor(buttonColor.pointColor)
                             //                            .font(.interSemiBold(size: 12))
-                                .font(.bold(size: 9))
+                                .font(.bold(size: 6))
                         }
                     }
                     .padding(.top, 5)
@@ -79,7 +74,7 @@ struct DayReservationButton: View {
             })
             .sheet(isPresented: $vm.isDetailModalPresented) {
                 DetailReservModalView(vm: vm)
-                    .presentationDetents([.fraction(0.3)])
+                    .presentationDetents([.fraction(0.2)])
             }
         }.frame(height: endPixel)
     }
@@ -117,7 +112,7 @@ struct DayReservationButton: View {
         inputFormatter.locale = Locale(identifier: "en_US_POSIX")
 
         let outputFormatterHour = DateFormatter()
-        outputFormatterHour.dateFormat = "h : "
+        outputFormatterHour.dateFormat = "h:"
         outputFormatterHour.locale = Locale(identifier: "ko_KR")
         
         let outputFormatterMinute = DateFormatter()
@@ -127,12 +122,7 @@ struct DayReservationButton: View {
         if let date = inputFormatter.date(from: dateTimeString) {
             let hourString = outputFormatterHour.string(from: date)
             let minuteString = outputFormatterMinute.string(from: date)
-
-//            if minuteString == "00" {
-//                return hourString
-//            } else {
-                return "\(hourString) \(minuteString)"
-//            }
+                return "\(hourString)\(minuteString)"
         } else {
             return dateTimeString
         }

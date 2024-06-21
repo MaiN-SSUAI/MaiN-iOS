@@ -17,7 +17,9 @@ enum NewReservationAPI {
 }
 
 extension NewReservationAPI: TargetType {
-    var baseURL: URL { return URL(string: "http://54.180.221.239")! }
+    var baseURL: URL { 
+        return URL(string: "http://54.180.221.239")!
+    }
 
     var path: String {
         switch self {
@@ -68,7 +70,6 @@ extension NewReservationAPI: TargetType {
         guard let accessToken = TokenManager.shared.accessToken else {
             return nil
         }
-        print("⭐️accessToken: \(accessToken)")
         switch self {
         case .getReservation(date: let date):
             return [

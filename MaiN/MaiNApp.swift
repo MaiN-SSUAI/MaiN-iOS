@@ -9,32 +9,15 @@ import SwiftUI
 
 @main
 struct MaiNApp: App {
-    @AppStorage("isLogIn") var isLogin: String?
-    var isAutoLogin: String? = UserDefaults.standard.string(forKey:"isAutoLogin")
-    @StateObject var logInViewModel = LogInViewModel()
-
-    init(){
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
-        UINavigationBar.appearance().backgroundColor = .gray00
-    }
+    @StateObject var vm = LogInViewModel()
 
     var body: some Scene {
         WindowGroup {
-            ApplicationSwitcher().environmentObject(logInViewModel)
+            if (vm.loginSuccess || UserDefaults.standard.bool(forKey: "isAutoLogin")){
+                HomeUIView().environmentObject(vm)
+            } else {
+                LogInUIView().environmentObject(vm)
+            }
         }
-    }
-}
-
-struct ApplicationSwitcher: View {
-
-    @EnvironmentObject var vm: LogInViewModel
-
-    var body: some View {
-        if (vm.loginSuccess) || (UserDefaults.standard.bool(forKey: "isAutoLogin")) {
-            HomeUIView()
-        } else {
-            LogInUIView()
-        }
-
     }
 }
