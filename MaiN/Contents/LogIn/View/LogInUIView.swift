@@ -35,15 +35,15 @@ struct LogInUIView: View {
                     VStack {
 //                        Spacer()
                         HStack(spacing: 0){
-                            Text("M")
+                            Text("m")
                                 .font(.system(size: 73, weight: .bold)).foregroundColor(.black)
-                            Text("ai")
+                            Text("AI")
                                 .font(.system(size: 73, weight: .bold))
                                 .foregroundColor(.titleBlue)
-                            Text("N")
+                            Text("n")
                                 .font(.system(size: 73, weight: .bold)).foregroundColor(.black)
                             
-                        }.padding(.bottom, 10)
+                        }.padding(.bottom, 1)
 //
                         Text("SSU AI융합학부 \n 공지사항 및 예약 서비스")
                             .foregroundColor(.black)

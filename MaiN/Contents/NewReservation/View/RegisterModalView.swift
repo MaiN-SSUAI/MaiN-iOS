@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RegisterModalView: View {
-    let purposes: [String] = ["학습", "회의", "수업"]
+    let purposes: [String] = ["팀 프로젝트", "회의", "수업"]
     
     //MARK: ViewModel
     @ObservedObject var vm: ReservationViewModel
@@ -18,7 +18,7 @@ struct RegisterModalView: View {
     @State private var endTime: Date
     @State var studentId: String = ""
     @State var studentIds: [String] = [UserDefaults.standard.string(forKey: "studentNumber") ?? ""]
-    @State var selectedPurpose: String = "학습"
+    @State var selectedPurpose: String = "팀 프로젝트"
     
     //MARK: View
     @State private var isAlertPresented = false
@@ -34,6 +34,7 @@ struct RegisterModalView: View {
             HStack() {
                 Spacer()
                 Text("등록하기").font(.interSemiBold(size: 15)).padding(15)
+                    .foregroundColor(.black)
                 Spacer()
             }.background(.white)
             
@@ -46,6 +47,7 @@ struct RegisterModalView: View {
                             .foregroundColor(.black)
                         Spacer()
                         Text("\(vm.selectedDate.toDateString())").font(.interRegular(size: 14)).padding(.trailing, 10)
+                            .foregroundColor(.black)
                         DatePicker("", selection: $startTime, displayedComponents: .hourAndMinute)
                             .labelsHidden()
                             .padding(.trailing, 15)
@@ -58,6 +60,7 @@ struct RegisterModalView: View {
                             .foregroundColor(.black)
                         Spacer()
                         Text("\(vm.selectedDate.toDateString())").font(.interRegular(size: 14)).padding(.trailing, 10)
+                            .foregroundColor(.black)
                         DatePicker("", selection: $endTime, displayedComponents: .hourAndMinute)
                             .labelsHidden()
                             .padding(.trailing, 15)
@@ -73,6 +76,8 @@ struct RegisterModalView: View {
                             Spacer()
             
                             TextField("ex-20220000", text: $studentId)
+                                .keyboardType(.numberPad)
+                                .foregroundColor(.black)
                                 .padding(7)
                                 .padding(.horizontal, 10)
                                 .background(.gray00)
@@ -84,16 +89,18 @@ struct RegisterModalView: View {
                                 if (studentIds.contains(studentId)) {
                                     vm.alertMessage = "이미 등록한 학생입니다."
                                     vm.showAlert = true
-                                } else if !(studentId.count == 8 && studentId.first == "2" ){
+                                } else if !(studentId.count == 8){
                                     vm.alertMessage = "학번 8자리만 입력 가능합니다."
                                     vm.showAlert = true
                                 } else {
-                                    vm.checkUser(user: studentId, date: vm.selectedDate.toDateString()) { isValid in
-                                        if isValid {
+                                    vm.checkUser(user: studentId, date: vm.selectedDate.toDateString()) { result in
+                                        if result == "성공" {
                                             studentIds.append(studentId)
-                                            print("??\(studentIds)")
                                         } else {
-                                            vm.alertMessage = "등록 가능한 학생"
+                                            if !(result == "토큰 만료"){
+                                                vm.alertMessage = result
+                                                vm.showAlert = true
+                                            }
                                         }
                                     }
                                 }
@@ -125,8 +132,8 @@ struct RegisterModalView: View {
                                 .font(.interRegular(size: 14))
                                 .foregroundColor(.black)
                             Spacer()
-                        }.padding(.bottom, 15)
-                        HStack(spacing: 40) {
+                        }.padding(.bottom, 25)
+                        VStack(spacing: 18) {
                             ForEach(purposes, id: \.self) { purpose in
                                 Button(action: {
                                     selectedPurpose = purpose
@@ -136,7 +143,8 @@ struct RegisterModalView: View {
                                             .foregroundColor(.blue04)
                                             .padding(.trailing, 15)
                                         Text("\(purpose)")
-                                            .font(.interRegular(size: 15))
+                                            .font(.interRegular(size: 14))
+                                            .foregroundColor(.black)
                                         Spacer()
                                     }
                                 }
@@ -152,11 +160,13 @@ struct RegisterModalView: View {
                         vm.isLoading = true
                         vm.isWeekLoading = true
                         vm.isRegisterModalPresented = false
-                        let reserv = ReservInfo(studentIds: studentIds, purpose: selectedPurpose, startDateTimeStr: startTime.toDateTimeString(), endDateTimeStr: endTime.toDateTimeString())
+                        let reserv = ReservInfo(studentIds: studentIds, purpose: selectedPurpose, startDateTimeStr: startTime.formatDateToString(), endDateTimeStr: endTime.formatDateToString())
                         vm.addReservation(reservInfo: reserv) { alertMessage in
-                            vm.trigger.toggle()
-                            vm.alertMessage = alertMessage
-                            vm.showAlert = true
+                            if !(alertMessage == "토큰 만료") {
+                                vm.trigger.toggle()
+                                vm.alertMessage = alertMessage
+                                vm.showAlert = true
+                            }
                         }
                     }){
                         Text("저장").font(.normal(size: 20))
@@ -208,3 +218,4 @@ struct StudentIdView: View {
         }
     }
 }
+

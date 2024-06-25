@@ -23,8 +23,9 @@ struct MonthPicker: View {
                 }
             }
             .sheet(isPresented: $showingDatePicker) {
-                DatePicker("날짜 선택", selection: $vm.selectedDate, 
-                           displayedComponents: .date)
+                DatePicker("날짜 선택", selection: $vm.selectedDate, displayedComponents: .date)
+                    .environment(\.locale, Locale(identifier: "en_US_POSIX"))
+                    .environment(\.calendar, Calendar(identifier: .gregorian).withFirstWeekday(2))
                     .datePickerStyle(GraphicalDatePickerStyle())
                     .padding()
                     .onChange(of: vm.selectedDate) { newDate in
@@ -34,5 +35,13 @@ struct MonthPicker: View {
                     .presentationDetents([.fraction(0.5)])
             }
         }
+    }
+}
+
+extension Calendar {
+    func withFirstWeekday(_ weekday: Int) -> Calendar {
+        var calendar = self
+        calendar.firstWeekday = weekday
+        return calendar
     }
 }

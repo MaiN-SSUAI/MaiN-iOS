@@ -32,10 +32,20 @@ class TokenManager {
         }
     }
     
+    var studentId: String? {
+        get {
+            UserDefaults.standard.string(forKey: "studentNumber")
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: "studentNumber")
+        }
+    }
+    
     func clearTokens() {
         UserDefaults.standard.removeObject(forKey: "accessToken")
         UserDefaults.standard.removeObject(forKey: "refreshToken")
         UserDefaults.standard.removeObject(forKey: "isAutoLogin")
+        UserDefaults.standard.removeObject(forKey: "studentNumber")
     }
     
     func refreshAccessToken(completion: @escaping (Bool) -> Void) {

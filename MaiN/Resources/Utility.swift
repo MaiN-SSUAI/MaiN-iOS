@@ -21,6 +21,13 @@ extension Date {
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         return dateFormatter.string(from: self)
     }
+    
+    func formatDateToString() -> String {
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+        outputFormatter.timeZone = TimeZone(secondsFromGMT: 9 * 3600) // +09:00 시간대
+        return outputFormatter.string(from: self)
+    }
 }
 
 extension String {

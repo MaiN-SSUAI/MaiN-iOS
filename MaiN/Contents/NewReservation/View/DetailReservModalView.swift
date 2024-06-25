@@ -30,18 +30,23 @@ struct DetailReservModalView: View {
             
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("세미나실2 / \(vm.selectedDetailReservInfo.studentIds[0])")
+                    Text("세미나실2")
                         .font(.system(size: 14))
                         .foregroundColor(.black)
                     
                     if vm.selectedDetailReservInfo.studentIds.count > 1 {
-                        let remainingIds = vm.selectedDetailReservInfo.studentIds.dropFirst().joined(separator: ", ")
-                        Text("동반 이용자 : \(remainingIds)")
+//                        let remainingIds = vm.selectedDetailReservInfo.studentIds.dropFirst().joined(separator: ", ")
+                        let remainingIds = vm.selectedDetailReservInfo.studentIds.joined(separator: ", ")
+                        Text("이용자 : \(remainingIds)")
                             .font(.system(size: 12))
                             .foregroundColor(.gray)
                     }
                     
                     Text("시간 : \(vm.selectedDetailReservInfo.time)")
+                        .font(.system(size: 12))
+                        .foregroundColor(.gray)
+                    
+                    Text("사용 목적 : \(vm.selectedDetailReservInfo.purpose)")
                         .font(.system(size: 12))
                         .foregroundColor(.gray)
                 }
@@ -68,11 +73,15 @@ struct DetailReservModalView: View {
                             title: Text(""),
                             message: Text("정말로 삭제하겠습니까?"),
                             primaryButton: .destructive(Text("삭제")) {
+                                vm.isLoading = true
+                                vm.isWeekLoading = true
                                 vm.isDetailModalPresented = false
                                 vm.deleteReservation(reservId: vm.selectedDetailReservInfo.reservId) { result in
-                                    vm.trigger.toggle()
-                                    vm.alertMessage = result
-                                    vm.showAlert = true
+                                    if !(result == "토큰 만료"){
+                                        vm.trigger.toggle()
+                                        vm.alertMessage = result
+                                        vm.showAlert = true
+                                    }
                                 }
                             },
                             secondaryButton: .cancel(Text("취소"))

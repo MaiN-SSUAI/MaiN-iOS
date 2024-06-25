@@ -19,11 +19,11 @@ struct ReservationView: View {
         .background(.white)
         .sheet(isPresented: $reservationVM.isRegisterModalPresented) {
             RegisterModalView(vm: reservationVM, startTime: reservationVM.selectedDate, endTime: reservationVM.selectedDate.addingTimeInterval(3600))
-                .presentationDetents([.fraction(0.55)])
+                .presentationDetents([.fraction(0.65)])
         }
         .sheet(isPresented: $reservationVM.isInfoModalPresented) {
             InfoModalView()
-                .presentationDetents([.fraction(0.4)])
+                .presentationDetents([.fraction(0.45)])
         }
         .alert(isPresented: $reservationVM.showAlert) {
             Alert(title: Text(""), message: Text(reservationVM.alertMessage ?? "No message"), dismissButton: .default(Text("확인")))
