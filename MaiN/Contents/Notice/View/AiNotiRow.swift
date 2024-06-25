@@ -49,39 +49,54 @@ struct AiNotiRow: View {
                     } else {
                         List {
                             ForEach(modelData.aiNotices.filter { !showFavoritesOnly || $0.favorites }, id: \.id) { aiNoti in
-                                NavigationLink(destination: WKWebViewPractice(url: aiNoti.link)
-                                    .navigationBarBackButtonHidden(true)
-                                    .navigationBarItems(
-                                        leading: CustomBackButton(),
-                                        trailing: Button(action: {
-                                            if let index = modelData.aiNotices.firstIndex(where: { $0.id == aiNoti.id }) {
-                                                modelData.aiNotices[index].favorites.toggle()
-                                                if modelData.aiNotices[index].favorites {
-                                                    modelData.addFavorite(studentId: self.studentId ?? "", aiNotiId: aiNoti.id)
-                                                } else {
-                                                    modelData.deleteFavorite(studentId: self.studentId ?? "", aiNotiId: aiNoti.id)
+                                ZStack(alignment: .topTrailing) {
+                                    NavigationLink(destination: WKWebViewPractice(url: aiNoti.link)
+                                        .navigationBarBackButtonHidden(true)
+                                        .navigationBarItems(
+                                            leading: CustomBackButton(),
+                                            trailing: Button(action: {
+                                                if let index = modelData.aiNotices.firstIndex(where: { $0.id == aiNoti.id }) {
+                                                    modelData.aiNotices[index].favorites.toggle()
+                                                    if modelData.aiNotices[index].favorites {
+                                                        modelData.addFavorite(studentId: self.studentId ?? "", aiNotiId: aiNoti.id)
+                                                    } else {
+                                                        modelData.deleteFavorite(studentId: self.studentId ?? "", aiNotiId: aiNoti.id)
+                                                    }
                                                 }
-                                            }
-                                        }) {
-                                            Image(systemName: aiNoti.favorites ? "star.fill" : "star")
-                                                .foregroundColor(aiNoti.favorites ? .yellow : .gray)
-                                        }
-                                    )
-                                    .navigationBarTitle("AI융합학부 공지사항", displayMode: .inline)
-                                ) {
-                                    VStack {
-                                        VStack(alignment: .leading, spacing: 6) {
-                                            HStack {
-                                                Text(aiNoti.date).font(.bold(size: 16)).foregroundStyle(.blue02)
-                                                Spacer()
+                                            }) {
                                                 Image(systemName: aiNoti.favorites ? "star.fill" : "star")
                                                     .foregroundColor(aiNoti.favorites ? .yellow : .gray)
                                             }
-                                            Text(aiNoti.title).font(.normal(size: 13)).foregroundStyle(.black).fixedSize(horizontal: false, vertical: true)
+                                        )
+                                        .navigationBarTitle("AI융합학부 공지사항", displayMode: .inline).foregroundColor(.black)
+                                    ) {
+                                        VStack {
+                                            VStack(alignment: .leading, spacing: 6) {
+                                                HStack {
+                                                    Text(aiNoti.date).font(.bold(size: 16)).foregroundStyle(.blue02)
+                                                    Spacer()
+                                                }
+                                                Text(aiNoti.title).font(.normal(size: 13)).foregroundStyle(.black).fixedSize(horizontal: false, vertical: true)
+                                            }
+                                            Spacer()
                                         }
-                                        Spacer()
+                                        .frame(height: 80)
                                     }
-                                    .frame(height: 80)
+                                    Button (action: {
+                                        if let index = modelData.aiNotices.firstIndex(where: { $0.id == aiNoti.id }) {
+                                            modelData.aiNotices[index].favorites.toggle()
+                                            if modelData.aiNotices[index].favorites {
+                                                modelData.addFavorite(studentId: self.studentId ?? "", aiNotiId: aiNoti.id)
+                                            } else {
+                                                modelData.deleteFavorite(studentId: self.studentId ?? "", aiNotiId: aiNoti.id)
+                                            }
+                                        }
+                                    }) {
+                                        Image(systemName: aiNoti.favorites ? "star.fill" : "star")
+                                            .foregroundColor(aiNoti.favorites ? .yellow : .gray)
+                                            .padding(.trailing, 10)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
                                 }
                                 .listRowBackground(Color.white)
                             }
