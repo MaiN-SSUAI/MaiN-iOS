@@ -15,6 +15,8 @@ struct TopReservationView: View {
             HStack() {
                 Text("세미나실 예약").font(.interRegular(size: 24)).foregroundColor(.black)
                 Spacer()
+                Button(action: {vm.fetchWeekReservationAPI(for: vm.selectedDate)})
+                    {Image("refresh").frame(width: 30, height: 30)}
                 Button(action: vm.showInfoModal)
                     {Image("info").frame(width: 30, height: 30)}
             }

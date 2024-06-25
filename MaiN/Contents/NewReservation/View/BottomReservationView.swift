@@ -9,10 +9,10 @@ import SwiftUI
 
 struct BottomReservationView: View {
     @ObservedObject var vm: ReservationViewModel
-    
+    let studentId: String = TokenManager.shared.studentId ?? ""
     var body: some View {
         if vm.dayOrWeek == "day" {
-            if vm.isWeekLoading {
+            if vm.isWeekLoading || vm.isLoading {
                 DefaultLoadingView()
             } else {
                 if !vm.reservations.isEmpty {
@@ -25,13 +25,23 @@ struct BottomReservationView: View {
                             }
                             .padding(.horizontal, 14)
                             .padding(.top, 15)
+                            .padding(.bottom, 30)
                         }
                         VStack {
                             Spacer()
                             HStack {
                                 Spacer()
                                 Button(action: {
-                                    vm.isRegisterModalPresented = true
+                                    vm.checkUser(user: studentId, date: vm.selectedDate.toDateString()) { result in
+                                        if result == "성공" {
+                                            vm.isRegisterModalPresented = true
+                                        } else {
+                                            if !(result == "토큰 만료"){
+                                                vm.alertMessage = result
+                                                vm.showAlert = true
+                                            }
+                                        }
+                                    }
                                 }) {
                                     ZStack {
                                         Circle()
@@ -56,47 +66,25 @@ struct BottomReservationView: View {
                 DefaultLoadingView()
             } else {
                 if !(vm.weekReservations.allSatisfy { $0.isEmpty }) {
-                    ZStack {
-                        ScrollView() {
-                            ZStack(alignment: .topLeading) {
-                                TimeNumberView().padding(.leading, 10)
-                                HStack(alignment: .top, spacing: 0) {
+                    ScrollView() {
+                        ZStack(alignment: .topLeading) {
+                            TimeNumberView().padding(.leading, 10)
+                            HStack(alignment: .top, spacing: 0) {
+                                Rectangle()
+                                    .frame(maxWidth: 1, maxHeight: .infinity)
+                                    .foregroundColor(.gray05)
+                                ForEach(0..<7, id: \.self) { index in
+                                    WeekReservationView(vm: vm, index: index)
                                     Rectangle()
                                         .frame(maxWidth: 1, maxHeight: .infinity)
                                         .foregroundColor(.gray05)
-                                    ForEach(0..<7, id: \.self) { index in
-                                        WeekReservationView(vm: vm, index: index)
-                                        Rectangle()
-                                            .frame(maxWidth: 1, maxHeight: .infinity)
-                                            .foregroundColor(.gray05)
-                                    }
                                 }
-                                .padding(.leading, 28)
-                                .padding(.trailing, 20)
-                                .padding(.top, 5)
                             }
+                            .padding(.leading, 28)
+                            .padding(.trailing, 20)
+                            .padding(.top, 5)
                         }
-                        VStack {
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                Button(action: {
-                                    vm.isRegisterModalPresented = true
-                                }) {
-                                    ZStack {
-                                        Circle()
-                                            .fill(.blue04)
-                                            .frame(width: 60, height: 60)
-                                            .shadow(color: .gray, radius: 3, x: 1, y: 1)
-                                        Text("+")
-                                            .font(.bold(size: 40))
-                                            .foregroundColor(.white)
-                                    }
-                                }
-                                .padding(.bottom, 25).padding(.trailing, 15)
-                            }
-                        }
-                    }
+                    }.padding(.bottom, 30)
                 } else {
                     NoReservationWeekView(vm: vm)
                 }

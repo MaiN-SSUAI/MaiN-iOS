@@ -56,7 +56,6 @@ final class AuthPlugin: PluginType {
                 }
             }
         case .failure(let error):
-            // 다른 에러 처리
             print("Request failed with error: \(error)")
         }
     }

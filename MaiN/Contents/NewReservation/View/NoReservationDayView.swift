@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NoReservationDayView: View {
     @ObservedObject var vm: ReservationViewModel
-    
+    let studentId: String = TokenManager.shared.studentId ?? ""
     var body: some View {
         ZStack() {
             ScrollView() {
@@ -35,7 +35,16 @@ struct NoReservationDayView: View {
                 HStack {
                     Spacer()
                     Button(action: {
-                        vm.isRegisterModalPresented = true
+                        vm.checkUser(user: studentId, date: vm.selectedDate.toDateString()) { result in
+                            if result == "성공" {
+                                vm.isRegisterModalPresented = true
+                            } else {
+                                if !(result == "토큰 만료"){
+                                    vm.alertMessage = result
+                                    vm.showAlert = true
+                                }
+                            }
+                        }
                     }) {
                         ZStack {
                             Circle()

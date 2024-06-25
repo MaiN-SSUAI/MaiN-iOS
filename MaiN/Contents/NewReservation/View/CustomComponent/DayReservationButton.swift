@@ -11,6 +11,7 @@ struct DayReservationButton: View {
     @ObservedObject var vm: ReservationViewModel
     let date: Date
     let time: String
+    let purpose: String
     let studentNo: [String]
     let buttonColor: ButtonColor
     let reservId: Int
@@ -25,6 +26,7 @@ struct DayReservationButton: View {
         } else {
             self.time = "\(DayReservationButton.weekFormatTime(reservation.start)) ~ \(DayReservationButton.weekFormatTime(reservation.end))"
         }
+        self.purpose = reservation.purpose
         self.studentNo = reservation.studentNo
         self.reservId = reservation.reservId
         self.buttonColor = color
@@ -37,7 +39,7 @@ struct DayReservationButton: View {
             Spacer()
                 .frame(height: startPixel)
             Button(action: {
-                vm.selectedDetailReservInfo = ReservDetailInfo(reservId: reservId, studentIds: studentNo, purpose: "", time: time)
+                vm.selectedDetailReservInfo = ReservDetailInfo(reservId: reservId, studentIds: studentNo, purpose: purpose, time: time)
                 vm.isDetailModalPresented = true
             }, label: {
                 ZStack(alignment: .leading) {
@@ -47,14 +49,14 @@ struct DayReservationButton: View {
                                 .foregroundColor(buttonColor.pointColor)
                             //                            .font(.interSemiBold(size: 12))
                                 .font(.bold(size: 12))
-                            Text(studentNo[0])
+                            Text(studentNo.joined(separator: ", "))
                                 .foregroundColor(buttonColor.pointColor)
                                 .font(.interRegular(size: 12))
                         } else {
-                            Text(studentNo[0].trimmingCharacters(in: .whitespaces))
+                            Text(studentNo.joined(separator: "\n"))
                                 .foregroundColor(buttonColor.pointColor)
                             //                            .font(.interSemiBold(size: 12))
-                                .font(.bold(size: 6))
+                                .font(.bold(size: 8))
                         }
                     }
                     .padding(.top, 5)
