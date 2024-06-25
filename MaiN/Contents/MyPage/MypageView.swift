@@ -44,6 +44,18 @@ struct MypageView: View {
                     )
                 }
                 Divider().frame(width: 254)
+                
+                Button(action: {
+                    self.showAutoLoginAlert = true
+                }){
+                    HStack(){
+                        Text("문의하기").font(.bold(size: 15)).foregroundColor(.black)
+                        Spacer()
+                    }
+                }
+                
+                
+                Divider().frame(width: 254)
             }.padding(.horizontal, 46).padding(.vertical, 46).background(.white).cornerRadius(10)
                 .padding(.horizontal, 20)
             Spacer()
