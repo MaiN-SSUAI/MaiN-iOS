@@ -16,9 +16,9 @@ struct TopReservationView: View {
                 Text("세미나실 예약").font(.interRegular(size: 24)).foregroundColor(.black)
                 Spacer()
                 Button(action: {vm.fetchWeekReservationAPI(for: vm.selectedDate)})
-                    {Image("refresh").frame(width: 30, height: 30)}
+                {Image("refresh").resizable().frame(width: 30, height: 30).rotationEffect(.degrees(230))}.padding(.trailing, 5)
                 Button(action: vm.showInfoModal)
-                    {Image("info").frame(width: 30, height: 30)}
+                {Image("info").resizable().frame(width: 30, height: 30)}
             }
             .padding(.top, 28)
             .padding(.bottom, 13)
