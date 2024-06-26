@@ -55,56 +55,70 @@ struct SsuNotiRow: View {
                     } else {
                         List {
                             ForEach(filteredSsuNotices, id: \.id) { aiNoti in
-                                NavigationLink(destination: WKWebViewPractice(url: aiNoti.link)
-                                    .navigationBarBackButtonHidden(true)
-                                    .navigationBarItems(
-                                        leading: CustomBackButton(),
-                                        trailing: Button(action: {
-                                            if let index = ssuNotiModelData.ssuNotices.firstIndex(where: { $0.id == aiNoti.id }) {
-                                                ssuNotiModelData.ssuNotices[index].favorites.toggle()
-                                                if ssuNotiModelData.ssuNotices[index].favorites {
-                                                    ssuNotiModelData.addFavorite(studentId: self.studentId ?? "", ssucatchNotiId: aiNoti.id)
-                                                } else {
-                                                    ssuNotiModelData.deleteFavorite(studentId: self.studentId ?? "", ssucatchNotiId: aiNoti.id)
+                                ZStack(alignment: .topTrailing) {
+                                    NavigationLink(destination: WKWebViewPractice(url: aiNoti.link)
+                                        .navigationBarBackButtonHidden(true)
+                                        .navigationBarItems(
+                                            leading: CustomBackButton(),
+                                            trailing: Button(action: {
+                                                if let index = ssuNotiModelData.ssuNotices.firstIndex(where: { $0.id == aiNoti.id }) {
+                                                    ssuNotiModelData.ssuNotices[index].favorites.toggle()
+                                                    if ssuNotiModelData.ssuNotices[index].favorites {
+                                                        ssuNotiModelData.addFavorite(studentId: self.studentId ?? "", ssucatchNotiId: aiNoti.id)
+                                                    } else {
+                                                        ssuNotiModelData.deleteFavorite(studentId: self.studentId ?? "", ssucatchNotiId: aiNoti.id)
+                                                    }
                                                 }
-                                            }
-                                        }) {
-                                            Image(systemName: aiNoti.favorites ? "star.fill" : "star")
-                                                .foregroundColor(aiNoti.favorites ? .yellow : .gray)
-                                        }
-                                        .navigationBarTitle("SSU:catch 공지사항", displayMode: .inline)
-                                    )
-                                ) {
-                                    VStack {
-                                        VStack(alignment: .leading, spacing: 6) {
-                                            HStack {
-                                                Text(aiNoti.sDate).font(.bold(size: 16)).foregroundStyle(.blue02)
-                                                Spacer()
+                                            }) {
                                                 Image(systemName: aiNoti.favorites ? "star.fill" : "star")
                                                     .foregroundColor(aiNoti.favorites ? .yellow : .gray)
                                             }
-                                            Text(aiNoti.title).font(.normal(size: 13)).foregroundStyle(.black).fixedSize(horizontal: false, vertical: true)
-                                        }
-                                        Spacer()
-                                        HStack {
-                                            Text("\(aiNoti.category)").font(.normal(size: 13)).foregroundColor(.black)
-                                                .padding(.horizontal, 11).padding(.vertical, 3).overlay(
-                                                    RoundedRectangle(cornerRadius: 0)
-                                                        .stroke(.black, lineWidth: 1)
-                                                )
-                                                .padding(.trailing, 8)
-                                            
-                                            if (aiNoti.progress != "") {
-                                                Text("\(aiNoti.progress)".replacingOccurrences(of: "\n", with: "")).font(.normal(size: 13)).foregroundColor(.white)
-                                                    .padding(.horizontal, 11).padding(.vertical, 3).background(.blue03)
+                                                .navigationBarTitle("SSU:catch 공지사항", displayMode: .inline)
+                                        )
+                                    ) {
+                                        VStack {
+                                            VStack(alignment: .leading, spacing: 6) {
+                                                HStack {
+                                                    Text(aiNoti.sDate).font(.bold(size: 16)).foregroundStyle(.blue02)
+                                                    Spacer()
+                                                }
+                                                Text(aiNoti.title).font(.normal(size: 13)).foregroundStyle(.black).fixedSize(horizontal: false, vertical: true)
                                             }
-                                            
                                             Spacer()
+                                            HStack {
+                                                Text("\(aiNoti.category)").font(.normal(size: 13)).foregroundColor(.black)
+                                                    .padding(.horizontal, 11).padding(.vertical, 3).overlay(
+                                                        RoundedRectangle(cornerRadius: 0)
+                                                            .stroke(.black, lineWidth: 1)
+                                                    )
+                                                    .padding(.trailing, 8)
+                                                
+                                                if (aiNoti.progress != "") {
+                                                    Text("\(aiNoti.progress)".replacingOccurrences(of: "\n", with: "")).font(.normal(size: 13)).foregroundColor(.white)
+                                                        .padding(.horizontal, 11).padding(.vertical, 3).background(.blue03)
+                                                }
+                                                
+                                                Spacer()
+                                            }
                                         }
+                                        .frame(height: 100)
                                     }
-                                    .frame(height: 100)
-                                }
-                                .listRowBackground(Color.white) // 각 항목의 배경색을 흰색으로 설정
+                                    Button (action: {
+                                        if let index = ssuNotiModelData.ssuNotices.firstIndex(where: { $0.id == aiNoti.id }) {
+                                            ssuNotiModelData.ssuNotices[index].favorites.toggle()
+                                            if ssuNotiModelData.ssuNotices[index].favorites {
+                                                ssuNotiModelData.addFavorite(studentId: self.studentId ?? "", ssucatchNotiId: aiNoti.id)
+                                            } else {
+                                                ssuNotiModelData.deleteFavorite(studentId: self.studentId ?? "", ssucatchNotiId: aiNoti.id)
+                                            }
+                                        }
+                                    }) {
+                                        Image(systemName: aiNoti.favorites ? "star.fill" : "star")
+                                            .foregroundColor(aiNoti.favorites ? .yellow : .gray)
+                                            .padding(.trailing, 10)
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                }.listRowBackground(Color.white)
                             }
                         }
                         .listStyle(PlainListStyle())
