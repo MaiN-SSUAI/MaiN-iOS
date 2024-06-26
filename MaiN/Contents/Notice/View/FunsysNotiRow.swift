@@ -35,11 +35,40 @@ struct FunsysNotiRow: View {
                     } else {
                         List {
                             ForEach(filteredFunsysNotices, id: \.id) { aiNoti in
-                            NavigationLink(destination: WKWebViewPractice(url: aiNoti.link)
-                                .navigationBarBackButtonHidden(true)
-                                .navigationBarItems(
-                                    leading: CustomBackButton(),
-                                    trailing: Button(action: {
+                                ZStack(alignment: .topTrailing) {
+                                    NavigationLink(destination: WKWebViewPractice(url: aiNoti.link)
+                                        .navigationBarBackButtonHidden(true)
+                                        .navigationBarItems(
+                                            leading: CustomBackButton(),
+                                            trailing: Button(action: {
+                                                if let index = modelData.funsysNotices.firstIndex(where: { $0.id == aiNoti.id }) {
+                                                    modelData.funsysNotices[index].favorites.toggle()
+                                                    if modelData.funsysNotices[index].favorites {
+                                                        modelData.addFavorite(studentId: self.studentId ?? "", funsysNotiId: aiNoti.id)
+                                                    } else {
+                                                        modelData.deleteFavorite(studentId: self.studentId ?? "", funsysNotiId: aiNoti.id)
+                                                    }
+                                                }
+                                            }) {
+                                                Image(systemName: aiNoti.favorites ? "star.fill" : "star")
+                                                    .foregroundColor(aiNoti.favorites ? .yellow : .gray)
+                                            }
+                                                .navigationBarTitle("펀 시스템", displayMode: .inline)
+                                        )
+                                    ) {
+                                        VStack {
+                                            VStack(alignment: .leading, spacing: 6) {
+                                                HStack {
+                                                    Text("\(aiNoti.startDate) ~ \(aiNoti.endDate)").font(.bold(size: 16)).foregroundStyle(.blue02)
+                                                    Spacer()
+                                                }
+                                                Text(aiNoti.title).font(.normal(size: 13)).foregroundStyle(.black).fixedSize(horizontal: false, vertical: true)
+                                            }
+                                            Spacer()
+                                        }
+                                        .frame(height: 80)
+                                    }
+                                    Button (action: {
                                         if let index = modelData.funsysNotices.firstIndex(where: { $0.id == aiNoti.id }) {
                                             modelData.funsysNotices[index].favorites.toggle()
                                             if modelData.funsysNotices[index].favorites {
@@ -51,26 +80,11 @@ struct FunsysNotiRow: View {
                                     }) {
                                         Image(systemName: aiNoti.favorites ? "star.fill" : "star")
                                             .foregroundColor(aiNoti.favorites ? .yellow : .gray)
+                                            .padding(.trailing, 10)
                                     }
-                                    .navigationBarTitle("펀 시스템", displayMode: .inline)
-                                )
-                            ) {
-                                VStack {
-                                    VStack(alignment: .leading, spacing: 6) {
-                                        HStack {
-                                            Text("\(aiNoti.startDate) ~ \(aiNoti.endDate)").font(.bold(size: 16)).foregroundStyle(.blue02)
-                                            Spacer()
-                                            Image(systemName: aiNoti.favorites ? "star.fill" : "star")
-                                                .foregroundColor(aiNoti.favorites ? .yellow : .gray)
-                                        }
-                                        Text(aiNoti.title).font(.normal(size: 13)).foregroundStyle(.black).fixedSize(horizontal: false, vertical: true)
-                                    }
-                                    Spacer()
-                                }
-                                .frame(height: 80)
+                                    .buttonStyle(PlainButtonStyle())
+                                }.listRowBackground(Color.white)
                             }
-                            .listRowBackground(Color.white)
-                        }
                     }
                     .listStyle(PlainListStyle())
                 }
