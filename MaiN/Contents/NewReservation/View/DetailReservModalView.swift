@@ -71,7 +71,7 @@ struct DetailReservModalView: View {
                     .alert(isPresented: $showingAlert) {
                         Alert(
                             title: Text(""),
-                            message: Text("정말로 삭제하겠습니까?"),
+                            message: Text("예약을 삭제하시겠습니까?"),
                             primaryButton: .destructive(Text("삭제")) {
                                 vm.isLoading = true
                                 vm.isWeekLoading = true

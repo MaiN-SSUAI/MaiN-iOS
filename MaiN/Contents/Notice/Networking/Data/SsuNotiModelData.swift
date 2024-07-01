@@ -11,13 +11,26 @@ import SwiftUI
 
 
 class SsuNotiModelData: ObservableObject {
+    //MARK: State property
     @Published var ssuNotices: [SsuNoti] = []
     @Published var isLoading = true
-    let provider = MoyaProvider<SsuNotiAPI>(plugins: [AuthPlugin()])
+    
+    //MARK: property
+    private var paging = 0
+    private var isFetching: Bool = true
+    private let provider = MoyaProvider<SsuNotiAPI>(plugins: [AuthPlugin()])
+    
+    //MARK: init
     init() {
+        if let authPlugin = provider.plugins.first(where: { $0 is AuthPlugin }) as? AuthPlugin {
+            authPlugin.onRetrySuccess = { [weak self] in
+                self?.retrySuccess()
+            }
+        }
         setAPIValue()
     }
 
+    //MARK: function - API
     func addFavorite(studentId: String, ssucatchNotiId: Int) {
         provider.request(.ssuNotiFavoritesAdd(studentId: studentId, ssucatchNotiId: ssucatchNotiId)) { result in
             switch result {
@@ -44,20 +57,33 @@ class SsuNotiModelData: ObservableObject {
         guard let studentId = UserDefaults.standard.string(forKey: "studentNumber") else {
             return
         }
-        provider.request(.ssuNotiFavorites(studentId: studentId, pageNo: 1)) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case let .success(response):
-                    if let aiNoticess = try? response.map([SsuNoti].self) {
-                        self.ssuNotices = aiNoticess
-                        self.isLoading = false
-                    } else {
+        
+        if isFetching == true {
+            paging += 1
+            provider.request(.ssuNotiFavorites(studentId: studentId, pageNo: paging)) { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case let .success(response):
+                        if let aiNoticess = try? response.map([SsuNoti].self) {
+                            if aiNoticess == [] {
+                                self.isFetching = false
+                            } else {
+                                self.ssuNotices += aiNoticess
+                                self.isLoading = false
+                            }
+                        } else {
+                            self.isLoading = false
+                        }
+                    case .failure:
                         self.isLoading = false
                     }
-                case .failure:
-                    self.isLoading = false
                 }
             }
-        }
+        } else { return }
+    }
+    
+    func retrySuccess() {
+        self.isLoading = true
+        setAPIValue()
     }
 }

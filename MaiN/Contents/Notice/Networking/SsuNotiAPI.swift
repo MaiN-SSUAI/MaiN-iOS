@@ -9,6 +9,7 @@ import Foundation
 import Moya
 
 enum SsuNotiAPI {
+    case ssuNotiAll(studentId: String)
     case ssuNotiFavorites(studentId: String, pageNo: Int)
     case ssuNotiFavoritesAdd(studentId: String, ssucatchNotiId: Int)
     case ssuNotiFavoritesDelete(studentId: String, ssucatchNotiId: Int)
@@ -17,6 +18,7 @@ enum SsuNotiAPI {
 extension SsuNotiAPI: TargetType {
     var baseURL: URL {
         return URL(string: "http://54.180.221.239")!
+//        return URL(string: "http://localhost:8080")!
     }
     
     var path: String {
@@ -27,6 +29,8 @@ extension SsuNotiAPI: TargetType {
             return "/ssucatchnoti/favorites/add"
         case .ssuNotiFavoritesDelete(studentId: let studentId, ssucatchNotiId: let ssucatchNotiId):
             return "/ssucatchnoti/favorites/delete"
+        case .ssuNotiAll(let studentId):
+            return "/ssucatchnoti/favorites/all/dev/\(studentId)"
         }
     }
     
@@ -38,6 +42,8 @@ extension SsuNotiAPI: TargetType {
             return .delete
         case .ssuNotiFavoritesAdd:
             return .post
+        case .ssuNotiAll:
+            return .get
         }
     }
     
@@ -49,6 +55,8 @@ extension SsuNotiAPI: TargetType {
             return .requestParameters(parameters: ["studentNo": studentId, "ssuCatchNotiId": ssucatchNotiId], encoding: JSONEncoding.default)
         case .ssuNotiFavoritesDelete(studentId: let studentId, ssucatchNotiId: let ssucatchNotiId):
             return .requestParameters(parameters: ["studentNo": studentId, "ssuCatchNotiId": ssucatchNotiId], encoding: JSONEncoding.default)
+        case .ssuNotiAll:
+            return .requestPlain
         }
     }
     

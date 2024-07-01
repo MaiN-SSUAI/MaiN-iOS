@@ -37,6 +37,7 @@ final class AuthPlugin: PluginType {
                                 if (200...299).contains(response.statusCode) {
                                     print("😊 재시도 요청 성공: \(response.statusCode)")
                                     DispatchQueue.main.async {
+                                        // 재시도 성공 시, onRetrySuccess 클로저 호출
                                         self.onRetrySuccess?()
                                     }
                                 } else {
@@ -60,4 +61,5 @@ final class AuthPlugin: PluginType {
         }
     }
 }
+
 

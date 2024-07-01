@@ -18,7 +18,11 @@ struct SsuNotiRow: View {
     var body: some View {
         Group {
             if ssuNotiModelData.isLoading {
-                    ProgressView("Loading...")
+                VStack() {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                }.frame(maxWidth: .infinity).background(.gray00)
             } else {
                 VStack(){
                     Toggle(isOn: $showFavoritesOnly) {
@@ -118,7 +122,14 @@ struct SsuNotiRow: View {
                                             .padding(.trailing, 10)
                                     }
                                     .buttonStyle(PlainButtonStyle())
-                                }.listRowBackground(Color.white)
+                                }
+                                .listRowBackground(Color.white)
+                                .onAppear { // 페이징 처리
+                                    guard let index = filteredSsuNotices.firstIndex(where: { $0.id == aiNoti.id }) else { return }
+                                    if index == filteredSsuNotices.count - 1 {
+                                        ssuNotiModelData.setAPIValue()
+                                    }
+                                }
                             }
                         }
                         .listStyle(PlainListStyle())

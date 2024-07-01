@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreLocation
-struct SsuNoti: Decodable {
+struct SsuNoti: Decodable, Equatable {
     var id: Int
     var title: String
     var link: String

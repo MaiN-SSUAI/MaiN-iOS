@@ -31,7 +31,11 @@ struct AiNotiRow: View {
     var body: some View {
         Group {
             if modelData.isLoading {
-                    ProgressView("Loading...")
+                VStack() {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                }.frame(maxWidth: .infinity).background(.gray00)
             } else {
                 VStack(){
                     Toggle(isOn: $showFavoritesOnly) {
@@ -45,7 +49,7 @@ struct AiNotiRow: View {
                                 .font(.system(size: 16))
                                 .foregroundColor(.gray)
                             Spacer()
-                        }
+                        }.frame(maxWidth: .infinity)
                     } else {
                         List {
                             ForEach(modelData.aiNotices.filter { !showFavoritesOnly || $0.favorites }, id: \.id) { aiNoti in
@@ -99,6 +103,12 @@ struct AiNotiRow: View {
                                     .buttonStyle(PlainButtonStyle())
                                 }
                                 .listRowBackground(Color.white)
+                                .onAppear { // 페이징 처리
+                                    guard let index = modelData.aiNotices.firstIndex(where: { $0.id == aiNoti.id }) else { return }
+                                    if index == modelData.aiNotices.count - 1 {
+                                        modelData.setAPIValue()
+                                    }
+                                }
                             }
                         }
                         .listStyle(PlainListStyle())

@@ -9,6 +9,7 @@ import Foundation
 import Moya
 
 enum AiNotiAPI {
+    case aiNotiAll(studentNo: String)
     case aiNotiFavorites(studentNo: String, pageNo: Int)
     case aiNotiFavoritesAdd(studentId: String, aiNotiId: Int)
     case aiNotiFavoritesDelete(studentId: String, aiNotiId: Int)
@@ -17,6 +18,7 @@ enum AiNotiAPI {
 extension AiNotiAPI: TargetType {
     var baseURL: URL {
         return URL(string: "http://54.180.221.239")!
+//        return URL(string: "http://localhost:8080")!
     }
     
     var path: String {
@@ -27,6 +29,8 @@ extension AiNotiAPI: TargetType {
             return "/ainoti/favorites/delete"
         case .aiNotiFavoritesAdd(studentId: let studentId, aiNotiId: let aiNotiId):
             return "/ainoti/favorites/add"
+        case .aiNotiAll(let studentNo):
+            return "/ainoti/favorites/all/dev/\(studentNo)"
         }
     }
     
@@ -38,6 +42,8 @@ extension AiNotiAPI: TargetType {
             return .delete
         case .aiNotiFavoritesAdd:
             return .post
+        case .aiNotiAll:
+            return .get
         }
     }
     
@@ -49,6 +55,8 @@ extension AiNotiAPI: TargetType {
             return .requestParameters(parameters: ["studentNo": studentId, "aiNotiId": aiNotiId], encoding: JSONEncoding.default)
         case .aiNotiFavoritesDelete(studentId: let studentId, aiNotiId: let aiNotiId):
             return .requestParameters(parameters: ["studentNo": studentId, "aiNotiId": aiNotiId], encoding: JSONEncoding.default)
+        case .aiNotiAll:
+            return .requestPlain
         }
     }
     

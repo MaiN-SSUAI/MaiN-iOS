@@ -72,7 +72,11 @@ class ReservationViewModel: ObservableObject {
     //MARK: View
     @Published var isInfoModalPresented: Bool = false
     @Published var isDetailModalPresented: Bool = false
-    @Published var isRegisterModalPresented: Bool = false
+    @Published var isRegisterModalPresented: Bool = false {
+        didSet {
+            print("등록 모달 :\(isRegisterModalPresented)")
+        }
+    }
     @Published var selectedDate: Date = Date() {
         didSet {
             updateSelectedDateIndex()
@@ -106,15 +110,17 @@ class ReservationViewModel: ObservableObject {
     
     //MARK: init
     init() {
-        let authPlugin = AuthPlugin()
-        authPlugin.onRetrySuccess = { [weak self] in
-            self?.fetchReservationAPI(for: self?.selectedDate ?? Date())
-            self?.fetchWeekReservationAPI(for: self?.selectedDate ?? Date())
+
+            let authPlugin = AuthPlugin()
+            authPlugin.onRetrySuccess = { [weak self] in
+                self?.fetchReservationAPI(for: self?.selectedDate ?? Date())
+                self?.fetchWeekReservationAPI(for: self?.selectedDate ?? Date())
+            }
+            self.provider = MoyaProvider<NewReservationAPI>(plugins: [authPlugin])
+            fetchReservationAPI(for: selectedDate)
+            fetchWeekReservationAPI(for: selectedDate)
+            updateSelectedDateIndex()
         }
-        self.provider = MoyaProvider<NewReservationAPI>(plugins: [authPlugin])
-        fetchReservationAPI(for: selectedDate)
-        fetchWeekReservationAPI(for: selectedDate)
-    }
 
     private func updateSelectedDateIndex() {
         let calendar = Calendar.current
@@ -258,6 +264,12 @@ class ReservationViewModel: ObservableObject {
             case .success(let response):
                 if response.statusCode == 401 {
                     completion("토큰 만료")
+                } else if response.statusCode == 400 {
+                    if let responseData = try? JSONDecoder().decode(ErrorResponse.self, from: response.data) {
+                        let errorMessage = responseData.detail
+                        completion("\(errorMessage)")} else {
+                            completion("네트워크 요청이 실패하였습니다.")
+                        }
                 } else {
                     print("세미나실 예약 삭제 API 성공🔥")
                     completion("예약이 삭제되었습니다.")
