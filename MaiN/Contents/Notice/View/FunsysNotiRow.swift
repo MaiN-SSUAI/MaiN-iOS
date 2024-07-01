@@ -17,7 +17,11 @@ struct FunsysNotiRow: View {
     var body: some View {
         Group {
             if modelData.isLoading {
-                ProgressView("Loading...")
+                VStack() {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                }.frame(maxWidth: .infinity).background(.gray00)
             } else {
                 VStack(){
                     Toggle(isOn: $showFavoritesOnly) {
@@ -83,12 +87,19 @@ struct FunsysNotiRow: View {
                                             .padding(.trailing, 10)
                                     }
                                     .buttonStyle(PlainButtonStyle())
-                                }.listRowBackground(Color.white)
+                                }
+                                .listRowBackground(Color.white)
+                                .onAppear { // 페이징 처리
+                                    guard let index = modelData.funsysNotices.firstIndex(where: { $0.id == aiNoti.id }) else { return }
+                                    if index == modelData.funsysNotices.count - 1 {
+                                        modelData.setAPIValue()
+                                    }
+                                }
                             }
                     }
                     .listStyle(PlainListStyle())
                 }
-                }.padding().background(.gray00)
+                }.padding().frame(maxWidth: .infinity).background(.gray00)
             }
         }.navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: Button(action: {

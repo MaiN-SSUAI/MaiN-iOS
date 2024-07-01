@@ -9,6 +9,7 @@ import Foundation
 import Moya
 
 enum FunsysNotiAPI {
+    case funsysNotiAll(studentId: String)
     case funsysNotiFavorites(studentId: String, pageNo: Int)
     case funsysNotiFavoritesAdd(studentId: String, funsysNotiId: Int)
     case funsysNotiFavoritesDelete(studentId: String, funsysNotiId: Int)
@@ -17,6 +18,7 @@ enum FunsysNotiAPI {
 extension FunsysNotiAPI: TargetType {
     var baseURL: URL {
         return URL(string: "http://54.180.221.239")!
+//        return URL(string: "http://localhost:8080")!
     }
     
     var path: String {
@@ -27,6 +29,8 @@ extension FunsysNotiAPI: TargetType {
             return "/funsysnoti/favorites/delete"
         case .funsysNotiFavoritesDelete(studentId: let studentId, funsysNotiId: let funsysNotiId):
             return "/funsysnoti/favorites/add/"
+        case .funsysNotiAll(let studentId):
+            return "/funsysnoti/favorites/all/dev/\(studentId)"
         }
     }
     
@@ -38,6 +42,8 @@ extension FunsysNotiAPI: TargetType {
             return .delete
         case .funsysNotiFavoritesAdd:
             return .post
+        case .funsysNotiAll:
+            return .get
         }
 
     }
@@ -50,6 +56,8 @@ extension FunsysNotiAPI: TargetType {
             return .requestParameters(parameters: ["studentNo": studentId, "funsysNotiId": funsysNotiId], encoding: JSONEncoding.default)
         case .funsysNotiFavoritesDelete(studentId: let studentId, funsysNotiId: let funsysNotiId):
             return .requestParameters(parameters: ["studentNo": studentId, "funsysNotiId": funsysNotiId], encoding: JSONEncoding.default)
+        case .funsysNotiAll:
+            return .requestPlain
         }
     }
     

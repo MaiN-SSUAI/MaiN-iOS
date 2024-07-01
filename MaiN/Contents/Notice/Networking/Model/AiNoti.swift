@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreLocation
 
-struct AiNoti: Decodable {
+struct AiNoti: Decodable, Equatable {
     var id: Int
     var title: String
     var link: String

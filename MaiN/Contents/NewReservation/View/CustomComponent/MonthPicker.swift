@@ -32,7 +32,7 @@ struct MonthPicker: View {
                         showingDatePicker = false
                         vm.fetchWeekReservationAPI(for: newDate)
                     }
-                    .presentationDetents([.fraction(0.5)])
+                    .presentationDetents([.fraction(0.6)])
             }
         }
     }

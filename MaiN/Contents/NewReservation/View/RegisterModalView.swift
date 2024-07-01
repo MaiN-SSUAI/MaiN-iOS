@@ -45,9 +45,10 @@ struct RegisterModalView: View {
                             .font(.interRegular(size: 14))
                             .padding(.leading, 25).padding(.vertical, 15)
                             .foregroundColor(.black)
-                        Spacer()
                         Text("\(vm.selectedDate.toDateString())").font(.interRegular(size: 14)).padding(.trailing, 10)
                             .foregroundColor(.black)
+                            .padding(.leading, 85)
+                        Spacer()
                         DatePicker("", selection: $startTime, displayedComponents: .hourAndMinute)
                             .labelsHidden()
                             .padding(.trailing, 15)
@@ -58,9 +59,10 @@ struct RegisterModalView: View {
                             .font(.interRegular(size: 14))
                             .padding(.leading, 25).padding(.vertical, 15)
                             .foregroundColor(.black)
-                        Spacer()
-                        Text("\(vm.selectedDate.toDateString())").font(.interRegular(size: 14)).padding(.trailing, 10)
+                        Text("\(endTime.toDateString())").font(.interRegular(size: 14)).padding(.trailing, 10)
                             .foregroundColor(.black)
+                            .padding(.leading, 90)
+                        Spacer()
                         DatePicker("", selection: $endTime, displayedComponents: .hourAndMinute)
                             .labelsHidden()
                             .padding(.trailing, 15)
@@ -88,9 +90,6 @@ struct RegisterModalView: View {
                             Button(action: {
                                 if (studentIds.contains(studentId)) {
                                     vm.alertMessage = "이미 등록한 학생입니다."
-                                    vm.showAlert = true
-                                } else if !(studentId.count == 8){
-                                    vm.alertMessage = "학번 8자리만 입력 가능합니다."
                                     vm.showAlert = true
                                 } else {
                                     vm.checkUser(user: studentId, date: vm.selectedDate.toDateString()) { result in
@@ -210,8 +209,12 @@ struct StudentIdView: View {
                         studentIds.remove(at: index)
                     }
                 }) {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.red)
+                    ZStack() {
+                        Image(systemName: "circle")
+                            .foregroundColor(.white)
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.red)
+                    }
                 }
                 .offset(x: 40, y: -10)
             }

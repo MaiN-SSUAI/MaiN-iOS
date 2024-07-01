@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FunsysNoti: Decodable {
+struct FunsysNoti: Decodable, Equatable {
     var id: Int
     var title: String
     var link: String

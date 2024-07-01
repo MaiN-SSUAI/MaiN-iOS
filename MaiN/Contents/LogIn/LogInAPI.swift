@@ -15,6 +15,7 @@ enum LogInAPI {
 extension LogInAPI: TargetType {
     var baseURL: URL {
         return URL(string: "http://54.180.221.239")!
+//        return URL(string: "http://localhost:8080")!
     }
     
     var path: String {

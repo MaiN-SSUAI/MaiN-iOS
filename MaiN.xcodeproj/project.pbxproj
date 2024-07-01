@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		801C0E152C2BE63800FCD04F /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801C0E142C2BE63800FCD04F /* TimePicker.swift */; };
 		802239CF2B458E3C0021C344 /* NoticeUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802239CE2B458E3C0021C344 /* NoticeUIView.swift */; };
 		802239D12B458E510021C344 /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802239D02B458E510021C344 /* ReservationView.swift */; };
 		802239D52B4593AE0021C344 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802239D42B4593AE0021C344 /* ModelData.swift */; };
@@ -78,6 +79,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		801C0E142C2BE63800FCD04F /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
 		802239CE2B458E3C0021C344 /* NoticeUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeUIView.swift; sourceTree = "<group>"; };
 		802239D02B458E510021C344 /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
 		802239D42B4593AE0021C344 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
@@ -246,13 +248,11 @@
 		8053B4A52B66AC3F0090720D /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				8065E24A2C32C0CC001B35DD /* Data */,
 				802239D32B4593210021C344 /* Model */,
 				807BF82D2B504F1000A659B9 /* FunsysNotiAPI.swift */,
 				807BF82B2B504E5800A659B9 /* SsuNotiAPI.swift */,
 				802239E72B45A9FC0021C344 /* AiNotiAPI.swift */,
-				802239D42B4593AE0021C344 /* ModelData.swift */,
-				807BF8272B504B6800A659B9 /* SsuNotiModelData.swift */,
-				807BF8292B504DDD00A659B9 /* FunsysNotiModelData.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -267,6 +267,16 @@
 				807BF82F2B50516400A659B9 /* FunsysNotiRow.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		8065E24A2C32C0CC001B35DD /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				802239D42B4593AE0021C344 /* ModelData.swift */,
+				807BF8272B504B6800A659B9 /* SsuNotiModelData.swift */,
+				807BF8292B504DDD00A659B9 /* FunsysNotiModelData.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 		806F1B0A2B5F9812003E742F /* NewReservation */ = {
@@ -286,6 +296,7 @@
 				802D56E52BF4A7470009D9C7 /* WeekView.swift */,
 				8092416C2BF53EE70036D2B8 /* DayWeekPicker.swift */,
 				802AD7402BFDE9D7009DDB5A /* DayReservationButton.swift */,
+				801C0E142C2BE63800FCD04F /* TimePicker.swift */,
 			);
 			path = CustomComponent;
 			sourceTree = "<group>";
@@ -551,6 +562,7 @@
 				80223A1B2B4D781C0021C344 /* FontManager.swift in Sources */,
 				802239EA2B45C1CB0021C344 /* AiNotiRow.swift in Sources */,
 				803727FE2C12F9B9002F9DFA /* Reservation.swift in Sources */,
+				801C0E152C2BE63800FCD04F /* TimePicker.swift in Sources */,
 				80B11A292B57FA6C0069F8D9 /* AgreeView.swift in Sources */,
 				802239D52B4593AE0021C344 /* ModelData.swift in Sources */,
 				802239DB2B459A570021C344 /* SsuNoti.swift in Sources */,
@@ -698,6 +710,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MaiN/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = mAIn;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -713,7 +726,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soominAI.MaiN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -737,6 +750,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MaiN/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = mAIn;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -752,7 +766,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.soominAI.MaiN;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

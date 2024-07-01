@@ -39,7 +39,8 @@ struct NoticeUIView: View {
                     NavigationLink(destination: SsuNotiRow()) {
                         HStack(){
                             Image("SSU")
-                                .frame(width: 50, height: 30)
+                                .resizable()
+                                .frame(width: 54, height: 54) //
                                 .padding(.leading)
                             VStack(alignment: .leading){
                                 Text("SSU:catch 공지사항 ")
@@ -58,7 +59,8 @@ struct NoticeUIView: View {
                     NavigationLink(destination: FunsysNotiRow()) {
                         HStack(){
                             Image("Funsys")
-                                .frame(width: 50, height: 30)
+                                .resizable()
+                                .frame(width: 60, height: 60) //
                                 .padding(.leading)
                             VStack(alignment: .leading){
                                 Text("펀 시스템")

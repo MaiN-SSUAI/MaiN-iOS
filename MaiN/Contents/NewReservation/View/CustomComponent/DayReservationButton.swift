@@ -64,7 +64,7 @@ struct DayReservationButton: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
 //                    .frame(height: (endPixel - startPixel))
                     .background(buttonColor.backgroundColor)
-                    .cornerRadius(4)
+                    .cornerRadius(vm.dayOrWeek=="day" ? 4 : 0)
                     
                     if vm.dayOrWeek == "day" {
                         RoundedCornerRectangle(cornerRadius: 4, corners: [.topLeft, .bottomLeft])
@@ -76,7 +76,7 @@ struct DayReservationButton: View {
             })
             .sheet(isPresented: $vm.isDetailModalPresented) {
                 DetailReservModalView(vm: vm)
-                    .presentationDetents([.fraction(0.2)])
+                    .presentationDetents([.fraction(0.3)])
             }
         }.frame(height: endPixel)
     }

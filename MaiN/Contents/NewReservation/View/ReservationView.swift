@@ -23,7 +23,7 @@ struct ReservationView: View {
         }
         .sheet(isPresented: $reservationVM.isInfoModalPresented) {
             InfoModalView()
-                .presentationDetents([.fraction(0.45)])
+                .presentationDetents([.fraction(0.5)])
         }
         .alert(isPresented: $reservationVM.showAlert) {
             Alert(title: Text(""), message: Text(reservationVM.alertMessage ?? "No message"), dismissButton: .default(Text("확인")))
