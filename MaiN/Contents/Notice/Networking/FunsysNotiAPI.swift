@@ -26,9 +26,9 @@ extension FunsysNotiAPI: TargetType {
         case .funsysNotiFavorites(studentId: let studentId, _):
             return "/funsysnoti/favorites/all/\(studentId)"
         case .funsysNotiFavoritesAdd(studentId: let studentId, funsysNotiId: let funsysNotiId):
-            return "/funsysnoti/favorites/delete"
+            return "/funsysnoti/favorites/add"
         case .funsysNotiFavoritesDelete(studentId: let studentId, funsysNotiId: let funsysNotiId):
-            return "/funsysnoti/favorites/add/"
+            return "/funsysnoti/favorites/delete"
         case .funsysNotiAll(let studentId):
             return "/funsysnoti/favorites/all/dev/\(studentId)"
         }

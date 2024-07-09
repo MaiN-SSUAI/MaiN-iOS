@@ -37,7 +37,7 @@ struct MypageView: View {
                     self.showAutoLoginAlert = true
                 }){
                     HStack(){
-                        Text("로그아웃").font(.bold(size: 15)).foregroundColor(.black)
+                        Text("로그아웃").font(.bold(size: 15)).foregroundColor(.red)
                         Spacer()
                     }
                 }.alert(isPresented: $showAutoLoginAlert) {

@@ -43,28 +43,34 @@ struct DayReservationButton: View {
                 vm.isDetailModalPresented = true
             }, label: {
                 ZStack(alignment: .leading) {
-                    VStack(alignment: .leading, spacing: 0) {
-                        if vm.dayOrWeek == "day" {
+                    
+                    if vm.dayOrWeek == "day" {
+                        VStack(alignment: .leading, spacing: 0) {
                             Text("\(time)")
                                 .foregroundColor(buttonColor.pointColor)
-                            //                            .font(.interSemiBold(size: 12))
                                 .font(.bold(size: 12))
                             Text(studentNo.joined(separator: ", "))
                                 .foregroundColor(buttonColor.pointColor)
                                 .font(.interRegular(size: 12))
-                        } else {
+                        }
+                        .padding(.top, 5)
+                        .padding(.horizontal, 15)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                        .frame(height: (endPixel - startPixel))
+                        .background(buttonColor.backgroundColor)
+                        .cornerRadius(4)
+                    } else {
+                        VStack(alignment: .center, spacing: 0) {
                             Text(studentNo.joined(separator: "\n"))
                                 .foregroundColor(buttonColor.pointColor)
-                            //                            .font(.interSemiBold(size: 12))
                                 .font(.bold(size: 8))
                         }
+                        .padding(.top, 5)
+                        .padding(.horizontal, 5)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                        .frame(height: (endPixel - startPixel))
+                        .background(buttonColor.backgroundColor)
                     }
-                    .padding(.top, 5)
-                    .padding(.horizontal, vm.dayOrWeek == "day" ? 15 : 3)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-//                    .frame(height: (endPixel - startPixel))
-                    .background(buttonColor.backgroundColor)
-                    .cornerRadius(vm.dayOrWeek=="day" ? 4 : 0)
                     
                     if vm.dayOrWeek == "day" {
                         RoundedCornerRectangle(cornerRadius: 4, corners: [.topLeft, .bottomLeft])
