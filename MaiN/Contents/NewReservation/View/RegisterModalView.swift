@@ -61,7 +61,7 @@ struct RegisterModalView: View {
                             .foregroundColor(.black)
                         Text("\(endTime.toDateString())").font(.interRegular(size: 14)).padding(.trailing, 10)
                             .foregroundColor(.black)
-                            .padding(.leading, 90)
+                            .padding(.leading, 85)
                         Spacer()
                         DatePicker("", selection: $endTime, displayedComponents: .hourAndMinute)
                             .labelsHidden()

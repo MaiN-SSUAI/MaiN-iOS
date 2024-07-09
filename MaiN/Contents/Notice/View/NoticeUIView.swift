@@ -83,6 +83,6 @@ struct NoticeUIView: View {
     }
 }
 
-#Preview {
-    NoticeUIView()
-}
+//#Preview {
+//    NoticeUIView()
+//}

@@ -14,7 +14,7 @@ struct InfoModalView: View {
             Text("세미나실 예약 수칙")
                 .font(.bold(size: 20))
             VStack(alignment: .leading, spacing: 10) {
-                Text("1.   학부생은 세미나실2 만 사용 가능합니다.").font(.normal(size: 15))
+                Text("1.   학부생은 세미나실2만 사용 가능합니다.").font(.normal(size: 15))
                 Text("2.   2인 이상부터 예약 가능합니다.").font(.normal(size: 15))
                 Text("3.   회당 2시간 이상 예약이 불가합니다.").font(.normal(size: 15))
                 Text("4.   주당 2회만 예약이 가능합니다.").font(.normal(size: 15))

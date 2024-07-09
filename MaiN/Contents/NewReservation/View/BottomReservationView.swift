@@ -117,17 +117,17 @@ struct DayReservationView: View {
     var body: some View {
         ZStack(alignment: .top) {
             //MARK: 시간 그리드
-//            ZStack(alignment: .top) {
+            ZStack(alignment: .top) {
                 ForEach(0..<24, id: \.self) { index in
                         Rectangle()
                             .frame(maxWidth: .infinity, maxHeight: 1)
                             .foregroundColor(.gray05)
                     .padding(.top, CGFloat(36 * index))
                 }
-//            }
+            }
             
             //MARK: 예약 버튼들
-//            ZStack(alignment: .top) {
+            ZStack(alignment: .top) {
                 ForEach(Array(vm.reservations.enumerated()), id: \.element) { index, reservation in
                     DayReservationButton(
                         vm: vm,
@@ -135,7 +135,7 @@ struct DayReservationView: View {
                         color: colorSet[index % colorSet.count]
                     )
                 }
-//            }
+            }
         }
     }
 }
