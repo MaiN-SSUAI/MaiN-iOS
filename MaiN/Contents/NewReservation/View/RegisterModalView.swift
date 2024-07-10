@@ -14,8 +14,10 @@ struct RegisterModalView: View {
     @ObservedObject var vm: ReservationViewModel
     
     //MARK: Data
-    @State var startTime: Date
-    @State private var endTime: Date
+    @State var startTime: String
+    @State private var endTime: String
+    @State var startDate: Date
+    @State var endDate: Date
     @State var studentId: String = ""
     @State var studentIds: [String] = [UserDefaults.standard.string(forKey: "studentNumber") ?? ""]
     @State var selectedPurpose: String = "팀 프로젝트"
@@ -25,8 +27,10 @@ struct RegisterModalView: View {
     
     init(vm: ReservationViewModel, startTime: Date, endTime: Date) {
         self.vm = vm
-        self._startTime = State(initialValue: startTime)
-        self._endTime = State(initialValue: endTime)
+        self._startTime = State(initialValue: startTime.formatDateToString())
+        self._endTime = State(initialValue: endTime.formatDateToString())
+        self._startDate = State(initialValue: startTime)
+        self._endDate = State(initialValue: endTime)
     }
 
     var body: some View {
@@ -40,34 +44,8 @@ struct RegisterModalView: View {
             
             ScrollView {
                 VStack(spacing: 5) {
-                    HStack() {
-                        Text("시작 시간")
-                            .font(.interRegular(size: 14))
-                            .padding(.leading, 25).padding(.vertical, 15)
-                            .foregroundColor(.black)
-                        Text("\(vm.selectedDate.toDateString())").font(.interRegular(size: 14)).padding(.trailing, 10)
-                            .foregroundColor(.black)
-                            .padding(.leading, 85)
-                        Spacer()
-                        DatePicker("", selection: $startTime, displayedComponents: .hourAndMinute)
-                            .labelsHidden()
-                            .padding(.trailing, 15)
-                    }.background(.white)
-                    
-                    HStack() {
-                        Text("종료 시간")
-                            .font(.interRegular(size: 14))
-                            .padding(.leading, 25).padding(.vertical, 15)
-                            .foregroundColor(.black)
-                        Text("\(endTime.toDateString())").font(.interRegular(size: 14)).padding(.trailing, 10)
-                            .foregroundColor(.black)
-                            .padding(.leading, 85)
-                        Spacer()
-                        DatePicker("", selection: $endTime, displayedComponents: .hourAndMinute)
-                            .labelsHidden()
-                            .padding(.trailing, 15)
-                    }.background(.white)
-                    
+                    TimePicker(vm: vm, time: $startTime, selectedDate: $startDate, text: "시작 시간")
+                    TimePicker(vm: vm, time: $endTime, selectedDate: $endDate, text: "종료 시간")
                     VStack(spacing: 0) {
                         HStack() {
                             Text("이용자 추가")
@@ -77,7 +55,8 @@ struct RegisterModalView: View {
                                 .foregroundColor(.black)
                             Spacer()
             
-                            TextField("ex-20220000", text: $studentId)
+                            TextField("", text: $studentId, prompt: Text("ex-20220000").font(.interRegular(size: 14)))
+                                .font(.interRegular(size: 14))
                                 .keyboardType(.numberPad)
                                 .foregroundColor(.black)
                                 .padding(7)
@@ -159,7 +138,7 @@ struct RegisterModalView: View {
                         vm.isLoading = true
                         vm.isWeekLoading = true
                         vm.isRegisterModalPresented = false
-                        let reserv = ReservInfo(studentIds: studentIds, purpose: selectedPurpose, startDateTimeStr: startTime.formatDateToString(), endDateTimeStr: endTime.formatDateToString())
+                        let reserv = ReservInfo(studentIds: studentIds, purpose: selectedPurpose, startDateTimeStr: startTime, endDateTimeStr: endTime)
                         vm.addReservation(reservInfo: reserv) { alertMessage in
                             if !(alertMessage == "토큰 만료") {
                                 vm.trigger.toggle()
@@ -168,7 +147,7 @@ struct RegisterModalView: View {
                             }
                         }
                     }){
-                        Text("저장").font(.normal(size: 20))
+                        Text("저장").font(.interRegular(size: 20))
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
@@ -179,13 +158,21 @@ struct RegisterModalView: View {
                     .padding(.vertical, 15)
                 }
             }
+        }.background(.gray00)
+            .onChange(of: startTime) { newValue in
+                print("시작시간 : \(newValue)")
+            }
+            .onChange(of: endTime) { newValue in
+                print("종료시간 : \(newValue)")
+            }
             .gesture(
                 TapGesture()
                     .onEnded { _ in
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        vm.startPickerOff.toggle()
+                        vm.endPickerOff.toggle()
                     }
             )
-        }.background(.gray00)
     }
 }
 

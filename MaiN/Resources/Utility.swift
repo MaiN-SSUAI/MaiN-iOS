@@ -28,6 +28,12 @@ extension Date {
         outputFormatter.timeZone = TimeZone(secondsFromGMT: 9 * 3600) // +09:00 시간대
         return outputFormatter.string(from: self)
     }
+    
+    func formatDateToStringNoTimeZone() -> String {
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+        return outputFormatter.string(from: self)
+    }
 }
 
 extension String {
