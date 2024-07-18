@@ -62,9 +62,9 @@ struct MaiNApp: App {
         // 앱의 현재 버전 정보 (옛날 버전)
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
         // 앱스토어에 올라와있는 가장 높은 버전
-        let latestVersion = "2.0.4"
+        let latestVersion = "2.0.5"
         
-        if currentVersion != latestVersion {
+        if currentVersion < latestVersion {
             DispatchQueue.main.async {
                 showAlertForUpdate()
             }

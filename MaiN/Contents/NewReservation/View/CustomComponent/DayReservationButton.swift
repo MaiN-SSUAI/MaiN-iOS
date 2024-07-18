@@ -67,7 +67,7 @@ struct DayReservationButton: View {
                         }
                         .padding(.top, 5)
                         .padding(.horizontal, 5)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                         .frame(height: (endPixel - startPixel))
                         .background(buttonColor.backgroundColor)
                     }

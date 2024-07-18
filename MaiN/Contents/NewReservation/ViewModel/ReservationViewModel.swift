@@ -70,6 +70,7 @@ class ReservationViewModel: ObservableObject {
     @Published var selectedDetailReservInfo: ReservDetailInfo = ReservDetailInfo(reservId: 0, studentIds: [], purpose: "", time: "")
     
     //MARK: View
+    @Published var weekOffset: Int = 0
     @Published var isInfoModalPresented: Bool = false
     @Published var isDetailModalPresented: Bool = false
     @Published var isRegisterModalPresented: Bool = false {
