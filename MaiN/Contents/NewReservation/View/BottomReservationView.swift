@@ -164,13 +164,29 @@ struct WeekReservationView: View {
             //MARK: 예약 버튼들
             ZStack(alignment: .top) {
                 ForEach(Array(vm.weekReservations[index].enumerated()), id: \.element) { index, reservation in
+                    let selectedIndex = (self.convertIsoDateTimeToHour(isoDateTime: reservation.start) ?? 0 + (self.convertIsoDateTimeToHour(isoDateTime: reservation.end) ?? 0)) % colorSet.count
                     DayReservationButton(
                         vm: vm,
                         reservation: reservation,
-                        color: colorSet[index % colorSet.count]
+                        color: colorSet[selectedIndex]
                     )
                 }
             }
+        }
+    }
+    
+    func convertIsoDateTimeToHour(isoDateTime: String) -> Int? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        if let date = formatter.date(from: isoDateTime) {
+            let calendar = Calendar.current
+            let hour = calendar.component(.hour, from: date)
+            return hour
+        } else {
+            print("ddddd")
+            return nil
         }
     }
 }

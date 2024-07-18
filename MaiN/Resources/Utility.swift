@@ -42,4 +42,17 @@ extension String {
         dateFormatter.formatOptions = [.withFullDate, .withFullTime, .withFractionalSeconds, .withTimeZone]
         return dateFormatter.date(from: self) ?? Date()
     }
+    
+    func convertIsoDateTimeToHour() -> Int? {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        
+        if let date = formatter.date(from: self) {
+            let calendar = Calendar.current
+            let hour = calendar.component(.hour, from: date)
+            return hour
+        } else {
+            return nil
+        }
+    }
 }
