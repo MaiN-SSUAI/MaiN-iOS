@@ -70,7 +70,12 @@ struct RegisterModalView: View {
                                 if (studentIds.contains(studentId)) {
                                     vm.alertMessage = "이미 등록한 학생입니다."
                                     vm.showAlert = true
-                                } else {
+                                } else if (studentId == "") {
+                                    
+                                } else if (6 < studentId.count) {
+                                    vm.alertMessage = "올바른 학번을 이용해주세요."
+                                    vm.showAlert = true
+                                } else  {
                                     vm.checkUser(user: studentId, date: vm.selectedDate.toDateString()) { result in
                                         if result == "성공" {
                                             studentIds.append(studentId)
