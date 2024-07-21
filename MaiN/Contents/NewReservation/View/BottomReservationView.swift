@@ -164,7 +164,7 @@ struct WeekReservationView: View {
             //MARK: 예약 버튼들
             ZStack(alignment: .top) {
                 ForEach(Array(vm.weekReservations[index].enumerated()), id: \.element) { index, reservation in
-                    let selectedIndex = (self.convertIsoDateTimeToHour(isoDateTime: reservation.start) ?? 0 + (self.convertIsoDateTimeToHour(isoDateTime: reservation.end) ?? 0)) % colorSet.count
+                    let selectedIndex = ((self.convertIsoDateTimeToHour(isoDateTime: reservation.start) ?? 0 + (self.convertIsoDateTimeToHour(isoDateTime: reservation.end) ?? 0)) + self.index) % colorSet.count
                     DayReservationButton(
                         vm: vm,
                         reservation: reservation,
