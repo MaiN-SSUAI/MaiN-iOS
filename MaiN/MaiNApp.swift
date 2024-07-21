@@ -61,14 +61,52 @@ struct MaiNApp: App {
     func checkVersion() {
         // 앱의 현재 버전 정보 (옛날 버전)
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
-        // 앱스토어에 올라와있는 가장 높은 버전
-        let latestVersion = "2.0.4"
-        
-        if currentVersion != latestVersion {
-            DispatchQueue.main.async {
-                showAlertForUpdate()
+        // 앱스토어에서 최신 버전 정보를 가져오는 함수 호출
+        fetchLatestVersion { latestVersion in
+            guard let latestVersion = latestVersion else { return }
+            
+            if currentVersion != latestVersion {
+                DispatchQueue.main.async {
+                    showAlertForUpdate()
+                }
             }
         }
+    }
+    
+    func fetchLatestVersion(completion: @escaping (String?) -> Void) {
+        let bundleID = Bundle.main.bundleIdentifier ?? ""
+        let urlString = "https://itunes.apple.com/lookup?bundleId=\(bundleID)"
+        
+        guard let url = URL(string: urlString) else {
+            completion(nil)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard error == nil else {
+                completion(nil)
+                return
+            }
+            
+            guard let data = data else {
+                completion(nil)
+                return
+            }
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let results = json["results"] as? [[String: Any]],
+                   let latestVersion = results.first?["version"] as? String {
+                    completion(latestVersion)
+                } else {
+                    completion(nil)
+                }
+            } catch {
+                completion(nil)
+            }
+        }
+        
+        task.resume()
     }
 
     func showAlertForUpdate() {
@@ -80,7 +118,6 @@ struct MaiNApp: App {
         }))
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         
-        // 현재의 루트 뷰 컨트롤러를 찾아 알림을 표시합니다.
         if let rootVC = UIApplication.shared.windows.first?.rootViewController {
             rootVC.present(alert, animated: true, completion: nil)
         }
