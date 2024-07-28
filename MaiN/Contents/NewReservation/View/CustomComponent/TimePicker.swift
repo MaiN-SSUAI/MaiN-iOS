@@ -14,7 +14,7 @@ struct TimePicker: View {
     //MARK: State Property - View
     @State var isTimePickerVisible = false {
         didSet {
-            if isTimePickerVisible == true {
+            if isTimePickerVisible {
                 isDatePickerVisible = false
             }
         }
@@ -22,7 +22,7 @@ struct TimePicker: View {
     
     @State var isDatePickerVisible = false {
         didSet {
-            if isDatePickerVisible == true {
+            if isDatePickerVisible {
                 isTimePickerVisible = false
             }
         }
@@ -58,9 +58,9 @@ struct TimePicker: View {
                     .foregroundColor(.black)
                 Button(action: {
                     if text == "시작 시간" {
-                        vm.endPickerOff.toggle()
+                        vm.endPickerOff = true
                     } else {
-                        vm.startPickerOff.toggle()
+                        vm.startPickerOff = true
                     }
                     isDatePickerVisible.toggle()
                 }) {
@@ -73,13 +73,13 @@ struct TimePicker: View {
                 }
                 Button(action: {
                     if text == "시작 시간" {
-                        vm.endPickerOff.toggle()
+                        vm.endPickerOff = true
                     } else {
-                        vm.startPickerOff.toggle()
+                        vm.startPickerOff = true
                     }
                     isTimePickerVisible.toggle()
                 }) {
-                    Text("\(String(hours[selectedHour])):\(String(format: "%02d", minutes[selectedMinute])) \(periods[selectedPeriod])")
+                    Text(formattedTimeDisplay())
                         .font(.interRegular(size: 14))
                         .foregroundColor(.black)
                         .padding()
@@ -89,7 +89,7 @@ struct TimePicker: View {
             if isTimePickerVisible {
                 HStack(spacing: 4) {
                     Picker("Hour", selection: $selectedHour) {
-                        ForEach(0..<hours.count) { index in
+                        ForEach(0..<hours.count, id: \.self) { index in
                             Text("\(self.hours[index])")
                         }
                     }
@@ -97,7 +97,7 @@ struct TimePicker: View {
                     .clipped()
                     
                     Picker("Minute", selection: $selectedMinute) {
-                        ForEach(0..<minutes.count) { index in
+                        ForEach(0..<minutes.count, id: \.self) { index in
                             Text(String(format: "%02d", self.minutes[index]))
                         }
                     }
@@ -105,7 +105,7 @@ struct TimePicker: View {
                     .clipped()
                     
                     Picker("Period", selection: $selectedPeriod) {
-                        ForEach(0..<periods.count) {
+                        ForEach(0..<periods.count, id: \.self) {
                             Text(self.periods[$0])
                         }
                     }
@@ -129,26 +129,52 @@ struct TimePicker: View {
                 .environment(\.locale, Locale(identifier: "ko_KR"))
             }
         }.background(.white)
-            .onChange(of: selectedDate, {time = formattedTime()})
-            .onChange(of: selectedHour, {time = formattedTime()})
-            .onChange(of: selectedMinute, {time = formattedTime()})
-            .onChange(of: selectedPeriod, {time = formattedTime()})
-            .onChange(of: vm.startPickerOff, {
-                if text == "시작 시간" {
-                    isTimePickerVisible = false
-                    isDatePickerVisible = false
-                }
-            })
-            .onChange(of: vm.endPickerOff, {
-                if text == "종료 시간" {
-                    isTimePickerVisible = false
-                    isDatePickerVisible = false
-                }
-            })
-            .onAppear(perform: {time = formattedTime()})
+            .onChange(of: selectedDate) { _ in
+                time = formattedTime()
+            }
+            .onChange(of: selectedHour) { _ in
+                time = formattedTime()
+            }
+            .onChange(of: selectedMinute) { _ in
+                time = formattedTime()
+            }
+            .onChange(of: selectedPeriod) { _ in
+                time = formattedTime()
+            }
+            .onChange(of: vm.startPickerOff) { _ in
+//                if text == "시작 시간" {
+//                    isTimePickerVisible = false
+//                    isDatePickerVisible = false
+//                }
+            }
+            .onChange(of: vm.endPickerOff) { _ in
+//                if text == "종료 시간" {
+//                    isTimePickerVisible = false
+//                    isDatePickerVisible = false
+//                }
+            }
+            .onAppear {
+                time = formattedTime()
+            }
+    }
+    
+    func formattedTimeDisplay() -> String {
+        guard hours.indices.contains(selectedHour),
+              minutes.indices.contains(selectedMinute),
+              periods.indices.contains(selectedPeriod) else {
+            return "Invalid Time"
+        }
+        
+        return "\(String(hours[selectedHour])):\(String(format: "%02d", minutes[selectedMinute])) \(periods[selectedPeriod])"
     }
     
     func formattedTime() -> String {
+        guard hours.indices.contains(selectedHour),
+              minutes.indices.contains(selectedMinute),
+              periods.indices.contains(selectedPeriod) else {
+            return ""
+        }
+
         let calendar = Calendar.current
         let hour = (periods[selectedPeriod] == "PM" && hours[selectedHour] != 12) ? (hours[selectedHour] + 12) : (periods[selectedPeriod] == "AM" && hours[selectedHour] == 12) ? 0 : hours[selectedHour]
 
@@ -171,8 +197,6 @@ struct TimePicker: View {
     }
 }
 
-
-
 extension Date {
     var hour: Int {
         get { Calendar.current.component(.hour, from: self) }
@@ -188,3 +212,4 @@ extension Date {
         }
     }
 }
+

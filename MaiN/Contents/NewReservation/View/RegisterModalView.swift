@@ -72,7 +72,7 @@ struct RegisterModalView: View {
                                     vm.showAlert = true
                                 } else if (studentId == "") {
                                     
-                                } else if (6 < studentId.count) {
+                                } else if !(6 <= studentId.count && studentId.count <= 10 ) {
                                     vm.alertMessage = "올바른 학번을 이용해주세요."
                                     vm.showAlert = true
                                 } else  {
@@ -164,20 +164,14 @@ struct RegisterModalView: View {
                 }
             }
         }.background(.gray00)
-            .onChange(of: startTime) { newValue in
-                print("시작시간 : \(newValue)")
-            }
-            .onChange(of: endTime) { newValue in
-                print("종료시간 : \(newValue)")
-            }
-            .gesture(
-                TapGesture()
-                    .onEnded { _ in
-                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                        vm.startPickerOff.toggle()
-                        vm.endPickerOff.toggle()
-                    }
-            )
+        .gesture(
+            TapGesture()
+                .onEnded { _ in
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    vm.startPickerOff.toggle()
+                    vm.endPickerOff.toggle()
+                }
+        )
     }
 }
 
