@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		801C0E152C2BE63800FCD04F /* TimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801C0E142C2BE63800FCD04F /* TimePicker.swift */; };
+		801C0E152C2BE63800FCD04F /* StartTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801C0E142C2BE63800FCD04F /* StartTimePicker.swift */; };
 		802239CF2B458E3C0021C344 /* NoticeUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802239CE2B458E3C0021C344 /* NoticeUIView.swift */; };
 		802239D12B458E510021C344 /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802239D02B458E510021C344 /* ReservationView.swift */; };
 		802239D52B4593AE0021C344 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802239D42B4593AE0021C344 /* ModelData.swift */; };
@@ -42,6 +42,7 @@
 		802AD7392BFBD932009DDB5A /* LogInAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802AD7382BFBD932009DDB5A /* LogInAPI.swift */; };
 		802AD7412BFDE9D7009DDB5A /* DayReservationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802AD7402BFDE9D7009DDB5A /* DayReservationButton.swift */; };
 		802D56E62BF4A7470009D9C7 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802D56E52BF4A7470009D9C7 /* WeekView.swift */; };
+		8030475D2C5695E600366653 /* EndTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8030475C2C5695E600366653 /* EndTimePicker.swift */; };
 		803727FE2C12F9B9002F9DFA /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803727FD2C12F9B9002F9DFA /* Reservation.swift */; };
 		803728022C146900002F9DFA /* RegisterModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803728012C146900002F9DFA /* RegisterModalView.swift */; };
 		803728102C178CEE002F9DFA /* DetailReservModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8037280F2C178CEE002F9DFA /* DetailReservModalView.swift */; };
@@ -79,7 +80,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		801C0E142C2BE63800FCD04F /* TimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePicker.swift; sourceTree = "<group>"; };
+		801C0E142C2BE63800FCD04F /* StartTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTimePicker.swift; sourceTree = "<group>"; };
 		802239CE2B458E3C0021C344 /* NoticeUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeUIView.swift; sourceTree = "<group>"; };
 		802239D02B458E510021C344 /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
 		802239D42B4593AE0021C344 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
@@ -113,6 +114,7 @@
 		802D56E32BF4A2DB0009D9C7 /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Inter-Regular.ttf"; path = "../../../../Inter/static/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		802D56E42BF4A6160009D9C7 /* Lato-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lato-SemiBold.ttf"; path = "../../../../Lato-SemiBold.ttf"; sourceTree = "<group>"; };
 		802D56E52BF4A7470009D9C7 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
+		8030475C2C5695E600366653 /* EndTimePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndTimePicker.swift; sourceTree = "<group>"; };
 		803727FD2C12F9B9002F9DFA /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
 		803728012C146900002F9DFA /* RegisterModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModalView.swift; sourceTree = "<group>"; };
 		8037280F2C178CEE002F9DFA /* DetailReservModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReservModalView.swift; sourceTree = "<group>"; };
@@ -296,7 +298,8 @@
 				802D56E52BF4A7470009D9C7 /* WeekView.swift */,
 				8092416C2BF53EE70036D2B8 /* DayWeekPicker.swift */,
 				802AD7402BFDE9D7009DDB5A /* DayReservationButton.swift */,
-				801C0E142C2BE63800FCD04F /* TimePicker.swift */,
+				801C0E142C2BE63800FCD04F /* StartTimePicker.swift */,
+				8030475C2C5695E600366653 /* EndTimePicker.swift */,
 			);
 			path = CustomComponent;
 			sourceTree = "<group>";
@@ -534,6 +537,7 @@
 				809241682BF529F00036D2B8 /* MonthPicker.swift in Sources */,
 				802AD7352BFBC1BC009DDB5A /* LogInViewModel.swift in Sources */,
 				802D56E62BF4A7470009D9C7 /* WeekView.swift in Sources */,
+				8030475D2C5695E600366653 /* EndTimePicker.swift in Sources */,
 				8099F1022B6FAB3F00F06339 /* Extension.swift in Sources */,
 				802239E82B45A9FC0021C344 /* AiNotiAPI.swift in Sources */,
 				802AD72B2BFA7016009DDB5A /* BottomReservationView.swift in Sources */,
@@ -562,7 +566,7 @@
 				80223A1B2B4D781C0021C344 /* FontManager.swift in Sources */,
 				802239EA2B45C1CB0021C344 /* AiNotiRow.swift in Sources */,
 				803727FE2C12F9B9002F9DFA /* Reservation.swift in Sources */,
-				801C0E152C2BE63800FCD04F /* TimePicker.swift in Sources */,
+				801C0E152C2BE63800FCD04F /* StartTimePicker.swift in Sources */,
 				80B11A292B57FA6C0069F8D9 /* AgreeView.swift in Sources */,
 				802239D52B4593AE0021C344 /* ModelData.swift in Sources */,
 				802239DB2B459A570021C344 /* SsuNoti.swift in Sources */,

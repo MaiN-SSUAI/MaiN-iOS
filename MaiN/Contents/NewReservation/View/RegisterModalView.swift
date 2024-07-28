@@ -44,8 +44,8 @@ struct RegisterModalView: View {
             
             ScrollView {
                 VStack(spacing: 5) {
-                    TimePicker(vm: vm, time: $startTime, selectedDate: $startDate, text: "시작 시간")
-                    TimePicker(vm: vm, time: $endTime, selectedDate: $endDate, text: "종료 시간")
+                    StartTimePicker(vm: vm, time: $startTime, selectedDate: $startDate)
+                    EndTimePicker(vm: vm, time: $endTime, selectedDate: $endDate)
                     VStack(spacing: 0) {
                         HStack() {
                             Text("이용자 추가")

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TimePicker: View {
+struct StartTimePicker: View {
     //MARK: ViewModel
     @ObservedObject var vm: ReservationViewModel
     
@@ -36,8 +36,6 @@ struct TimePicker: View {
     @State var selectedPeriod = 0
     
     //MARK: Property
-    let text: String
-    
     var hours: [Int] {
         Array(1...12)
     }
@@ -52,16 +50,12 @@ struct TimePicker: View {
     var body: some View {
         VStack {
             HStack {
-                Text("\(text)")
+                Text("시작 시간")
                     .font(.interRegular(size: 14))
                     .padding(.leading, 25).padding(.vertical, 15)
                     .foregroundColor(.black)
                 Button(action: {
-                    if text == "시작 시간" {
-                        vm.endPickerOff = true
-                    } else {
-                        vm.startPickerOff = true
-                    }
+                    vm.endPickerOff = true
                     isDatePickerVisible.toggle()
                 }) {
                     HStack(spacing: 0) {
@@ -72,11 +66,7 @@ struct TimePicker: View {
                     }
                 }
                 Button(action: {
-                    if text == "시작 시간" {
-                        vm.endPickerOff = true
-                    } else {
-                        vm.startPickerOff = true
-                    }
+                    vm.endPickerOff = true
                     isTimePickerVisible.toggle()
                 }) {
                     Text(formattedTimeDisplay())
@@ -86,47 +76,50 @@ struct TimePicker: View {
                 }
             }
 
-            if isTimePickerVisible {
-                HStack(spacing: 4) {
-                    Picker("Hour", selection: $selectedHour) {
-                        ForEach(0..<hours.count, id: \.self) { index in
-                            Text("\(self.hours[index])")
+            //MARK: Picker
+            if !vm.startPickerOff {
+                if isTimePickerVisible {
+                    HStack(spacing: 4) {
+                        Picker("Hour", selection: $selectedHour) {
+                            ForEach(0..<hours.count, id: \.self) { index in
+                                Text("\(self.hours[index])")
+                            }
                         }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .clipped()
-                    
-                    Picker("Minute", selection: $selectedMinute) {
-                        ForEach(0..<minutes.count, id: \.self) { index in
-                            Text(String(format: "%02d", self.minutes[index]))
+                        .frame(maxWidth: .infinity)
+                        .clipped()
+                        
+                        Picker("Minute", selection: $selectedMinute) {
+                            ForEach(0..<minutes.count, id: \.self) { index in
+                                Text(String(format: "%02d", self.minutes[index]))
+                            }
                         }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .clipped()
-                    
-                    Picker("Period", selection: $selectedPeriod) {
-                        ForEach(0..<periods.count, id: \.self) {
-                            Text(self.periods[$0])
+                        .frame(maxWidth: .infinity)
+                        .clipped()
+                        
+                        Picker("Period", selection: $selectedPeriod) {
+                            ForEach(0..<periods.count, id: \.self) {
+                                Text(self.periods[$0])
+                            }
                         }
+                        .frame(maxWidth: .infinity)
+                        .clipped()
                     }
-                    .frame(maxWidth: .infinity)
-                    .clipped()
+                    .frame(height: 150)
+                    .pickerStyle(WheelPickerStyle())
+                    .onDisappear {
+                        isTimePickerVisible = false
+                    }
                 }
-                .frame(height: 150)
-                .pickerStyle(WheelPickerStyle())
-                .onDisappear {
-                    isTimePickerVisible = false
+                
+                if isDatePickerVisible {
+                    DatePicker(
+                        "",
+                        selection: $selectedDate,
+                        displayedComponents: .date
+                    )
+                    .datePickerStyle(WheelDatePickerStyle())
+                    .environment(\.locale, Locale(identifier: "ko_KR"))
                 }
-            }
-            
-            if isDatePickerVisible {
-                DatePicker(
-                    "",
-                    selection: $selectedDate,
-                    displayedComponents: .date
-                )
-                .datePickerStyle(WheelDatePickerStyle())
-                .environment(\.locale, Locale(identifier: "ko_KR"))
             }
         }.background(.white)
             .onChange(of: selectedDate) { _ in
@@ -140,18 +133,6 @@ struct TimePicker: View {
             }
             .onChange(of: selectedPeriod) { _ in
                 time = formattedTime()
-            }
-            .onChange(of: vm.startPickerOff) { _ in
-//                if text == "시작 시간" {
-//                    isTimePickerVisible = false
-//                    isDatePickerVisible = false
-//                }
-            }
-            .onChange(of: vm.endPickerOff) { _ in
-//                if text == "종료 시간" {
-//                    isTimePickerVisible = false
-//                    isDatePickerVisible = false
-//                }
             }
             .onAppear {
                 time = formattedTime()

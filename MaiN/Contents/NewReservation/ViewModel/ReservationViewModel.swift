@@ -95,8 +95,20 @@ class ReservationViewModel: ObservableObject {
     @Published var selectedReservation: Reservation?
     @Published var alertMessage: String? = nil
     @Published var showAlert: Bool = false
-    @Published var startPickerOff: Bool = false
-    @Published var endPickerOff: Bool = false
+    @Published var startPickerOff: Bool = false {
+        didSet {
+            if startPickerOff {
+                endPickerOff = false
+            }
+        }
+    }
+    @Published var endPickerOff: Bool = false {
+        didSet {
+            if endPickerOff {
+                startPickerOff = false
+            }
+        }
+    }
     
     //MARK: Network
     @Published var isLoading: Bool = false // API 호출 진행중
