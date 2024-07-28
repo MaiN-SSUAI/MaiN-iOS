@@ -17,7 +17,10 @@ struct DayReservationButton: View {
     let reservId: Int
     let startPixel: CGFloat
     let endPixel: CGFloat
-
+    let startTime: String
+    let endTime: String
+    let isMini: Bool = UserDefaults.standard.bool(forKey: "mini")
+    
     init(vm: ReservationViewModel, reservation: Reservation, color: ButtonColor) {
         self.vm = vm
         self.date = reservation.start.toDate()
@@ -32,6 +35,8 @@ struct DayReservationButton: View {
         self.buttonColor = color
         self.startPixel = CGFloat(Double(reservation.start_pixel) ?? 0)
         self.endPixel = CGFloat(Double(reservation.end_pixel) ?? 0)
+        self.startTime = DayReservationButton.dayFormatTime(reservation.start)
+        self.endTime = DayReservationButton.dayFormatTime(reservation.end)
     }
 
     var body: some View {
@@ -39,7 +44,7 @@ struct DayReservationButton: View {
             Spacer()
                 .frame(height: startPixel)
             Button(action: {
-                vm.selectedDetailReservInfo = ReservDetailInfo(reservId: reservId, studentIds: studentNo, purpose: purpose, time: time)
+                vm.selectedDetailReservInfo = ReservDetailInfo(reservId: reservId, studentIds: studentNo, purpose: purpose, time: time, startTime: startTime, endTime: endTime)
                 vm.isDetailModalPresented = true
             }, label: {
                 ZStack(alignment: .leading) {
@@ -63,11 +68,12 @@ struct DayReservationButton: View {
                         VStack(alignment: .center, spacing: 0) {
                             Text(studentNo.joined(separator: "\n"))
                                 .foregroundColor(buttonColor.pointColor)
-                                .font(.bold(size: 8))
+                                .font(.bold(size: isMini ? 7 : 8))
+                            Spacer()
                         }
                         .padding(.top, 5)
-                        .padding(.horizontal, 5)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+//                        .padding(.horizontal, isMini ? 7 : 5)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .frame(height: (endPixel - startPixel))
                         .background(buttonColor.backgroundColor)
                     }
@@ -82,7 +88,7 @@ struct DayReservationButton: View {
             })
             .sheet(isPresented: $vm.isDetailModalPresented) {
                 DetailReservModalView(vm: vm)
-                    .presentationDetents([.fraction(0.3)])
+                    .presentationDetents(isMini ? [.fraction(0.6)] : [.fraction(0.5)])
             }
         }.frame(height: endPixel)
     }
@@ -142,6 +148,8 @@ struct ReservDetailInfo: Codable {
     let studentIds: [String]
     let purpose: String
     let time: String
+    let startTime: String
+    let endTime: String
 }
 
 enum ButtonColor {

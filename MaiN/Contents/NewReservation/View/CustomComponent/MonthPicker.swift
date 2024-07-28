@@ -10,6 +10,7 @@ import SwiftUI
 struct MonthPicker: View {
     @ObservedObject var vm: ReservationViewModel
     @State private var showingDatePicker = false
+    let isMini: Bool = UserDefaults.standard.bool(forKey: "mini")
     
     var body: some View {
         VStack {
@@ -32,7 +33,7 @@ struct MonthPicker: View {
                         showingDatePicker = false
                         vm.fetchWeekReservationAPI(for: newDate)
                     }
-                    .presentationDetents([.fraction(0.6)])
+                    .presentationDetents(isMini ? [.fraction(0.6)] : [.fraction(0.5)])
             }
         }
     }
