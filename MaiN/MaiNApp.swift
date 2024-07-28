@@ -14,6 +14,7 @@ struct MaiNApp: App {
     init() {
         configureNavigationBar()
         checkVersion()
+        checkScreenSize()
     }
     
     var body: some Scene {
@@ -120,6 +121,19 @@ struct MaiNApp: App {
         
         if let rootVC = UIApplication.shared.windows.first?.rootViewController {
             rootVC.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func checkScreenSize() {
+        let screenHeight = UIScreen.main.bounds.height
+        if screenHeight < 800 {
+            // se, mini
+             UserDefaults.standard.setValue(true, forKey: "mini")
+            print("📺small\(UserDefaults.standard.bool(forKey: "mini"))")
+        } else {
+            // normal
+            print("📺big")
+            UserDefaults.standard.setValue(false, forKey: "mini")
         }
     }
 }
