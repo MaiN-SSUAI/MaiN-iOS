@@ -73,12 +73,13 @@ struct RegisterModalView: View {
                                 } else if (studentId == "") {
                                     
                                 } else if !(6 <= studentId.count && studentId.count <= 10 ) {
-                                    vm.alertMessage = "올바른 학번을 이용해주세요."
+                                    vm.alertMessage = "올바른 학번을 입력해주세요."
                                     vm.showAlert = true
                                 } else  {
                                     vm.checkUser(user: studentId, date: vm.selectedDate.toDateString()) { result in
                                         if result == "성공" {
                                             studentIds.append(studentId)
+                                            studentId = ""
                                         } else {
                                             if !(result == "토큰 만료"){
                                                 vm.alertMessage = result
@@ -196,10 +197,18 @@ struct StudentIdView: View {
                     }
                 }) {
                     ZStack() {
-                        Image(systemName: "circle")
-                            .foregroundColor(.white)
-                        Image(systemName: "xmark.circle.fill")
+//                        Image(systemName: "circle")
+//                            .foregroundColor(.white)
+//                        Image(systemName: "xmark.circle.fill")
+//                            .foregroundColor(.red)
+                        
+                        Image(systemName: "circle.fill")
                             .foregroundColor(.red)
+                            .frame(width: 24, height: 24) // 원 배경 크기 설정
+                        Image(systemName: "xmark")
+                            .foregroundColor(.white)
+                            .font(.system(size: 10, weight: .bold)) // x 아이콘 크기와 두께 설정
+                            .scaleEffect(0.9) // 크기 조절
                     }
                 }
                 .offset(x: 40, y: -10)
