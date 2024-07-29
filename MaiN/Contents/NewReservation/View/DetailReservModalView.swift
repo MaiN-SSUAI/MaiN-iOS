@@ -18,7 +18,7 @@ struct DetailReservModalView: View {
                 // MARK: 제목
                 HStack() {
                     Text("세미나실 2").font(.interRegular(size: 20))
-                    Text("세부 정보").font(.interRegular(size: 20))
+                    Text("예약 정보").font(.interRegular(size: 20))
                 }
                 .padding(.leading, 25)
                 .padding(.top, 30)
