@@ -56,6 +56,7 @@ struct StartTimePicker: View {
                     .foregroundColor(.black)
                 Button(action: {
                     vm.endPickerOff = true
+                    vm.startPickerOff = false
                     isDatePickerVisible.toggle()
                 }) {
                     HStack(spacing: 0) {
@@ -67,6 +68,7 @@ struct StartTimePicker: View {
                 }
                 Button(action: {
                     vm.endPickerOff = true
+                    vm.startPickerOff = false
                     isTimePickerVisible.toggle()
                 }) {
                     Text(formattedTimeDisplay())

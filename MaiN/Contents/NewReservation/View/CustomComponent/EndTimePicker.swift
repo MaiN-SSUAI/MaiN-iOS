@@ -56,6 +56,7 @@ struct EndTimePicker: View {
                     .foregroundColor(.black)
                 Button(action: {
                     vm.startPickerOff = true
+                    vm.endPickerOff = false
                     isDatePickerVisible.toggle()
                 }) {
                     HStack(spacing: 0) {
@@ -67,6 +68,7 @@ struct EndTimePicker: View {
                 }
                 Button(action: {
                     vm.startPickerOff = true
+                    vm.endPickerOff = false
                     isTimePickerVisible.toggle()
                 }) {
                     Text(formattedTimeDisplay())
@@ -170,7 +172,7 @@ struct EndTimePicker: View {
         if let combinedDate = calendar.date(from: components) {
             let formatter = ISO8601DateFormatter()
             formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-            formatter.timeZone = TimeZone(secondsFromGMT: 9 * 3600) // +09:00 시간대
+            formatter.timeZone = TimeZone(secondsFromGMT: 9 * 3600)
             return formatter.string(from: combinedDate)
         } else {
             return ""

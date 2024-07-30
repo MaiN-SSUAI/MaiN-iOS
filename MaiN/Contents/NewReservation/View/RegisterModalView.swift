@@ -169,8 +169,8 @@ struct RegisterModalView: View {
             TapGesture()
                 .onEnded { _ in
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-                    vm.startPickerOff.toggle()
-                    vm.endPickerOff.toggle()
+                    vm.startPickerOff = true
+                    vm.endPickerOff = true
                 }
         )
     }
@@ -197,18 +197,13 @@ struct StudentIdView: View {
                     }
                 }) {
                     ZStack() {
-//                        Image(systemName: "circle")
-//                            .foregroundColor(.white)
-//                        Image(systemName: "xmark.circle.fill")
-//                            .foregroundColor(.red)
-                        
                         Image(systemName: "circle.fill")
                             .foregroundColor(.red)
-                            .frame(width: 24, height: 24) // 원 배경 크기 설정
+                            .frame(width: 24, height: 24)
                         Image(systemName: "xmark")
                             .foregroundColor(.white)
-                            .font(.system(size: 10, weight: .bold)) // x 아이콘 크기와 두께 설정
-                            .scaleEffect(0.9) // 크기 조절
+                            .font(.system(size: 10, weight: .bold))
+                            .scaleEffect(0.9)
                     }
                 }
                 .offset(x: 40, y: -10)
