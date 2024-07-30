@@ -13,7 +13,7 @@ struct MaiNApp: App {
     
     init() {
         configureNavigationBar()
-        checkVersion()
+//        checkVersion()
         checkScreenSize()
     }
     
