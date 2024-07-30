@@ -15,7 +15,19 @@ struct ReservationView: View {
     var body: some View {
         VStack(spacing: 0) {
             TopReservationView(vm: reservationVM)
-            BottomReservationView(vm: reservationVM).padding(.top, 10)
+            if reservationVM.dayOrWeek == "day" {
+                TabView(selection: $reservationVM.selectedDateIndex) {
+                    BottomReservationView(vm: reservationVM, index: 0).padding(.top, 10).tag(0)
+                    BottomReservationView(vm: reservationVM, index: 1).padding(.top, 10).tag(1)
+                    BottomReservationView(vm: reservationVM, index: 2).padding(.top, 10).tag(2)
+                    BottomReservationView(vm: reservationVM, index: 3).padding(.top, 10).tag(3)
+                    BottomReservationView(vm: reservationVM, index: 4).padding(.top, 10).tag(4)
+                    BottomReservationView(vm: reservationVM, index: 5).padding(.top, 10).tag(5)
+                    BottomReservationView(vm: reservationVM, index: 6).padding(.top, 10).tag(6)
+                }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            } else {
+                BottomReservationView(vm: reservationVM, index: 0).padding(.top, 10).tag(6)
+            }
         }
         .background(.white)
         .sheet(isPresented: $reservationVM.isRegisterModalPresented) {

@@ -27,7 +27,7 @@ struct WeekView: View {
                             VStack(alignment: .center, spacing: 2) {
                                 Text(dateString)
                                     .foregroundColor(.black00)
-                                    .font(isSameDay(day1: day, day2: Date()) ? /*.interExtraBold(size: 18) : .interSemiBold(size: 18)*/
+                                    .font(isSameDay(day1: day, day2: Date()) ?
                                         .bold(size: 18) :
                                             .interSemiBold(size: 18))
                                 Text(dayString)
@@ -35,7 +35,7 @@ struct WeekView: View {
                                     .font(.interRegular(size: 13))
                             }
                             .frame(width: geometry.size.width/7, height: 60)
-                            .background( vm.dayOrWeek == "day" && isSameDate(day1: day, day2: vm.selectedDate) ? .selectedCalendar : Color.white)
+                            .background( vm.dayOrWeek == "day" && (offset == vm.selectedDateIndex) ? .selectedCalendar : Color.white)
                             .cornerRadius(10)
                         }
                     }

@@ -9,16 +9,8 @@ import SwiftUI
 import Moya
 
 class ReservationViewModel: ObservableObject {
-    //MARK: data
-    @Published var reservations: [Reservation] = [Reservation(reservId: 16,
-                                                              studentNo: ["20221813", "20220900"], purpose: "dummy data",
-                                                              start: "2024-05-25T01:00:00.000+09:00", end: "2024-05-25T02:00:00.000+09:00",
-                                                              start_pixel: "36", end_pixel: "72"),
-                                                Reservation(reservId: 0,
-                                                            studentNo: ["20233107"], purpose: "",
-                                                            start: "2024-06-03T13:00:00.000+09:00", end: "2024-06-03T16:00:00.000+09:00",
-                                                            start_pixel: "468", end_pixel: "576")]
     
+    //MARK: data
     @Published var weekReservations: [[Reservation]] = [
             [Reservation(reservId: 16,
                          studentNo: ["20221813", "20220900"], purpose: "",
@@ -59,14 +51,8 @@ class ReservationViewModel: ObservableObject {
                          studentNo: ["20221813", "20220900"], purpose: "",
             start: "2024-05-25T04:00:00.000+09:00",
             end: "2024-05-25T05:00:00.000+09:00",
-                         start_pixel: "36", end_pixel: "72")]] {
-         didSet {
-             if (weekReservations.allSatisfy { $0.isEmpty }) {reservations = []} else {
-                 reservations = weekReservations[selectedDateIndex]
-             }
-         }
-     }
-    
+                         start_pixel: "36", end_pixel: "72")]]
+
     @Published var selectedDetailReservInfo: ReservDetailInfo = ReservDetailInfo(reservId: 0, studentIds: [], purpose: "", time: "", startTime: "", endTime: "")
     
     //MARK: View
@@ -82,15 +68,7 @@ class ReservationViewModel: ObservableObject {
             updateSelectedDateIndex()
         }
     }
-    @Published var selectedDateIndex: Int = 0 {
-        didSet {
-            if weekReservations.allSatisfy { $0.isEmpty } {
-                reservations = []
-            } else {
-                reservations = weekReservations[selectedDateIndex]
-            }
-        }
-    }
+    @Published var selectedDateIndex: Int = 0
     @Published var dayOrWeek: String = "day"
     @Published var selectedReservation: Reservation?
     @Published var alertMessage: String? = nil
@@ -103,10 +81,10 @@ class ReservationViewModel: ObservableObject {
     @Published var isWeekLoading: Bool = false // API 호출 진행중
     @Published var trigger: Bool = false { // API 강제 호출
         didSet {
-            print("⭐️⭐️⭐️⭐️⭐️trigger작동")
             fetchWeekReservationAPI(for: selectedDate)
         }
     }
+
     //MARK: User
     @EnvironmentObject var logInVM: LogInViewModel
     
@@ -144,7 +122,7 @@ class ReservationViewModel: ObservableObject {
         case 7: // Saturday
             selectedDateIndex = 5
         default:
-            selectedDateIndex = -1 // Error case, should not happen
+            selectedDateIndex = -1
         }
     }
     
@@ -169,7 +147,6 @@ class ReservationViewModel: ObservableObject {
                     print("세미나실 매핑 성공🚨")
                     print("🌷accessToekn:\(TokenManager.shared.accessToken)")
                     print("🌷refreshToekn:\(TokenManager.shared.refreshToken)")
-                    self.reservations = reservations.compactMap { $0 }
                 } else {
                     print("세미나실 매핑 실패🚨")
                     print("🌷accessToekn:\(TokenManager.shared.accessToken)")
@@ -252,8 +229,6 @@ class ReservationViewModel: ObservableObject {
                 print("세미나실 예약 등록 API 실패🔥 : \(error)")
                 completion("네트워크 요청이 실패하였습니다.")
             }
-//            self.isLoading = false
-//            self.isWeekLoading = false
         }
     }
 
@@ -280,8 +255,6 @@ class ReservationViewModel: ObservableObject {
                 print("세미나실 예약 삭제 API 실패🔥: \(error)")
                 completion("네트워크 요청이 실패하였습니다")
             }
-//            self.isLoading = false
-//            self.isWeekLoading = false
         }
     }
     

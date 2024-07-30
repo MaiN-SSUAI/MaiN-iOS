@@ -9,18 +9,21 @@ import SwiftUI
 
 struct BottomReservationView: View {
     @ObservedObject var vm: ReservationViewModel
+    
+    let index: Int
     let studentId: String = TokenManager.shared.studentId ?? ""
+    
     var body: some View {
         if vm.dayOrWeek == "day" {
             if vm.isWeekLoading || vm.isLoading {
                 DefaultLoadingView()
             } else {
-                if !vm.reservations.isEmpty {
+                if !vm.weekReservations[index].isEmpty {
                     ZStack() {
                         ScrollView() {
                             HStack(alignment: .top, spacing: 8) {
                                 TimeView()
-                                DayReservationView(vm: vm)
+                                DayReservationView(index: index, vm: vm)
                                     .padding(.top, 5)
                             }
                             .padding(.horizontal, 14)
@@ -142,6 +145,7 @@ struct TimeNumberView: View {
 }
 
 struct DayReservationView: View {
+    let index: Int
     @ObservedObject var vm: ReservationViewModel
     let colorSet: [ButtonColor] = [.green, .orange, .red, .purple, .blue]
     
@@ -159,7 +163,7 @@ struct DayReservationView: View {
             
             //MARK: 예약 버튼들
             ZStack(alignment: .top) {
-                ForEach(Array(vm.reservations.enumerated()), id: \.element) { index, reservation in
+                ForEach(Array(vm.weekReservations[index].enumerated()), id: \.element) { index, reservation in
                     DayReservationButton(
                         vm: vm,
                         reservation: reservation,
@@ -216,7 +220,6 @@ struct WeekReservationView: View {
             let hour = calendar.component(.hour, from: date)
             return hour
         } else {
-            print("ddddd")
             return nil
         }
     }
