@@ -90,17 +90,16 @@ class ReservationViewModel: ObservableObject {
     
     //MARK: init
     init() {
-
-            let authPlugin = AuthPlugin()
-            authPlugin.onRetrySuccess = { [weak self] in
-                self?.fetchReservationAPI(for: self?.selectedDate ?? Date())
-                self?.fetchWeekReservationAPI(for: self?.selectedDate ?? Date())
-            }
-            self.provider = MoyaProvider<NewReservationAPI>(plugins: [authPlugin])
-            fetchReservationAPI(for: selectedDate)
-            fetchWeekReservationAPI(for: selectedDate)
-            updateSelectedDateIndex()
+        let authPlugin = AuthPlugin()
+        authPlugin.onRetrySuccess = { [weak self] in
+            self?.fetchReservationAPI(for: self?.selectedDate ?? Date())
+            self?.fetchWeekReservationAPI(for: self?.selectedDate ?? Date())
         }
+        self.provider = MoyaProvider<NewReservationAPI>(plugins: [authPlugin])
+        fetchReservationAPI(for: selectedDate)
+        fetchWeekReservationAPI(for: selectedDate)
+        updateSelectedDateIndex()
+    }
 
     private func updateSelectedDateIndex() {
         let calendar = Calendar.current
@@ -134,6 +133,20 @@ class ReservationViewModel: ObservableObject {
         selectedDate = date
     }
     
+    private func moveDate(byDays days: Int) {
+        if let newDate = Calendar.current.date(byAdding: .day, value: days, to: selectedDate) {
+            selectedDate = newDate
+        }
+    }
+    
+    func moveDateForwardByWeek() {
+        moveDate(byDays: 7)
+    }
+    
+    func moveDateBackwardByWeek() {
+        moveDate(byDays: -7)
+    }
+
     //MARK: Network
     var provider = MoyaProvider<NewReservationAPI>()
     

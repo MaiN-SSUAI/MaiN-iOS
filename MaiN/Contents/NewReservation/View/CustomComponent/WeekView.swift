@@ -12,32 +12,30 @@ struct WeekView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ScrollView(.horizontal, showsIndicators: false){
-                HStack(spacing: 0) {
-                    ForEach(0..<7, id: \.self) { offset in
-                        let day = Calendar.current.date(byAdding: .day, value: offset, to: vm.selectedDate.startOfWeek!)!
-                        let dayString = dayOfWeekFormatter.string(from: day)
-                        
-                        let dateString = dateOfWeekFormatter.string(from: day)
-                        Button(action: {
-                            if (vm.dayOrWeek == "week") {vm.dayOrWeek = "day"}
-                            self.updateSelectedDate(to: day)
-                            vm.selectedDateIndex = offset
-                        }){
-                            VStack(alignment: .center, spacing: 2) {
-                                Text(dateString)
-                                    .foregroundColor(.black00)
-                                    .font(isSameDay(day1: day, day2: Date()) ?
-                                        .bold(size: 18) :
-                                            .interSemiBold(size: 18))
-                                Text(dayString)
-                                    .foregroundColor(.gray03)
-                                    .font(.interRegular(size: 13))
-                            }
-                            .frame(width: geometry.size.width/7, height: 60)
-                            .background( vm.dayOrWeek == "day" && (offset == vm.selectedDateIndex) ? .selectedCalendar : Color.white)
-                            .cornerRadius(10)
+            HStack(spacing: 0) {
+                ForEach(0..<7, id: \.self) { offset in
+                    let day = Calendar.current.date(byAdding: .day, value: offset, to: vm.selectedDate.startOfWeek!)!
+                    let dayString = dayOfWeekFormatter.string(from: day)
+                    
+                    let dateString = dateOfWeekFormatter.string(from: day)
+                    Button(action: {
+                        if (vm.dayOrWeek == "week") {vm.dayOrWeek = "day"}
+                        self.updateSelectedDate(to: day)
+                        vm.selectedDateIndex = offset
+                    }){
+                        VStack(alignment: .center, spacing: 2) {
+                            Text(dateString)
+                                .foregroundColor(.black00)
+                                .font(isSameDay(day1: day, day2: Date()) ?
+                                    .bold(size: 18) :
+                                        .interSemiBold(size: 18))
+                            Text(dayString)
+                                .foregroundColor(.gray03)
+                                .font(.interRegular(size: 13))
                         }
+                        .frame(width: geometry.size.width/7, height: 60)
+                        .background( vm.dayOrWeek == "day" && (offset == vm.selectedDateIndex) ? .selectedCalendar : Color.white)
+                        .cornerRadius(10)
                     }
                 }
             }

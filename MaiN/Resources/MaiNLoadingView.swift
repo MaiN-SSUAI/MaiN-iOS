@@ -40,5 +40,6 @@ struct DefaultLoadingView: View {
             ProgressView()
             Spacer()
         }
+        .frame(maxWidth: .infinity)
     }
 }

@@ -10,8 +10,20 @@ import SwiftUI
 struct ReservationView: View {
     @EnvironmentObject var loginVM: LogInViewModel
     @ObservedObject private var reservationVM = ReservationViewModel()
+
+    @State private var offsetX: CGFloat = 0
+    @State private var currentIndex: Int = 0 {
+       didSet {
+           if currentIndex > oldValue {
+               reservationVM.moveDateForwardByWeek()
+           } else if currentIndex < oldValue {
+               reservationVM.moveDateBackwardByWeek()
+           }
+           reservationVM.fetchWeekReservationAPI(for: reservationVM.selectedDate)
+       }
+    }
     let isMini: Bool = UserDefaults.standard.bool(forKey: "mini")
-    
+
     var body: some View {
         VStack(spacing: 0) {
             TopReservationView(vm: reservationVM)
@@ -26,7 +38,34 @@ struct ReservationView: View {
                     BottomReservationView(vm: reservationVM, index: 6).padding(.top, 10).tag(6)
                 }.tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             } else {
-                BottomReservationView(vm: reservationVM, index: 0).padding(.top, 10).tag(6)
+                GeometryReader { geometry in
+                    BottomReservationView(vm: reservationVM, index: 0)
+                        .padding(.top, 10)
+                        .offset(x: offsetX)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    offsetX = value.translation.width
+                                }
+                                .onEnded { value in
+                                    if value.translation.width < -50 {
+                                        withAnimation {
+                                            currentIndex += 1
+                                            offsetX = -geometry.size.width
+                                        }
+                                    } else if value.translation.width > 50 {
+                                        withAnimation {
+                                            currentIndex -= 1
+                                            offsetX = geometry.size.width
+                                        }
+                                    }
+                                    withAnimation {
+                                        offsetX = 0
+                                    }
+                                }
+                        )
+                }
+                .clipped()
             }
         }
         .background(.white)
